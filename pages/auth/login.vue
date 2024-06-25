@@ -7,11 +7,9 @@
                 Connecting Hearts, Finding Hope
             </p>
         </div>
-        <div class="float-right top-0 w-[calc(100%-500px)] z-50 h-screen  text-5xl text-center flex flex-col">
-           <p class="m-10 text-[82px] text-[#676767]">Login</p> 
-           <div>
-
-           </div>
+        <div class="float-right top-0 w-[calc(100%-500px)] z-50 h-screen  text-5xl text-center items-center justify-center flex flex-col">
+           <p class="m-6 text-[82px] text-[#676767]">Login</p> 
+           <FormCard/>
 
         </div>
     </div>
