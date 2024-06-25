@@ -1,3 +1,3 @@
 <template>
-  <div>Afalagi</div>
+  <NuxtPage />
 </template>
