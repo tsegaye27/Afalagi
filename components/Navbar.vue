@@ -1,13 +1,5 @@
 <template>
-    <div>
-
-    </div>
+  <div>NavBar</div>
 </template>
 
-<script setup>
-
-</script>
-
-<style lang="scss" scoped>
-
-</style>
+<script setup></script>
