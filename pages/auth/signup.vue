@@ -1,13 +1,13 @@
 <template>
   <div class="flex w-[100%] h-[100vh] justify-center items-center">
-    <div class="left w-[38.19%] h-[100%]">
+    <div class="w-[38.19%] h-[100%]">
       <h1
-        class="fixed font-bold text-[82px] text-white text-center mt-[4.5rem] w-[38.19%] h-[96px] z-0"
+        class="fixed font-bold text-[82px] text-white text-center mt-[2rem] w-[30%] h-[96px]"
       >
         Afalagi
       </h1>
       <p
-        class="fixed font-[poppins] text-center font-semibold text-[36px] text-white mt-[13rem] w-[478px] h-[130px] z-1"
+        class="fixed font-[poppins] text-center font-semibold text-[36px] text-white mt-[10.5rem] w-[478px] h-[130px] z-1"
       >
         Connecting Hearts, Finding Hope
       </p>
@@ -18,9 +18,13 @@
       />
     </div>
     <div
-      class="right w-[61.81%] h-[680px] flex justify-between mt-[68px] items-center flex-col"
+      class="right w-[61.81%] h-[100vh] flex flex-col gap-[58px] justify-start items-center"
     >
-      <h1 class="text-center font-semibold text-[82px] text-[#676767]">Signup</h1>
+      <h1
+        class="text-center font-semibold mt-[1rem] text-[82px] text-[#676767]"
+      >
+        Signup
+      </h1>
       <FormCard />
     </div>
   </div>
