@@ -101,7 +101,9 @@
         <li class="nav-menu">
           <NuxtLink to="/success-story">Success Story</NuxtLink>
         </li>
-        <li class="nav-menu"><NuxtLink to="/auth/signup">Signup</NuxtLink></li>
+        <li class="nav-menu">
+          <NuxtLink to="/auth/signup">Signup</NuxtLink>
+        </li>
       </ul>
     </div>
   </footer>

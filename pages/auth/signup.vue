@@ -25,7 +25,10 @@
       >
         Signup
       </h1>
-      <FormCard />
+      <FormCard :size="4" />
+      <p>
+        Already have an account? <NuxtLink to="/auth/login">Login</NuxtLink>
+      </p>
     </div>
   </div>
 </template>
