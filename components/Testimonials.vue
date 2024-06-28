@@ -9,7 +9,7 @@
       <button class="btn-round-white mr-[3rem]"><</button>
       <div>
         <div
-          class="w-[650px] h-[340px] flex justify-between rounded-lg bg-slate-200"
+          class="w-[650px] h-[340px] flex justify-between rounded-lg bg-[#f4f4f4]"
         >
           <img
             class="w-[250px] h-[340px]"

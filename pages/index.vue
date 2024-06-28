@@ -2,7 +2,8 @@
   <NavBar />
   <Hero />
   <Visions />
-  <Testimonials />
+  <Testimonials class="mb-[3rem]" />
+  <hr />
   <Contact />
   <Footer />
 </template>
