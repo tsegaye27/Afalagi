@@ -16,15 +16,20 @@
             src="/assets/img/testimonial.png"
             alt="testimonial_picture"
           />
-          <div class="flex flex-col justify-center">
+          <div class="flex flex-col justify-start gap-[2rem] py-5">
             <h2
-              class="text-[40px] pl-5 font-[poppins] font-semibold text-[#788dd5]"
+              class="text-[40px] text-center font-[poppins] font-semibold text-[#788dd5]"
             >
               Eden E.
             </h2>
             <p class="pl-3 text-[#868686] font-[poppins]">
-              "At volutpat diam ut venenatis tellus in. Est ullamcorper eget
-              nulla facilisi etiam dignissim. Ut aliquam purus sit amet."
+              <i>
+                "At volutpat diam ut venenatis tellus in. Est ullamcorper eget
+                nulla facilisi etiam dignissim. Ut aliquam pur tellus in. Est
+                ullamcorper eget nulla facilisi etiam dignissim. Ut aliquam purt
+                diam ut venenatis tellus in. Est ullamcorper eget nulla facilisi
+                etiam dignissim. Ut aliquam purus sit amet."
+              </i>
             </p>
           </div>
         </div>
