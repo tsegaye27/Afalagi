@@ -103,5 +103,11 @@
 </template>
 
 <script setup>
-const size = ref(2);
+const props = defineProps({
+  size: {
+    type: Number,
+    required: true,
+    default: 2, // default value if not provided
+  },
+});
 </script>
