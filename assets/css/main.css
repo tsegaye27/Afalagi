@@ -8,3 +8,22 @@
 * {
   font-family: "inter", sans-serif;
 }
+
+.nav-menu:hover {
+  @apply text-[#788DD5] transition-colors duration-300 cursor-pointer;
+}
+
+.nav-menu {
+  @apply text-[#868686];
+}
+
+.btn {
+  @apply p-2 bg-[#788DD5] rounded-md text-white;
+}
+
+.btn-round {
+  @apply w-[50px] h-[50px] px-2 font-semibold text-[25px] bg-[#788dd5] rounded-full text-white;
+}
+.btn-round-white {
+  @apply w-[50px] h-[50px] px-2 font-semibold text-[25px] bg-white rounded-full text-[#788dd5] shadow-[1px_1px_3px_2px_lightgray];
+}

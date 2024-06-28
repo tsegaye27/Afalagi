@@ -12,6 +12,7 @@
           class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[#6f6f6f]"
           type="text"
           name="name"
+          :value="name"
           placeholder="Enter your name here"
         />
       </div>
@@ -23,6 +24,7 @@
           class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[#6f6f6f]"
           type="email"
           name="email"
+          :value="email"
           placeholder="Enter your email here"
         />
       </div>
@@ -33,6 +35,7 @@
         <input
           class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[#6f6f6f]"
           type="password"
+          :value="password"
           name="password"
           placeholder="Enter your password here"
         />
@@ -44,16 +47,17 @@
         <input
           class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[#6f6f6f]"
           type="password"
+          :value="confirmPassword"
           name="confirmPassword"
           placeholder="Enter the password again"
         />
       </div>
-      <NuxtLink
-        to="/home"
-        class="flex cursor-pointer justify-center items-center bg-[#788DD5] text-white w-[10rem] mt-4 h-[2.5rem] rounded-full"
+      <button
+        :onClick="addUser"
+        class="flex justify-center items-center bg-[#788DD5] text-white w-[10rem] mt-4 h-[2.5rem] rounded-full"
       >
-        Submit
-      </NuxtLink>
+        <NuxtLink to="/home"> Submit </NuxtLink>
+      </button>
     </form>
   </div>
 </template>
