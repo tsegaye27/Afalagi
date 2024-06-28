@@ -57,7 +57,7 @@
         :onClick="addUser"
         class="flex justify-center items-center bg-[#788DD5] text-white w-[10rem] mt-4 h-[2.5rem] rounded-full"
       >
-        <NuxtLink to="/home"> Submit </NuxtLink>
+        <NuxtLink to="/"> Submit </NuxtLink>
       </button>
     </form>
   </div>
@@ -96,7 +96,7 @@
       <button
         class="flex justify-center items-center bg-[#788DD5] text-white w-[10rem] mt-4 h-[2.5rem] rounded-full"
       >
-        <NuxtLink to="/home"> Submit </NuxtLink>
+        <NuxtLink to="/"> Submit </NuxtLink>
       </button>
     </form>
   </div>

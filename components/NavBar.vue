@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex justify-between">
+  <nav class="flex shadow-md px-[2rem] h-[6rem] justify-between pr-[3rem]">
     <div
       class="logo text-[3rem] pl-[3rem] text-[#788DD5] font-[poppins] flex items-center font-semibold"
     >
@@ -17,7 +17,7 @@
       <li v-else class="nav-menu">
         <NuxtLink to="/profile">Profile</NuxtLink>
       </li>
-      <li class="nav-menu btn"><NuxtLink to="/report">Report</NuxtLink></li>
+      <li class="nav-menu btn"><NuxtLink to="/report">Report Now</NuxtLink></li>
       <select class="p-2 rounded-md outline-none" name="lang" id="lang">
         <option class="rounded-md bg-slate-100" value="English" selected>
           Eng
@@ -30,6 +30,6 @@
 
 <script setup>
 defineProps({
-  isLogged: { type: Boolean, required: true, default: true },
+  isLogged: { type: Boolean, required: true, default: false },
 });
 </script>

@@ -1,6 +1,6 @@
 <template>
   <NavBar />
-  <div>Report</div>
+  <div>Profile</div>
   <Footer />
 </template>
 
