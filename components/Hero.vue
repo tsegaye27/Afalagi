@@ -4,15 +4,17 @@
       <h2 class="text-[55px] pl-[6rem] w-[700px] font-bold text-[#788dd5]">
         Bringing loved ones together
       </h2>
-      <p class="text-[20px] w-[400px] pl-[6rem] text-[#868686]">
+      <p class="text-[20px] w-[700px] pl-[6rem] text-[#868686]">
         At volutpat diam ut venenatis tellus in. Est ullamcorper eget nulla
-        facilisi etiam dignissim. Ut aliquam purus sit amet.
+        facilisi etiam dignissim. Ut aliquam purus sit amet.At volutpat diam ut
+        venenatis tellus in. Est ullamcorper eget nulla facilisi etiam
+        dignissim. Ut aliquam purus sit amet.
       </p>
       <SearchBar class="pl-[6rem]" />
     </div>
     <div class="right mt-[2rem]">
       <img
-        class="w-[750px] h-[630px]"
+        class="w-[650px] h-[630px]"
         src="/assets/img/home.png"
         alt="family_picture"
       />

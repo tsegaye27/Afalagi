@@ -30,6 +30,6 @@
 
 <script setup>
 defineProps({
-  isLogged: { type: Boolean, required: true, default: false },
+  isLogged: { type: Boolean, default: true },
 });
 </script>

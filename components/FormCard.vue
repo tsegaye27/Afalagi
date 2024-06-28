@@ -5,7 +5,7 @@
   >
     <form
       class="flex justify-center flex-col items-center gap-[1rem]"
-      @submit="handleSubmit"
+      @submit.prevent="handleSubmit"
     >
       <p class="text-center text-[27px] my-[25px]">Create a new account</p>
       <div
@@ -16,7 +16,6 @@
           class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[#6f6f6f]"
           type="text"
           name="name"
-          :onChange="handleNameChange"
           v-model="name"
           placeholder="Enter your name here"
         />
@@ -29,7 +28,6 @@
           class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[#6f6f6f]"
           type="email"
           name="email"
-          :onChange="handleEmailChange"
           v-model="email"
           placeholder="Enter your email here"
         />
@@ -43,7 +41,6 @@
           type="password"
           v-model="password"
           name="password"
-          :onChange="handlePasswordChange"
           placeholder="Enter your password here"
         />
       </div>
@@ -55,7 +52,6 @@
           class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[#6f6f6f]"
           type="password"
           v-model="confirmPassword"
-          :onChange="handleConfirmPassword"
           name="confirmPassword"
           placeholder="Enter the password again"
         />
@@ -73,7 +69,7 @@
     v-if="size === 2"
   >
     <form
-      @submit="handleSubmit"
+      @submit.prevent="handleSubmit"
       class="flex justify-center flex-col items-center gap-[1rem]"
     >
       <p class="text-center text-[27px] my-[25px]">Login to your account</p>
@@ -85,7 +81,6 @@
           class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[#6f6f6f]"
           type="email"
           name="email"
-          :onChange="handleEmailChange"
           v-model="email"
           placeholder="Enter your email here"
         />
@@ -98,7 +93,6 @@
           class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[#6f6f6f]"
           type="password"
           v-model="password"
-          :onChange="handlePasswordChange"
           name="password"
           placeholder="Enter your password here"
         />
@@ -114,49 +108,53 @@
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   size: {
     type: Number,
     required: true,
     default: 2,
   },
 });
+const router = useRouter();
 
-const isValid = ref(false);
-
-const name = ref("");
-const email = ref("");
-const password = ref("");
-const confirmPassword = ref("");
-
-watch([name, email, password, confirmPassword], () => {
-  if (
-    name.value &&
-    email.value &&
-    password.value &&
-    (confirmPassword.value || size !== 4)
-  ) {
-    if (size === 4 && password.value !== confirmPassword.value) {
-      isValid.value = false;
-    } else {
-      isValid.value = true;
-    }
-  } else {
-    isValid.value = false;
-  }
-});
-
-const handleSubmit = (e) => {
-  e.preventDefault();
-  if (!isValid.value) {
-    alert("Please fill all the fields correctly");
+const handleSubmit = () => {
+  if (props.size === 2 && (!email.value || !password.value)) {
+    alert("Please fill all the fields");
     return;
   }
-  alert("Success");
-  // Reset form fields
+  if (props.size === 4) {
+    if (
+      !name.value ||
+      !email.value ||
+      !password.value ||
+      !confirmPassword.value
+    ) {
+      alert("Please fill all the fields");
+      return;
+    }
+    if (password.value !== confirmPassword.value) {
+      alert("Passwords do not match");
+      return;
+    }
+  }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!emailRegex.test(email.value)) {
+    alert("Please enter a valid email address");
+    return;
+  }
+
   name.value = "";
   email.value = "";
   password.value = "";
   confirmPassword.value = "";
+
+  router.push("/");
 };
+
+const isValid = ref(false);
+const name = ref("");
+const email = ref("");
+const password = ref("");
+const confirmPassword = ref("");
 </script>
