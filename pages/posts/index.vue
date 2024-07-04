@@ -1,5 +1,4 @@
 <template>
-  <NavBar />
   <div class="mt-[3rem]">
     <div
       class="flex mx-[2.5rem] mb-[2rem] gap-[14rem] justify-start items-center"
@@ -24,7 +23,6 @@
       <MissingCard />
     </div>
   </div>
-  <Footer />
 </template>
 
 <script setup></script>

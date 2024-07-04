@@ -1,5 +1,4 @@
 <template>
-  <NavBar />
   <div class="">
     <h1
       class="text-[30px] w-full my-[3rem] text-center text-[#a9a9a9] font-semibold"
@@ -62,5 +61,4 @@
   </div>
   <hr />
   <Contact />
-  <Footer />
 </template>

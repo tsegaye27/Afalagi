@@ -1,7 +1,5 @@
 <template>
-  <NavBar />
-  <div>Profile</div>
-  <Footer />
+  <Sidebar />
 </template>
 
 <script setup></script>

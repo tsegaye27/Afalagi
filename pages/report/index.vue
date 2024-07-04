@@ -1,7 +1,5 @@
 <template>
-  <NavBar />
   <div>Report</div>
-  <Footer />
 </template>
 
 <script setup></script>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-[350px] gap-1 flex flex-col bg-white rounded-lg border-2 border-[#f4f4f4] pt-4 items-center"
+    class="w-[350px] gap-1 flex flex-col bg-lightgrey rounded-lg border-2 border-[#f4f4f4] pt-4 items-center"
   >
     <img
       class="w-[280px] h-[230px]"
