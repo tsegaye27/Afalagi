@@ -1,7 +1,7 @@
 <template>
   <div
     class="bg-white shadow-[0px_0px_4px_1px_#788DD5] w-[729px] h-[55%] rounded-lg"
-    v-if="size === 4"
+    v-if="formType === 'signup'"
   >
     <form
       class="flex justify-center flex-col items-center gap-[1rem]"
@@ -66,7 +66,7 @@
   </div>
   <div
     class="bg-white shadow-[0px_0px_4px_1px_#788DD5] w-[650px] h-[40%] rounded-lg"
-    v-if="size === 2"
+    v-if="formType === 'login'"
   >
     <form
       @submit.prevent="handleSubmit"
@@ -109,20 +109,19 @@
 
 <script setup>
 const props = defineProps({
-  size: {
-    type: Number,
-    required: true,
-    default: 2,
+  formType: {
+    type: String,
+    default: "login",
   },
 });
 const router = useRouter();
 
 const handleSubmit = () => {
-  if (props.size === 2 && (!email.value || !password.value)) {
+  if (props.formType === "login" && (!email.value || !password.value)) {
     alert("Please fill all the fields");
     return;
   }
-  if (props.size === 4) {
+  if (props.formType === "signup") {
     if (
       !name.value ||
       !email.value ||
@@ -152,7 +151,6 @@ const handleSubmit = () => {
   router.push("/");
 };
 
-const isValid = ref(false);
 const name = ref("");
 const email = ref("");
 const password = ref("");

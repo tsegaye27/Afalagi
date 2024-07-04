@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar />
+    <NavBar class="shadow-md px-[2rem] h-[6rem]" />
     <slot />
     <Footer />
   </div>

@@ -5,7 +5,7 @@
     <div
       class="logo text-[3rem] pl-[3rem] pt-[1.5rem] h-[100%] text-[#788DD5] font-[poppins] flex flex-col justify-start font-semibold"
     >
-      Afalagi
+      <nuxt-link to="/"> Afalagi </nuxt-link>
     </div>
     <ul class="mx-[8rem] flex flex-col items-start">
       <li class="nav-menu"><NuxtLink to="/">Home</NuxtLink></li>

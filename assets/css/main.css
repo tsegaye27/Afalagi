@@ -14,11 +14,11 @@
 }
 
 .nav-menu {
-  @apply text-[#868686] text-[19px] font-semibold font-[poppins];
+  @apply text-[#868686] text-[19px] font-medium font-[poppins];
 }
 
 .nav-btn {
-  @apply text-white bg-[#788dd5] text-[17px] font-[poppins] font-semibold p-2 rounded-md;
+  @apply text-white bg-[#788dd5] text-[17px] font-[poppins] font-medium p-2 rounded-md;
 }
 
 .btn {
