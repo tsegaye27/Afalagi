@@ -1,7 +1,6 @@
 <script setup>
 definePageMeta({ layout: "profile" });
 </script>
-
 <template>
-  <div>Profile</div>
+  <div>myPosts</div>
 </template>
