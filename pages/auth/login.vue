@@ -1,20 +1,36 @@
 <template>
-    <div class="h-full w-full">
-        <img class="h-screen w-[500px] z-10 inline-block" src="~/assets/img/signup.png" alt="">
-        <div class="m-4 mt-20 ml-0 top-0 w-[500px] text-center fixed text-[82px] font-bold z-50 text-white justify-center items-center flex flex-col">
-            Afalagi
-            <p class="text-3xl mt-10 w-[300px] ">
-                Connecting Hearts, Finding Hope
-            </p>
-        </div>
-        <div class="float-right top-0 w-[calc(100%-500px)] z-50 h-screen  text-5xl text-center items-center justify-center flex flex-col">
-           <p class="m-6 text-[82px] text-[#676767]">Login</p> 
-           <FormCard/>
-
-        </div>
+  <div class="flex w-[100%] h-[100vh] justify-center items-center">
+    <div class="w-[38.19%] h-[100%]">
+      <h1
+        class="fixed font-bold text-[82px] text-white text-center mt-[2rem] w-[30%] h-[96px]"
+      >
+        Afalagi
+      </h1>
+      <p
+        class="fixed font-[poppins] text-center font-semibold text-[36px] text-white mt-[10.5rem] w-[478px] h-[130px] z-1"
+      >
+        Connecting Hearts, Finding Hope
+      </p>
+      <img
+        class="object-fit w-[500px] h-full"
+        src="/assets/img/signup.png"
+        alt="two-people-hugging"
+      />
     </div>
+    <div
+      class="right w-[61.81%] h-[100vh] flex flex-col gap-[58px] justify-start items-center"
+    >
+      <h1
+        class="text-center font-semibold mt-[1rem] text-[82px] text-[#676767]"
+      >
+        Login
+      </h1>
+      <FormCard />
+      <p>
+        Don't have an account? <NuxtLink to="/auth/signup">Signup</NuxtLink>
+      </p>
+    </div>
+  </div>
 </template>
 
-<script setup>
-
-</script>
+<script setup></script>

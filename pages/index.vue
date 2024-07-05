@@ -1,9 +1,11 @@
 <template>
-    <div>
-        afalagi
-    </div>
+  <Hero />
+  <Visions />
+  <Testimonials class="mb-[3rem]" />
+  <hr />
+  <Contact />
 </template>
 
-<script setup>
+<style></style>
 
-</script>
+<script setup></script>

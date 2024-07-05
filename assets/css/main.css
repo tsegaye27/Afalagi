@@ -8,3 +8,30 @@
 * {
   font-family: "inter", sans-serif;
 }
+
+.nav-menu:hover {
+  @apply text-[#788DD5] transition-colors duration-300 cursor-pointer;
+}
+
+.nav-menu {
+  @apply text-[#868686] text-[19px] font-medium font-[poppins];
+}
+
+.nav-btn {
+  @apply text-white bg-[#788dd5] text-[17px] font-[poppins] font-medium p-2 rounded-md;
+}
+
+.btn {
+  @apply p-2 bg-[#788DD5] rounded-md text-white;
+}
+
+.btn-posts {
+  @apply p-2 bg-[#788DD5] rounded-[0_0_6px_6px] text-white;
+}
+
+.btn-round {
+  @apply w-[50px] h-[50px] px-2 font-semibold text-[25px] bg-[#788dd5] rounded-full text-white;
+}
+.btn-round-white {
+  @apply w-[50px] h-[50px] px-2 font-semibold text-[25px] bg-white rounded-full text-[#788dd5] shadow-[1px_1px_3px_2px_lightgray];
+}
