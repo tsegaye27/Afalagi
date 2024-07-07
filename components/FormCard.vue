@@ -17,9 +17,11 @@
           type="text"
           name="name"
           v-model="name"
+          @input="validateName"
           placeholder="Enter your name here"
         />
       </div>
+      <span v-if="nameError" class="text-red-500">{{ nameError }}</span>
       <div
         class="field flex justify-center gap-[3rem] pl-[1rem] items-center w-[100%] h-[40px]"
       >
@@ -29,9 +31,11 @@
           type="email"
           name="email"
           v-model="email"
+          @input="validateEmail"
           placeholder="Enter your email here"
         />
       </div>
+      <span v-if="emailError" class="text-red-500">{{ emailError }}</span>
       <div
         class="field flex justify-center pr-[1rem] gap-[3rem] items-center w-[100%] h-[40px]"
       >
@@ -40,10 +44,12 @@
           class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[#6f6f6f]"
           type="password"
           v-model="password"
+          @input="validatePassword"
           name="password"
           placeholder="Enter your password here"
         />
       </div>
+      <span v-if="passwordError" class="text-red-500">{{ passwordError }}</span>
       <div
         class="field flex justify-center pr-[5rem] gap-[3rem] items-center w-[100%] h-[40px]"
       >
@@ -52,10 +58,12 @@
           class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[#6f6f6f]"
           type="password"
           v-model="confirmPassword"
+          @input="validateConfirmPassword"
           name="confirmPassword"
           placeholder="Enter the password again"
         />
       </div>
+      <span v-if="confirmPasswordError" class="text-red-500">{{ confirmPasswordError }}</span>
       <button
         type="submit"
         class="flex justify-center items-center bg-[#788DD5] text-white w-[10rem] mt-4 h-[2.5rem] rounded-full"
@@ -82,9 +90,11 @@
           type="email"
           name="email"
           v-model="email"
+          @input="validateEmail"
           placeholder="Enter your email here"
         />
       </div>
+      <span v-if="emailError" class="text-red-500">{{ emailError }}</span>
       <div
         class="field flex justify-center pr-[1rem] gap-[3rem] items-center w-[100%] h-[40px]"
       >
@@ -93,10 +103,12 @@
           class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[#6f6f6f]"
           type="password"
           v-model="password"
+          @input="validatePassword"
           name="password"
           placeholder="Enter your password here"
         />
       </div>
+      <span v-if="passwordError" class="text-red-500">{{ passwordError }}</span>
       <button
         type="submit"
         class="flex justify-center items-center bg-[#788DD5] text-white w-[10rem] mt-4 h-[2.5rem] rounded-full"
@@ -111,36 +123,82 @@
 const props = defineProps({
   formType: {
     type: String,
-    default: "login",
+    default: "signup",
   },
 });
 const router = useRouter();
 
+const name = ref("");
+const email = ref("");
+const password = ref("");
+const confirmPassword = ref("");
+
+const nameError = ref("");
+const emailError = ref("");
+const passwordError = ref("");
+const confirmPasswordError = ref("");
+
+const validateName = () => {
+  const nameRegex = /^[A-Za-z\s]+$/;
+  if (!name.value) {
+    nameError.value = "Name is required";
+  } else if (!nameRegex.test(name.value)) {
+    nameError.value = "Name should not include numbers";
+  } else {
+    nameError.value = "";
+  }
+};
+
+const validateEmail = () => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!email.value) {
+    emailError.value = "Email is required";
+  } else if (!emailRegex.test(email.value)) {
+    emailError.value = "Please enter a valid email address";
+  } else {
+    emailError.value = "";
+  }
+};
+
+const validatePassword = () => {
+  if (!password.value) {
+    passwordError.value = "Password is required";
+  } else if (password.value.length < 6) {
+    passwordError.value = "Password should be at least 6 characters long";
+  } else {
+    passwordError.value = "";
+  }
+};
+
+const validateConfirmPassword = () => {
+  if (!confirmPassword.value) {
+    confirmPasswordError.value = "Confirm Password is required";
+  } else if (password.value !== confirmPassword.value) {
+    confirmPasswordError.value = "Passwords do not match";
+  } else {
+    confirmPasswordError.value = "";
+  }
+};
+
 const handleSubmit = () => {
   if (props.formType === "login" && (!email.value || !password.value)) {
-    alert("Please fill all the fields");
+    validateEmail();
+    validatePassword();
     return;
   }
   if (props.formType === "signup") {
+    validateName();
+    validateEmail();
+    validatePassword();
+    validateConfirmPassword();
     if (
       !name.value ||
       !email.value ||
       !password.value ||
       !confirmPassword.value
     ) {
-      alert("Please fill all the fields");
       return;
     }
-    if (password.value !== confirmPassword.value) {
-      alert("Passwords do not match");
-      return;
-    }
-  }
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  if (!emailRegex.test(email.value)) {
-    alert("Please enter a valid email address");
-    return;
   }
 
   name.value = "";
@@ -150,9 +208,4 @@ const handleSubmit = () => {
 
   router.push("/");
 };
-
-const name = ref("");
-const email = ref("");
-const password = ref("");
-const confirmPassword = ref("");
 </script>
