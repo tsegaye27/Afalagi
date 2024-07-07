@@ -25,7 +25,7 @@
       >
         Login
       </h1>
-      <FormCard />
+      <FormCard formType="login"/>
       <p>
         Don't have an account? <NuxtLink to="/auth/signup">Signup</NuxtLink>
       </p>
