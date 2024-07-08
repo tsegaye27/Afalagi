@@ -8,7 +8,9 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  modules: [[
+  modules: [
+    'nuxt-swiper',
+    [
     "@pinia/nuxt",
     {
       autoImports:['defineStore', 'acceptHMRUpdate']
