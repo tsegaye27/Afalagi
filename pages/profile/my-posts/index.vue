@@ -2,5 +2,7 @@
 definePageMeta({ layout: "profile" });
 </script>
 <template>
-  <div>myPosts</div>
+  <div class="w-[1160px]">
+    <MissingCard />
+  </div>
 </template>

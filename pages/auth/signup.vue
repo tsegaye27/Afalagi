@@ -18,19 +18,17 @@
       />
     </div>
     <div
-      class="right w-[61.81%] h-[100vh] flex flex-col gap-[58px] justify-start items-center"
+      class="right w-[61.81%] h-[100vh] flex flex-col gap-[58px] justify-center items-center"
     >
-      <h1
-        class="text-center font-semibold mt-[1rem] text-[82px] text-[#676767]"
-      >
-        Signup
-      </h1>
       <FormCard :formType="signup" />
       <p>
-        Already have an account? <NuxtLink to="/auth/login">Login</NuxtLink>
+        Already have an account?
+        <NuxtLink class="text-[#788dd5]" to="/auth/login">Login</NuxtLink>
       </p>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+definePageMeta({ layout: "" });
+</script>

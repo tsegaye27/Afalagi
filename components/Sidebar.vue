@@ -11,7 +11,7 @@
           Profile
         </li>
       </nuxt-link>
-      <nuxt-link class="py-1 w-[100%]" to="/profile/posts">
+      <nuxt-link class="py-1 w-[100%]" to="/profile/my-posts">
         <li
           class="border border-slate-300 w-[100%] text-center rounded-md cursor-pointer hover:text-[#788dd5]"
         >

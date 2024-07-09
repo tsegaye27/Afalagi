@@ -1,11 +1,11 @@
 <template>
   <div
-    class="bg-white shadow-[0px_0px_4px_1px_#788DD5] w-[729px] h-[55%] rounded-lg"
+    class="bg-white shadow-[0px_0px_4px_1px_#788DD5] w-[729px] rounded-lg pb-6"
     v-if="formType === 'signup'"
   >
     <form
       class="flex justify-center flex-col items-center gap-[1rem]"
-      @submit.prevent="handleSubmit"
+      @submit.prevent="handleSignupSubmit"
     >
       <p class="text-center text-[27px] my-[25px]">Create a new account</p>
       <div
@@ -63,7 +63,9 @@
           placeholder="Enter the password again"
         />
       </div>
-      <span v-if="confirmPasswordError" class="text-red-500">{{ confirmPasswordError }}</span>
+      <span v-if="confirmPasswordError" class="text-red-500">{{
+        confirmPasswordError
+      }}</span>
       <button
         type="submit"
         class="flex justify-center items-center bg-[#788DD5] text-white w-[10rem] mt-4 h-[2.5rem] rounded-full"
@@ -73,7 +75,7 @@
     </form>
   </div>
   <div
-    class="bg-white shadow-[0px_0px_4px_1px_#788DD5] w-[650px] h-[40%] rounded-lg"
+    class="bg-white shadow-[0px_0px_4px_1px_#788DD5] w-[650px] pb-6 rounded-lg"
     v-if="formType === 'login'"
   >
     <form
@@ -186,6 +188,11 @@ const handleSubmit = () => {
     validatePassword();
     return;
   }
+  email.value = "";
+  password.value = "";
+  router.push("/");
+};
+const handleSignupSubmit = () => {
   if (props.formType === "signup") {
     validateName();
     validateEmail();
@@ -200,12 +207,11 @@ const handleSubmit = () => {
       return;
     }
   }
-
   name.value = "";
   email.value = "";
   password.value = "";
   confirmPassword.value = "";
 
-  router.push("/");
+  router.push("/auth/login");
 };
 </script>
