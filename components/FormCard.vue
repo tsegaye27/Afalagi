@@ -1,11 +1,11 @@
 <template>
   <div
-    class="bg-white shadow-[0px_0px_4px_1px_#788DD5] w-[729px] rounded-lg pb-6"
+    class="bg-white shadow-[0px_0px_4px_1px_#788DD5] w-[729px] p-4 rounded-lg h-fit"
     v-if="formType === 'signup'"
   >
     <form
       class="flex justify-center flex-col items-center gap-[1rem]"
-      @submit.prevent="handleSignupSubmit"
+      @submit.prevent="handleSubmit"
     >
       <p class="text-center text-[27px] my-[25px]">Create a new account</p>
       <div
