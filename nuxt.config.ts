@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: false },
+  devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
   postcss: {
     plugins: {
@@ -8,13 +8,15 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  modules: [[
-    "@pinia/nuxt",
-    {
-      autoImports:['defineStore', 'acceptHMRUpdate']
-    },
-  ]],
-  imports:{
-    dirs:['stores'],
-  }
+  modules: [
+    [
+      "@pinia/nuxt",
+      {
+        autoImports: ["defineStore", "acceptHMRUpdate"],
+      },
+    ],
+  ],
+  imports: {
+    dirs: ["stores"],
+  },
 });
