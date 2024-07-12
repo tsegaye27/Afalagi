@@ -1,7 +1,7 @@
 <script setup>
 const input = ref("John");
 const handleSearch = () => {
-  // searching takes place here
+  navigateTo("/posts");
 };
 </script>
 <template>
