@@ -5,10 +5,10 @@
   >
     <form
       class="flex justify-center flex-col items-center gap-[1rem]"
-      @submit.prevent="handleSubmit"
+      @submit.prevent="handleSignupSubmit"
     >
       <p class="text-center text-[27px] my-[25px]">Create a new account</p>
-      <div
+      <!-- <div
         class="field flex pl-[0.85rem] justify-center gap-[3rem] items-center w-[100%] h-[40px]"
       >
         <label class="text-[#6F6F6F]">Name: </label>
@@ -20,8 +20,8 @@
           @input="validateName"
           placeholder="Enter your name here"
         />
-      </div>
-      <span v-if="nameError" class="text-red-500">{{ nameError }}</span>
+      </div> 
+      <span v-if="nameError" class="text-red-500">{{ nameError }}</span>-->
       <div
         class="field flex justify-center gap-[3rem] pl-[1rem] items-center w-[100%] h-[40px]"
       >
@@ -130,26 +130,26 @@ const props = defineProps({
 });
 const router = useRouter();
 
-const name = ref("");
+// const name = ref("");
 const email = ref("");
 const password = ref("");
 const confirmPassword = ref("");
 
-const nameError = ref("");
+// const nameError = ref("");
 const emailError = ref("");
 const passwordError = ref("");
 const confirmPasswordError = ref("");
 
-const validateName = () => {
-  const nameRegex = /^[A-Za-z\s]+$/;
-  if (!name.value) {
-    nameError.value = "Name is required";
-  } else if (!nameRegex.test(name.value)) {
-    nameError.value = "Name should not include numbers";
-  } else {
-    nameError.value = "";
-  }
-};
+// const validateName = () => {
+//   const nameRegex = /^[A-Za-z\s]+$/;
+//   if (!name.value) {
+//     nameError.value = "Name is required";
+//   } else if (!nameRegex.test(name.value)) {
+//     nameError.value = "Name should not include numbers";
+//   } else {
+//     nameError.value = "";
+//   }
+// };
 
 const validateEmail = () => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -194,24 +194,25 @@ const handleSubmit = () => {
 };
 const handleSignupSubmit = () => {
   if (props.formType === "signup") {
-    validateName();
+    // validateName();
     validateEmail();
     validatePassword();
     validateConfirmPassword();
     if (
-      !name.value ||
+      // !name.value ||
       !email.value ||
       !password.value ||
       !confirmPassword.value
     ) {
       return;
     }
-  }
-  name.value = "";
+     // name.value = "";
   email.value = "";
   password.value = "";
   confirmPassword.value = "";
 
-  router.push("/auth/login");
+  router.push("/auth/verification");
+  }
+ 
 };
 </script>
