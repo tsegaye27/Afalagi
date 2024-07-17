@@ -17,7 +17,7 @@
       <li v-else class="nav-menu">
         <NuxtLink to="/profile">Profile</NuxtLink>
       </li>
-      <li class="nav-btn"><NuxtLink to="/report">Report Now</NuxtLink></li>
+      <ReportBtn />
       <select class="p-2 rounded-md outline-none" name="lang" id="lang">
         <option class="rounded-md bg-slate-100" value="English">Eng</option>
         <option class="rounded-md bg-slate-100" value="አማርኛ">አማ</option>

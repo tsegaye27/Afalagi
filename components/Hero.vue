@@ -10,7 +10,9 @@
         venenatis tellus in. Est ullamcorper eget nulla facilisi etiam
         dignissim. Ut aliquam purus sit amet.
       </p>
-      <SearchBar class="pl-[6rem]" />
+      <div class="flex justify-center">
+        <ReportBtn class="list-none" />
+      </div>
     </div>
     <div class="right mt-[2rem]">
       <img

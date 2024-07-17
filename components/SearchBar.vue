@@ -1,5 +1,5 @@
 <script setup>
-const input = ref("John");
+const input = ref("");
 const handleSearch = () => {
   navigateTo("/posts");
 };
@@ -9,7 +9,7 @@ const handleSearch = () => {
     <input
       type="text"
       class="h-[41px] rounded-[18px_0_0_18px] pl-4 border-2 border-[#788dd5] text-[#868686] outline-none"
-      placeholder="Start typing here..."
+      placeholder="Search here..."
       v-model="input"
     />
     <button

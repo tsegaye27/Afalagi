@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt/icon": "^1.1.1",
     "@pinia/nuxt": "^0.5.1",
     "axios": "^1.7.2",
     "nuxt": "^3.12.2",

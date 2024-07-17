@@ -21,9 +21,11 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="flex justify-start items-baseline gap-[1.5rem]">
+  <div class="flex justify-start items-baseline gap-[3rem]">
     <label class="text-[#868686] font-semibold">{{ label }}: </label>
-    <select class="outline-none p-1 rounded border border-[#868686]">
+    <select
+      class="outline-none p-1 rounded bg-whitesmoke border border-[#868686]"
+    >
       <option disabled selected value="">{{ placeholder }}</option>
       <option
         v-for="(option, index) in options"
