@@ -1,13 +1,15 @@
+<script setup>
+definePageMeta({ layout: "default" });
+</script>
+
 <template>
-  <NavBar/>
-  <div class="w-1/3 float-start bg-green-200 h-[calc(100vh-6rem)]">Report</div>
-  <div class="float-right w-2/3 bg-yellow-100 h-[calc(100vh-6rem)] flex items-center justify-center">
-    <FormCard/>    
+  <div class="report-form flex h-screen justify-center items-center">
+    <form class="flex flex-col gap-[1rem] justify-start items-start">
+      <InputLabel
+        label="First Name"
+        placeholder="Enter the first name"
+        type="text"
+      />
+    </form>
   </div>
 </template>
-
-<script setup>
-definePageMeta({
-  layout: "",
-});
-</script>

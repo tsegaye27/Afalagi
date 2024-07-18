@@ -52,9 +52,6 @@ const props = defineProps({
       class="profile-image-container relative flex flex-col w-full items-center justify-center"
     >
       <ProfileImageInput />
-      <p class="font-medium text-[16px] my-4 text-[#3b3b3b] uppercase">
-        insert profile picture
-      </p>
     </div>
     <div class="flex gap-[1rem] flex-col items-center">
       <h1 class="text-[#878787] mt-5 text-center text-2xl font-semibold">
@@ -87,6 +84,26 @@ const props = defineProps({
             type="email"
             placeholder="Enter your email here"
             value="ttalegn29@gmail.com"
+          />
+          <InputLabel
+            label="Address"
+            type="text"
+            placeholder="Enter your name here"
+            value="Addis Ababa"
+          />
+          <SelectLabel
+            label="Gender"
+            :options="[
+              {
+                label: 'Male',
+                value: 'male',
+              },
+              {
+                label: 'Female',
+                value: 'female',
+              },
+            ]"
+            placeholder="Select your Gender"
           />
           <div class="flex justify-start items-baseline gap-[0.5rem]">
             <label class="text-[#868686] font-semibold">Date of Birth: </label>
@@ -132,30 +149,9 @@ const props = defineProps({
               placeholder="912-34-5678"
             />
           </div> -->
-          <SelectLabel
-            label="Gender"
-            :options="[
-              {
-                label: 'Male',
-                value: 'male',
-              },
-              {
-                label: 'Female',
-                value: 'female',
-              },
-            ]"
-            placeholder="Select your Gender"
-          />
-
-          <InputLabel
-            label="Address"
-            type="text"
-            placeholder="Enter your name here"
-            value="Addis Ababa"
-          />
         </div>
       </form>
-      <button class="px-4 py-1 w-[300px] bg-blue-500 text-white rounded-2xl">
+      <button class="px-4 py-1 w-[300px] bg-[#788dd5] text-white rounded-2xl">
         Save
       </button>
     </div>

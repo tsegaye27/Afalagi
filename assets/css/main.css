@@ -6,15 +6,15 @@
 @tailwind utilities;
 
 * {
-  font-family: "inter", sans-serif;
+  font-family: "poppins", "inter", sans-serif;
 }
 
 .nav-menu:hover {
-  @apply text-[#788DD5] transition-colors duration-300 cursor-pointer;
+  @apply text-[#788DD5] transition-colors duration-500 border border-[#788dd5]  cursor-pointer;
 }
 
 .nav-menu {
-  @apply text-[#868686] text-[19px] font-medium font-[poppins];
+  @apply text-[#868686] text-[19px] font-medium px-2 py-1 flex items-baseline rounded font-[poppins];
 }
 
 .nav-btn {

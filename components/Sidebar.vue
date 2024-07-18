@@ -1,6 +1,7 @@
+<script setup></script>
 <template>
   <div
-    class="w-[280px] h-[655px] flex flex-col my-1 justify-center gap-[1rem] items-center shadow-md bg-[#fff]"
+    class="w-[280px] h-[655px] flex flex-col mt-1 justify-center gap-[1rem] items-center shadow-md bg-[#fff]"
   >
     <div
       class="w-[200px] h-[200px] flex flex-col gap-[2rem] justify-center items-center"
@@ -12,40 +13,55 @@
       />
       <p class="text-xl text-[#868686] font-semibold">John Doe</p>
     </div>
-    <ul class="pt-[2rem] flex flex-col h-[50%] gap-[0.5rem] w-[100%]">
-      <nuxt-link class="py-1 w-[100%]" to="/profile">
-        <li
-          class="text-[#868686] p-1 border border-slate-300 w-[100%] text-center rounded-md cursor-pointer hover:text-[#788dd5]"
+    <ul class="pt-[2rem] flex flex-col h-[50%] w-[100%]">
+      <nuxt-link class="py-1 flex justify-center w-[100%]" to="/profile">
+        <div
+          class="text-[#868686] flex justify-start pl-[6.25rem] gap-[0.2rem] py-[0.3rem] border border-slate-300 w-[100%] text-center rounded-md cursor-pointer hover:text-[#788dd5]"
         >
+          <span class="flex justify-center items-baseline"
+            ><Icon name="humbleicons:user" size="20px"
+          /></span>
           Profile
-        </li>
+        </div>
       </nuxt-link>
-      <nuxt-link class="py-1 w-[100%]" to="/profile/my-posts">
-        <li
-          class="text-[#868686] border border-slate-300 w-[100%] text-center rounded-md cursor-pointer hover:text-[#788dd5]"
+      <nuxt-link class="py-1 w-[100%]" to="/profile">
+        <div
+          class="text-[#868686] flex justify-start pl-[6.25rem] gap-[0.2rem] py-[0.3rem] border border-slate-300 w-[100%] text-center rounded-md cursor-pointer hover:text-[#788dd5]"
         >
+          <span class="flex justify-center items-baseline"
+            ><Icon name="humbleicons:documents" size="20px"
+          /></span>
           My Posts
-        </li>
+        </div>
       </nuxt-link>
-      <nuxt-link class="py-1 w-[100%]" to="/profile/messages">
-        <li
-          class="text-[#868686] border border-slate-300 w-[100%] text-center rounded-md cursor-pointer hover:text-[#788dd5]"
+      <nuxt-link class="py-1 w-[100%]" to="/profile">
+        <div
+          class="text-[#868686] flex justify-start pl-[6.25rem] gap-[0.2rem] py-[0.3rem] border border-slate-300 w-[100%] text-center rounded-md cursor-pointer hover:text-[#788dd5]"
         >
+          <span class="flex justify-center items-baseline"
+            ><Icon name="humbleicons:chat" size="20px"
+          /></span>
           Messages
-        </li>
+        </div>
       </nuxt-link>
-      <nuxt-link class="py-1 w-[100%]" to="/profile/settings">
-        <li
-          class="text-[#868686] border border-slate-300 w-[100%] text-center rounded-md cursor-pointer hover:text-[#788dd5]"
+      <nuxt-link class="py-1 w-[100%]" to="/profile">
+        <div
+          class="text-[#868686] flex justify-start pl-[6.25rem] gap-[0.2rem] py-[0.3rem] border border-slate-300 w-[100%] text-center rounded-md cursor-pointer hover:text-[#788dd5]"
         >
+          <span class="flex justify-center items-baseline"
+            ><Icon name="humbleicons:cog" size="20px"
+          /></span>
           Settings
-        </li>
+        </div>
       </nuxt-link>
     </ul>
     <button
       @click="navigateTo('/auth/login')"
-      class="w-[100%] mb-[30px] text-red-600 border border-slate-300 rounded-md"
+      class="w-[100%] mb-[30px] flex justify-center gap-[0.35rem] text-red-600 border border-slate-300 rounded-md"
     >
+      <span class="flex justify-center items-center"
+        ><Icon size="22px" name="iconoir:log-out"
+      /></span>
       Logout
     </button>
   </div>

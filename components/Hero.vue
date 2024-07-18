@@ -10,8 +10,8 @@
         venenatis tellus in. Est ullamcorper eget nulla facilisi etiam
         dignissim. Ut aliquam purus sit amet.
       </p>
-      <div class="flex justify-center">
-        <ReportBtn class="list-none" />
+      <div class="flex justify-start ml-[6rem]">
+        <ReportBtn class="w-[30%]" />
       </div>
     </div>
     <div class="right mt-[2rem]">
