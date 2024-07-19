@@ -44,7 +44,7 @@ const showMore = () => {
 </script>
 <template>
   <div>
-    <h1 class="text-center my-[2rem] text-[38px] font-semibold text-[#788dd5]">
+    <h1 class="text-center my-[2rem] text-[38px] font-semibold text-[#0097d3]">
       Missing Reported
     </h1>
     <div class="flex justify-center items-center gap-[3rem] mx-[1rem]">
@@ -64,7 +64,7 @@ const showMore = () => {
       />
       <button
         @click="showMore"
-        class="text-[#f4f4f4] p-[0.7rem] rounded-full bg-[#788dd5] font-semibold w-[2.8rem] h-full flex items-center justify-center"
+        class="text-[#f4f4f4] p-[0.7rem] rounded-full bg-[#0097d3] font-semibold w-[2.8rem] h-full flex items-center justify-center"
       >
         <span class="flex justify-center items-center"
           ><Icon size="22px" name="material-symbols:arrow-right-alt"
