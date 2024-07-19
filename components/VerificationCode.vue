@@ -32,7 +32,21 @@ const verify = () => {
     <input
       type="text"
       :id="4"
-      @change="verify"
+      :maxlength="1"
+      :value="2"
+      class="w-[50px] h-[50px] text-center text-[#868686] text-[1.75rem] border-2 border-[#788dd5] outline-none rounded-lg"
+    />
+    <input
+      type="text"
+      :id="5"
+      :maxlength="1"
+      :value="2"
+      class="w-[50px] h-[50px] text-center text-[#868686] text-[1.75rem] border-2 border-[#788dd5] outline-none rounded-lg"
+    />
+    <input
+      type="text"
+      :id="4"
+      @input="verify"
       :value="verificationCode.value"
       class="w-[50px] h-[50px] text-center text-[#868686] text-[1.75rem] border-2 border-[#788dd5] outline-none rounded-lg"
     />
