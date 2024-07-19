@@ -15,6 +15,9 @@ export default defineNuxtConfig({
       autoImports: ["defineStore", "acceptHMRUpdate"],
     },
   ], "@nuxt/icon"],
+  plugins: [
+    '~/plugins/axios.ts',
+  ],
   imports: {
     dirs: ["stores"],
   },
