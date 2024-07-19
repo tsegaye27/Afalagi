@@ -60,11 +60,11 @@ const viewDetails = () => {
       src="@/assets/img/missing.png"
       alt="missing_boy"
     />
-    <h1 class="text-[27px] font-semibold text-[#868686]">{{ fullName }}</h1>
-    <p class="w-[247px] text-[#868686]">
+    <h1 class="text-[27px] font-semibold text-[#005782]">{{ fullName }}</h1>
+    <p class="w-[247px] text-[#005782]">
       Last-Seen(Location): {{ lastSeenLocation }}
     </p>
-    <p class="w-[247px] text-[#868686]">Last-Seen(Date): {{ lastSeenDate }}</p>
+    <p class="w-[247px] text-[#005782]">Last-Seen(Date): {{ lastSeenDate }}</p>
     <button @click="viewDetails" class="btn-posts mt-1 w-[349px]">
       View Details
     </button>
