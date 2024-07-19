@@ -90,7 +90,7 @@ const missingPerson = missingPersons[postId];
         class="flex btn-round justify-center items-center mr-[1rem]"
       >
         <</button
-      ><span class="text-[#868686] text-2xl">Back</span>
+      ><span class="text-[#005782] text-2xl">Back</span>
     </div>
 
     <hr />
@@ -164,12 +164,12 @@ const missingPerson = missingPersons[postId];
         <div
           class="flex flex-col items-center justify-center gap-[1rem] mb-[3rem]"
         >
-          <h1 class="text-[30px] text-[#393939] font-medium font-[poppins]">
+          <h1 class="text-[30px] text-[#393939] font-medium font-[sora]">
             Message from his mother
           </h1>
           <video class="w-[600px] h-[400px] rounded-md" controls src=""></video>
           <button
-            class="p-3 bg-[#788dd5] rounded-lg text-medium text-white"
+            class="p-3 bg-[#0097d3] rounded-lg text-medium text-white"
             @click="navigateTo('/profile/messages')"
           >
             Chat with the reporter

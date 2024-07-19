@@ -106,23 +106,23 @@ const props = defineProps({
             placeholder="Select your Gender"
           />
           <div class="flex justify-start items-baseline gap-[0.5rem]">
-            <label class="text-[#868686] font-semibold">Date of Birth: </label>
+            <label class="text-[#005782] font-semibold">Date of Birth: </label>
             <input
-              class="outline-none w-[265px] p-1 pl-2 rounded text-[#606060] border border-[#868686]"
+              class="outline-none w-[265px] p-1 pl-2 rounded text-[#606060] border border-[#005782]"
               type="date"
             />
           </div>
           <div class="flex justify-start items-baseline gap-[3.5rem]">
-            <label class="text-[#868686] font-semibold">Phone: </label>
+            <label class="text-[#005782] font-semibold">Phone: </label>
             <div class="flex gap-[1rem]">
               <select
-                class="outline-none p-1 bg-whitesmoke rounded border border-[#868686]"
+                class="outline-none p-1 bg-whitesmoke rounded border border-[#005782]"
               >
                 <option>🇪🇹</option>
                 <option>🇬🇧</option>
               </select>
               <input
-                class="p-1 rounded w-[200px] pl-2 border text-[#606060] border-[#868686] outline-none"
+                class="p-1 rounded w-[200px] pl-2 border text-[#606060] border-[#005782] outline-none"
                 type="text"
                 placeholder="912-34-5678"
               />
@@ -144,14 +144,14 @@ const props = defineProps({
               ]"
             />
             <input
-              class="p-1 rounded w-[200px] border text-[#606060] border-[#868686] outline-none"
+              class="p-1 rounded w-[200px] border text-[#606060] border-[#005782] outline-none"
               type="text"
               placeholder="912-34-5678"
             />
           </div> -->
         </div>
       </form>
-      <button class="px-4 py-1 w-[300px] bg-[#788dd5] text-white rounded-2xl">
+      <button class="px-4 py-1 w-[300px] bg-[#0097d3] text-white rounded-2xl">
         Save
       </button>
     </div>
