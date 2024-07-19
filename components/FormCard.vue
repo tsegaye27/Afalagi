@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white shadow-[0px_0px_4px_1px_#788DD5] w-[729px] p-4 rounded-lg h-fit"
+    class="bg-white shadow-[0px_0px_4px_1px_#0097d3] w-[729px] p-4 rounded-lg h-fit"
     v-if="formType === 'signup'"
   >
     <form
@@ -8,20 +8,7 @@
       @submit.prevent="handleSignupSubmit"
     >
       <p class="text-center text-[27px] my-[25px]">Create a new account</p>
-      <!-- <div
-        class="field flex pl-[0.85rem] justify-center gap-[3rem] items-center w-[100%] h-[40px]"
-      >
-        <label class="text-[#6F6F6F]">Name: </label>
-        <input
-          class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[#6f6f6f]"
-          type="text"
-          name="name"
-          v-model="name"
-          @input="validateName"
-          placeholder="Enter your name here"
-        />
-      </div> 
-      <span v-if="nameError" class="text-red-500">{{ nameError }}</span>-->
+
       <div
         class="field flex justify-center gap-[3rem] pl-[1rem] items-center w-[100%] h-[40px]"
       >
@@ -68,14 +55,14 @@
       }}</span>
       <button
         type="submit"
-        class="flex justify-center items-center bg-[#788DD5] text-white w-[10rem] mt-4 h-[2.5rem] rounded-full"
+        class="flex justify-center items-center bg-[#0097d3] text-white w-[10rem] mt-4 h-[2.5rem] rounded-full"
       >
         Submit
       </button>
     </form>
   </div>
   <div
-    class="bg-white shadow-[0px_0px_4px_1px_#788DD5] w-[650px] pb-6 rounded-lg"
+    class="bg-white shadow-[0px_0px_4px_1px_#0097d3] w-[650px] pb-6 rounded-lg"
     v-if="formType === 'login'"
   >
     <form
@@ -113,7 +100,7 @@
       <span v-if="passwordError" class="text-red-500">{{ passwordError }}</span>
       <button
         type="submit"
-        class="flex justify-center items-center bg-[#788DD5] text-white w-[10rem] mt-4 h-[2.5rem] rounded-full"
+        class="flex justify-center items-center bg-[#0097d3] text-white w-[10rem] mt-4 h-[2.5rem] rounded-full"
       >
         Submit
       </button>
@@ -206,13 +193,12 @@ const handleSignupSubmit = () => {
     ) {
       return;
     }
-     // name.value = "";
-  email.value = "";
-  password.value = "";
-  confirmPassword.value = "";
+    // name.value = "";
+    email.value = "";
+    password.value = "";
+    confirmPassword.value = "";
 
-  router.push("/auth/verification");
+    router.push("/auth/verification");
   }
- 
 };
 </script>
