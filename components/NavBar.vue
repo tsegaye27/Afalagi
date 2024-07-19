@@ -1,9 +1,12 @@
 <template>
-  <nav class="flex shadow-md px-[2rem] h-[6rem] justify-between pr-[3rem]">
-    <div
-      class="logo text-[3rem] pl-[3rem] text-[#788DD5] font-[poppins] flex items-center font-semibold"
-    >
-      <NuxtLink to="/"> Afalagi </NuxtLink>
+  <nav class="flex shadow-md px-[2rem] h-[7rem] justify-between pr-[3rem]">
+    <div>
+      <NuxtLink to="/">
+        <img
+          class="logo w-[180px] mt-[0.5rem] ml-[2.5rem] h-[90px] object-contain"
+          src="@/assets/img/logo.png"
+          alt="reuniteus_logo"
+      /></NuxtLink>
     </div>
     <ul class="flex w-[70%] justify-end gap-[2.5rem] items-center">
       <li class="nav-menu">
@@ -47,13 +50,13 @@
       </li>
       <li
         v-else
-        class="rounded-full p-2 border border-[#788dd5] hover:text-[#788dd5]"
+        class="rounded-full p-2 border border-[#0097d3] hover:text-[#0097d3]"
       >
         <NuxtLink
           class="flex gap-[0.35rem] justify-center items-center"
           to="/profile"
         >
-          <span class="text-[#868686] flex justify-center items-center">
+          <span class="text-[#005782] flex justify-center items-center">
             <Icon name="humbleicons:user" size="25px" />
           </span>
         </NuxtLink>
@@ -72,3 +75,16 @@ const handleChange = () => {
   lang.value = document.getElementById("lang").value;
 };
 </script>
+
+<style scoped>
+.router-link-active {
+  color: #0097d3;
+  border-bottom: 2px solid #0097d3;
+  transition: all 0.5s;
+}
+.router-link-exact-active {
+  color: #0097d3;
+  border-bottom: 2px solid #0097d3;
+  transition: all 0.5s;
+}
+</style>
