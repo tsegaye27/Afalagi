@@ -1,7 +1,7 @@
 <template>
   <nav class="flex shadow-md px-[2rem] h-[6rem] justify-between pr-[3rem]">
     <div
-      class="logo text-[3rem] pl-[3rem] text-[#788DD5] font-[poppins] flex items-center font-semibold"
+      class="logo text-[3rem] pl-[3rem] text-[#0097d3] font-[sora] flex items-center font-semibold"
     >
       <NuxtLink to="/"> Afalagi </NuxtLink>
     </div>
@@ -47,13 +47,13 @@
       </li>
       <li
         v-else
-        class="rounded-full p-2 border border-[#788dd5] hover:text-[#788dd5]"
+        class="rounded-full p-2 border border-[#0097d3] hover:text-[#0097d3]"
       >
         <NuxtLink
           class="flex gap-[0.35rem] justify-center items-center"
           to="/profile"
         >
-          <span class="text-[#868686] flex justify-center items-center">
+          <span class="text-[#005782] flex justify-center items-center">
             <Icon name="humbleicons:user" size="25px" />
           </span>
         </NuxtLink>
