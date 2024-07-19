@@ -6,22 +6,58 @@
       <NuxtLink to="/"> Afalagi </NuxtLink>
     </div>
     <ul class="flex w-[70%] justify-end gap-[2.5rem] items-center">
-      <li class="nav-menu"><NuxtLink to="/">Home</NuxtLink></li>
-      <li class="nav-menu"><NuxtLink to="/posts">Posts</NuxtLink></li>
       <li class="nav-menu">
-        <NuxtLink to="/success-story">Success Story</NuxtLink>
+        <NuxtLink to="/" class="flex gap-[0.35rem] justify-center items-center"
+          ><span class="flex items-center"
+            ><Icon name="heroicons-outline:home" size="22px" /></span
+          >Home</NuxtLink
+        >
       </li>
-      <li v-if="!isLogged" class="nav-menu">
-        <NuxtLink to="/auth/signup">Signup</NuxtLink>
+      <li class="nav-menu">
+        <NuxtLink
+          class="flex gap-[0.35rem] justify-center items-center"
+          to="/posts"
+          ><span class="flex items-center"
+            ><Icon name="material-symbols:post-add-sharp" size="22px" /></span
+          >Posts</NuxtLink
+        >
       </li>
-      <li v-else class="nav-menu">
-        <NuxtLink to="/profile">Profile</NuxtLink>
+      <li class="nav-menu">
+        <NuxtLink
+          class="flex gap-[0.35rem] justify-center items-center"
+          to="/success-story"
+          ><span class="flex items-center"
+            ><Icon name="material-symbols:history-edu" size="22px" /></span
+          >Success Story</NuxtLink
+        >
       </li>
-      <li class="nav-btn"><NuxtLink to="/report">Report Now</NuxtLink></li>
+      <ReportBtn />
       <select class="p-2 rounded-md outline-none" name="lang" id="lang">
-        <option class="rounded-md bg-slate-100" value="English">Eng</option>
-        <option class="rounded-md bg-slate-100" value="አማርኛ">አማ</option>
+        <option class="rounded-md bg-slate-100" value="English">🇬🇧</option>
+        <option class="rounded-md bg-slate-100" value="አማርኛ">🇪🇹</option>
       </select>
+      <li v-if="!isLogged" class="nav-menu">
+        <NuxtLink
+          class="flex gap-[0.35rem] justify-center items-center"
+          to="/auth/signup"
+          ><span class="flex items-center"
+            ><Icon name="material-symbols-light:login" size="22px" /></span
+          >Signup</NuxtLink
+        >
+      </li>
+      <li
+        v-else
+        class="rounded-full p-2 border border-[#788dd5] hover:text-[#788dd5]"
+      >
+        <NuxtLink
+          class="flex gap-[0.35rem] justify-center items-center"
+          to="/profile"
+        >
+          <span class="text-[#868686] flex justify-center items-center">
+            <Icon name="humbleicons:user" size="25px" />
+          </span>
+        </NuxtLink>
+      </li>
     </ul>
   </nav>
 </template>
