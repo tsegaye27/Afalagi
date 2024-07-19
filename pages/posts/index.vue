@@ -45,7 +45,7 @@ const showModal = ref(false);
       class="flex mx-[2.5rem] mb-[2rem] gap-[7rem] justify-between items-center"
     >
       <div class="flex justify-between w-[900px] items-center">
-        <h1 class="text-[40px] text-[#868686] font-[poppins] font-semibold">
+        <h1 class="text-[40px] text-[#005782] font-[sora] font-semibold">
           Missing Reported
         </h1>
         <SearchBar />
@@ -53,7 +53,7 @@ const showModal = ref(false);
       <Modal v-if="showModal"><FilterBox /></Modal>
       <button
         @click="showModal = true"
-        class="p-2 text-[#868686] font-medium border border-[#707070]"
+        class="p-2 text-[#005782] font-medium border border-[#707070]"
       >
         Filter
       </button>
