@@ -21,9 +21,9 @@ const props = defineProps({
 
 <template>
   <div class="flex justify-between items-baseline gap-2">
-    <label class="text-[#868686] font-semibold">{{ label }}: </label>
+    <label class="text-[#005782] font-semibold">{{ label }}: </label>
     <input
-      class="outline-none p-1 pl-2 rounded text-[#606060] border border-[#868686]"
+      class="outline-none p-1 pl-2 rounded text-[#606060] border border-[#005782]"
       :type="type"
       :placeholder="placeholder"
       :value="value"
