@@ -1,4 +1,18 @@
-<script setup></script>
+<script setup>
+const logut=async()=>{
+  try {
+    const response = await $axios.post('/auth/logout');
+    console.log('log out successful:', response.data);
+    navigateTo('/')
+    // Redirect to login page or dashboard after successful signup
+  } catch (error) {
+    console.error('logout failed:', error.response ? error.response.data : error.message);
+   
+  }
+
+}
+
+</script>
 <template>
   <div
     class="w-[280px] h-[655px] flex flex-col mt-1 justify-center gap-[1rem] items-center shadow-md bg-[#fff]"
@@ -56,7 +70,7 @@
       </nuxt-link>
     </ul>
     <button
-      @click="navigateTo('/auth/login')"
+      @click="logut"
       class="w-[100%] mb-[30px] flex justify-center gap-[0.35rem] text-red-600 border border-slate-300 rounded-md"
     >
       <span class="flex justify-center items-center"

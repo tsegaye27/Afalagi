@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
@@ -9,6 +10,7 @@ export default defineNuxtConfig({
     },
   },
   modules: [// "nuxt-swiper",
+    // '@primevue/nuxt-module',
   [
     "@pinia/nuxt",
     {
@@ -21,4 +23,5 @@ export default defineNuxtConfig({
   imports: {
     dirs: ["stores"],
   },
+  
 });
