@@ -20,6 +20,7 @@
     <div
       class="right w-[61.81%] h-[100vh] flex flex-col gap-[58px] justify-center items-center"
     >
+    <!-- <Toast /> -->
       <form @submit.prevent="submitForm" class="form-card">
         
         <input
@@ -44,6 +45,8 @@
           class="input"
         />
         <button type="submit" class="btn">Sign Up</button>
+        
+        <button class="btn m-4" @click="loginWithGoogle">Sign up with Google</button>
       </form>
       <p>
         Already have an account?
@@ -54,8 +57,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useNuxtApp } from '#app';
+
+// import { ToastService } from 'primevue/toastservice';
+// import { Toast } from 'primevue/toast';
+
+// const toastService = new ToastService();
+
+
 
 definePageMeta({ layout: "" });
 
@@ -77,8 +85,27 @@ const submitForm = async () => {
   } catch (error) {
     console.error('Signup failed:', error.response ? error.response.data : error.message);
     // Handle error, show error message to user
+
+  //   ToastService.add({
+  //   severity: 'success',
+  //   summary: 'Success!',
+  //   detail: error.response.data,
+  //   life: 3000 // Adjust duration (optional)
+  // });
   }
 };
+
+const loginWithGoogle= async()=>{
+  try {
+    const response = await $axios.get('/auth/google/login');
+    console.log('log in successful:', response.data);
+    router.push('/auth/verification')
+    // Redirect to login page or dashboard after successful signup
+  } catch (error) {
+    console.error('login failed:', error.response ? error.response.data : error.message);
+   
+  }
+}
 </script>
 
 <style scoped>
