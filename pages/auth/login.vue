@@ -7,7 +7,7 @@
         Afalagi
       </h1>
       <p
-        class="fixed font-[poppins] text-center font-semibold text-[36px] text-white mt-[10.5rem] w-[478px] h-[130px] z-1"
+        class="fixed font-[sora] text-center font-semibold text-[36px] text-white mt-[10.5rem] w-[478px] h-[130px] z-1"
       >
         Connecting Hearts, Finding Hope
       </p>
@@ -20,9 +20,8 @@
     <div
       class="right w-[61.81%] h-[100vh] flex flex-col gap-[58px] justify-center items-center"
     >
-    <!-- <Toast /> -->
+      <!-- <Toast /> -->
       <form @submit.prevent="submitForm" class="form-card">
-        
         <input
           type="email"
           v-model="email"
@@ -37,65 +36,69 @@
           required
           class="input"
         />
-        
+
         <button type="submit" class="btn">Sign Up</button>
-        <button class="btn m-4" @click="loginWithGoogle">Log in with Google</button>
+        <button class="btn m-4" @click="loginWithGoogle">
+          Log in with Google
+        </button>
       </form>
       <p>
         Don't have an account?
-        <NuxtLink class="text-[#788dd5]" to="/auth/signup">signup</NuxtLink>
+        <NuxtLink class="text-[#0097d3]" to="/auth/signup">signup</NuxtLink>
       </p>
     </div>
   </div>
 </template>
 
 <script setup>
-
 // import { ToastService } from 'primevue/toastservice';
 // import { Toast } from 'primevue/toast';
 
 // const toastService = new ToastService();
 
-
-
 definePageMeta({ layout: "" });
 
-const email = ref('');
-const password = ref('');
+const email = ref("");
+const password = ref("");
 
 const { $axios } = useNuxtApp();
 
 const submitForm = async () => {
   try {
-    const response = await $axios.post('/auth/local/signin', {
+    const response = await $axios.post("/auth/local/signin", {
       email: email.value,
       password: password.value,
     });
-    console.log('log in successful:', response.data);
+    console.log("log in successful:", response.data);
     // Redirect to login page or dashboard after successful signup
   } catch (error) {
-    console.error('login failed:', error.response ? error.response.data : error.message);
+    console.error(
+      "login failed:",
+      error.response ? error.response.data : error.message
+    );
     // Handle error, show error message to user
 
-  //   ToastService.add({
-  //   severity: 'success',
-  //   summary: 'Success!',
-  //   detail: error.response.data,
-  //   life: 3000 // Adjust duration (optional)
-  // });
+    //   ToastService.add({
+    //   severity: 'success',
+    //   summary: 'Success!',
+    //   detail: error.response.data,
+    //   life: 3000 // Adjust duration (optional)
+    // });
   }
 };
 
-const loginWithGoogle= async()=>{
+const loginWithGoogle = async () => {
   try {
-    const response = await $axios.get('/auth/google/login');
-    console.log('log in successful:', response.data);
+    const response = await $axios.get("/auth/google/login");
+    console.log("log in successful:", response.data);
     // Redirect to login page or dashboard after successful signup
   } catch (error) {
-    console.error('login failed:', error.response ? error.response.data : error.message);
-   
+    console.error(
+      "login failed:",
+      error.response ? error.response.data : error.message
+    );
   }
-}
+};
 </script>
 
 <style scoped>
@@ -108,12 +111,12 @@ const loginWithGoogle= async()=>{
 
 .btn {
   padding: 0.5rem 1rem;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin:12px
+  margin: 12px;
 }
 
 .form-card {
