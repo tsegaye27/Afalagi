@@ -36,7 +36,7 @@ const previewImage = (event) => {
         />
       </div>
       <button
-        class="w-full px-4 py-2 text-white bg-[#788dd5] rounded-lg hover:bg-[#786de1] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+        class="w-full px-4 py-2 text-white bg-[#0097d3] rounded-lg hover:bg-[#786de1] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
         type="submit"
       >
         Save
