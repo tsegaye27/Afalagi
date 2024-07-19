@@ -12,7 +12,7 @@ definePageMeta({ layout: "" });
         we've sent a code to your email address please enter it below
       </h1>
       <VerificationCode />
-      <p class="text-[#788dd5]">Resend the code(30s)</p>
+      <p class="text-[#0097d3]">Resend the code(30s)</p>
     </div>
   </div>
 </template>
