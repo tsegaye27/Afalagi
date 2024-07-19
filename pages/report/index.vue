@@ -20,7 +20,7 @@ definePageMeta({ layout: "default" });
 <template>
   <div class="report-form flex justify-center items-start my-[2rem]">
     <form
-      class="flex flex-col gap-[3.5rem] px-[2rem] border border-slate-400 py-[2rem] w-[40%] rounded-md justify-start items-start"
+      class="flex flex-col gap-[3.5rem] px-[2rem] border border-slate-400 py-[2rem] w-[50%] rounded-md justify-start items-start"
     >
       <h1
         class="text-center w-full uppercase text-[#788dd5] text-3xl font-medium"
@@ -36,6 +36,7 @@ definePageMeta({ layout: "default" });
             type="text"
             class="border border-[#868686] rounded outline-none text-[#868686] p-[0.1rem] pl-[0.5rem]"
             :name="firstName"
+            placeholder="Abraham"
             id="firstName"
           />
         </div>
@@ -47,6 +48,7 @@ definePageMeta({ layout: "default" });
             type="text"
             class="border border-[#868686] rounded outline-none text-[#868686] p-[0.1rem] pl-[0.5rem]"
             :name="middleName"
+            placeholder="Desalegn"
             id="middleName"
           />
         </div>
@@ -58,24 +60,20 @@ definePageMeta({ layout: "default" });
             type="text"
             class="border border-[#868686] rounded outline-none text-[#868686] p-[0.1rem] pl-[0.5rem]"
             :name="lastName"
+            placeholder="Feleke"
             id="lastName"
           />
         </div>
-        <SelectLabel
-          class="pl-[4.9rem]"
-          label="Gender"
-          :options="[
-            {
-              label: 'Male',
-              value: 'male',
-            },
-            {
-              label: 'Female',
-              value: 'female',
-            },
-          ]"
-          placeholder="Select your Gender"
-        />
+        <div class="flex justify-between px-[3rem] items-center">
+          <label class="text-[#707070] text-[1rem] font-medium">Gender:</label>
+          <select
+            class="border border-[#868686] rounded outline-none text-[#707070] p-[0.1rem] w-[320px]"
+          >
+            <option selected disabled>Select your Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
         <div class="flex gap-[0.9rem] justify-between px-[3rem] items-center">
           <label class="text-[#707070] text-[1rem] font-medium"
             >Date of birth:
@@ -100,7 +98,7 @@ definePageMeta({ layout: "default" });
         </div>
         <div class="flex gap-[5.5rem] justify-between px-[3rem] items-center">
           <label class="text-[#707070] text-[1rem] font-medium"
-            >Last Seen:
+            >Last Seen Location:
           </label>
           <div class="flex gap-[0.5rem]">
             <select
@@ -130,19 +128,22 @@ definePageMeta({ layout: "default" });
           <label class="text-[#707070] text-[1rem] font-medium"
             >Last Seen Wearing:
           </label>
-          <input
-            type="text"
-            class="border border-[#868686] rounded outline-none text-[#868686] p-[0.1rem] pl-[0.5rem]"
+          <textarea
+            class="border border-[#868686] rounded outline-none text-[#868686] p-[0.1rem] pt-[0.5rem] pl-[0.5rem] w-[320px]"
             :name="cloth"
             id="cloth"
+            placeholder="yellow jacket, blue jeans..."
           />
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
-          <label class="text-[#707070] text-[1rem] font-medium">Height: </label>
+          <label class="text-[#707070] text-[1rem] font-medium"
+            >Height(cm):
+          </label>
           <input
             type="text"
             class="border border-[#868686] rounded outline-none text-[#868686] p-[0.1rem] pl-[0.5rem]"
             :name="height"
+            placeholder="180"
             id="height"
           />
         </div>
@@ -150,10 +151,10 @@ definePageMeta({ layout: "default" });
           <label class="text-[#707070] text-[1rem] font-medium"
             >Skin Color:
           </label>
-          <input
-            type="text"
-            class="border border-[#868686] rounded outline-none text-[#868686] p-[0.1rem] pl-[0.5rem]"
+          <select
+            class="border border-[#868686] rounded w outline-none text-[#868686] p-[0.1rem] pl-[0.5rem]"
             :name="height"
+            placeholder="black"
             id="height"
           />
         </div>
@@ -172,9 +173,8 @@ definePageMeta({ layout: "default" });
           <label class="text-[#707070] text-[1rem] font-medium"
             >Recognizable Feature:
           </label>
-          <input
-            type="text"
-            class="border border-[#868686] rounded outline-none text-[#868686] p-[0.1rem] pl-[0.5rem]"
+          <textarea
+            class="border border-[#868686] w-[320px] rounded outline-none py-[0.5rem] text-[#868686] p-[0.1rem] pl-[0.5rem]"
             :name="height"
             id="height"
           />
@@ -191,7 +191,9 @@ definePageMeta({ layout: "default" });
           />
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
-          <label class="text-[#707070] text-[1rem] font-medium">Health: </label>
+          <label class="text-[#707070] text-[1rem] font-medium"
+            >Health Condition:
+          </label>
           <input
             type="text"
             class="border border-[#868686] rounded outline-none text-[#868686] p-[0.1rem] pl-[0.5rem]"
@@ -201,7 +203,7 @@ definePageMeta({ layout: "default" });
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
           <label class="text-[#707070] text-[1rem] font-medium"
-            >Education:
+            >Education Qualification:
           </label>
           <input
             type="text"
@@ -211,12 +213,10 @@ definePageMeta({ layout: "default" });
           />
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
-          <label class="text-[#707070] text-[1rem] font-medium"
-            >Video Message:
-          </label>
+          <label class="text-[#707070] text-[1rem] font-medium">Video: </label>
           <input
             type="file"
-            class="border border-[#868686] rounded outline-none text-[#868686] p-[0.1rem] pl-[0.5rem]"
+            class="border border-[#868686] w-[320px] rounded outline-none text-[#868686] p-[0.1rem] pl-[0.5rem]"
             :name="video"
             id="video"
           />
@@ -225,12 +225,17 @@ definePageMeta({ layout: "default" });
           <label class="text-[#707070] text-[1rem] font-medium">Image: </label>
           <input
             type="file"
-            class="border border-[#868686] rounded outline-none text-[#868686] p-[0.1rem] pl-[0.5rem]"
+            class="border border-[#868686] w-[320px] rounded outline-none text-[#868686] p-[0.1rem] pl-[0.5rem]"
             :name="image"
             id="image"
           />
         </div>
       </div>
+      <button
+        class="bg-[#788dd5] text-white text-[1rem] font-medium py-[0.5rem] px-[1.5rem] rounded-md w-[320px] mt-[1.5rem]"
+      >
+        Report
+      </button>
     </form>
   </div>
 </template>

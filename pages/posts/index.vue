@@ -54,8 +54,9 @@ const missingPersons = [
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[2rem] m-[2rem]"
     >
       <MissingCard
-        v-for="person in missingPersons"
-        :key="person.fullName"
+        v-for="(person, index) in missingPersons"
+        :key="index"
+        :postId="index"
         :lastSeenWearing="person.lastSeenWearing"
         :lastSeenLocation="person.lastSeenLocation"
         :lastSeenDate="person.lastSeenDate"

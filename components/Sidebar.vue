@@ -24,7 +24,7 @@
           Profile
         </div>
       </nuxt-link>
-      <nuxt-link class="py-1 w-[100%]" to="/profile">
+      <nuxt-link class="py-1 w-[100%]" to="/profile/my-posts">
         <div
           class="text-[#868686] flex justify-start pl-[6.25rem] gap-[0.2rem] py-[0.3rem] border border-slate-300 w-[100%] text-center rounded-md cursor-pointer hover:text-[#788dd5]"
         >
@@ -34,7 +34,7 @@
           My Posts
         </div>
       </nuxt-link>
-      <nuxt-link class="py-1 w-[100%]" to="/profile">
+      <nuxt-link class="py-1 w-[100%]" to="/profile/messages">
         <div
           class="text-[#868686] flex justify-start pl-[6.25rem] gap-[0.2rem] py-[0.3rem] border border-slate-300 w-[100%] text-center rounded-md cursor-pointer hover:text-[#788dd5]"
         >
@@ -44,7 +44,7 @@
           Messages
         </div>
       </nuxt-link>
-      <nuxt-link class="py-1 w-[100%]" to="/profile">
+      <nuxt-link class="py-1 w-[100%]" to="/profile/settings">
         <div
           class="text-[#868686] flex justify-start pl-[6.25rem] gap-[0.2rem] py-[0.3rem] border border-slate-300 w-[100%] text-center rounded-md cursor-pointer hover:text-[#788dd5]"
         >
