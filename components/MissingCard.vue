@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
   postId: {
-    type: String,
+    type: Number,
     required: true,
   },
   fullName: {
@@ -48,7 +48,7 @@ const props = defineProps({
 });
 
 const viewDetails = () => {
-  navigateTo(`/posts/details/:${props.postId}`);
+  navigateTo(`/posts/details/${props.postId}`);
 };
 </script>
 <template>

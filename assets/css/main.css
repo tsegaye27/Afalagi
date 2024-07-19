@@ -6,7 +6,7 @@
 @tailwind utilities;
 
 * {
-  font-family: "poppins", "inter", sans-serif;
+  font-family: "sora", "poppins", "inter", sans-serif;
 }
 
 .nav-menu:hover {

@@ -37,31 +37,17 @@ const missingPersons = [
     videoMessage: "",
   },
 ];
-const showModal = ref(false);
+const router = useRouter();
+const showMore = () => {
+  router.push("/posts");
+};
 </script>
 <template>
-  <div class="mt-[3rem]">
-    <div
-      class="flex mx-[2.5rem] mb-[2rem] gap-[7rem] justify-between items-center"
-    >
-      <div class="flex justify-between w-[900px] items-center">
-        <h1 class="text-[40px] text-[#868686] font-[poppins] font-semibold">
-          Missing Reported
-        </h1>
-        <SearchBar />
-      </div>
-      <Modal v-if="showModal"><FilterBox /></Modal>
-      <button
-        @click="showModal = true"
-        class="p-2 text-[#868686] font-medium border border-[#707070]"
-      >
-        Filter
-      </button>
-    </div>
-    <hr />
-    <div
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[2rem] m-[2rem]"
-    >
+  <div>
+    <h1 class="text-center my-[2rem] text-[38px] font-semibold text-[#788dd5]">
+      Missing Reported
+    </h1>
+    <div class="flex justify-center items-center gap-[3rem] mx-[1rem]">
       <MissingCard
         v-for="(person, index) in missingPersons"
         :key="index"
@@ -76,6 +62,14 @@ const showModal = ref(false);
         :imageUrl="person.imgURL"
         :videoMessage="person.videoMessage"
       />
+      <button
+        @click="showMore"
+        class="text-[#f4f4f4] p-[0.7rem] rounded-full bg-[#788dd5] font-semibold w-[2.8rem] h-full flex items-center justify-center"
+      >
+        <span class="flex justify-center items-center"
+          ><Icon size="22px" name="material-symbols:arrow-right-alt"
+        /></span>
+      </button>
     </div>
   </div>
 </template>

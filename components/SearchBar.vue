@@ -8,15 +8,17 @@ const handleSearch = () => {
   <div class="search h-[40px] flex">
     <input
       type="text"
-      class="h-[41px] rounded-[18px_0_0_18px] pl-4 border-2 border-[#788dd5] text-[#868686] outline-none"
+      class="h-[41px] rounded-[8px_0_0_8px] w-[400px] pl-4 border-2 border-[#788dd5] text-[#868686] outline-none"
       placeholder="Search here..."
       v-model="input"
     />
     <button
-      class="p-2 h-[41px] px-5 mr-3 bg-[#788DD5] rounded-[0_18px_18px_0] text-white"
+      class="p-2 h-[41px] bg-[#788DD5] rounded-[0_8px_8px_0] z-10 text-white"
       @click="handleSearch"
     >
-      ->
+      <span class="flex justify-center items-center"
+        ><Icon name="material-symbols:search" size="24px"
+      /></span>
     </button>
   </div>
 </template>

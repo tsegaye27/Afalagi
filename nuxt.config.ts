@@ -2,26 +2,26 @@
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  css: ["~/assets/css/main.css"],
+  css: ["~/assets/css/main.css", "~/assets/css/fonts.css"],
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
   },
-  modules: [// "nuxt-swiper",
+  modules: [
+    // "nuxt-swiper",
     // '@primevue/nuxt-module',
-  [
-    "@pinia/nuxt",
-    {
-      autoImports: ["defineStore", "acceptHMRUpdate"],
-    },
-  ], "@nuxt/icon"],
-  plugins: [
-    '~/plugins/axios.ts',
+    [
+      "@pinia/nuxt",
+      {
+        autoImports: ["defineStore", "acceptHMRUpdate"],
+      },
+    ],
+    "@nuxt/icon",
   ],
+  plugins: ["~/plugins/axios.ts"],
   imports: {
     dirs: ["stores"],
   },
-  
 });
