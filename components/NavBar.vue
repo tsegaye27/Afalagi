@@ -66,6 +66,9 @@
 </template>
 
 <script setup>
+defineProps({
+  isLogged: { type: Boolean, default: true },
+});
 const lang = ref("English");
 
 const handleChange = () => {
