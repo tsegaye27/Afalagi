@@ -1,55 +1,3 @@
-<template>
-  <div class="flex w-[100%] h-[100vh] justify-center items-center">
-    <div class="w-[38.19%] h-[100%]">
-      <h1
-        class="fixed font-bold text-[82px] text-white text-center mt-[2rem] w-[30%] h-[96px]"
-      >
-        Afalagi
-      </h1>
-      <p
-        class="fixed font-[sora] text-center font-semibold text-[36px] text-white mt-[10.5rem] w-[478px] h-[130px] z-1"
-      >
-        Connecting Hearts, Finding Hope
-      </p>
-      <img
-        class="object-fit w-[500px] h-full"
-        src="/assets/img/signup.png"
-        alt="two-people-hugging"
-      />
-    </div>
-    <div
-      class="right w-[61.81%] h-[100vh] flex flex-col gap-[58px] justify-center items-center"
-    >
-      <!-- <Toast /> -->
-      <form @submit.prevent="submitForm" class="form-card">
-        <input
-          type="email"
-          v-model="email"
-          placeholder="Email"
-          required
-          class="input"
-        />
-        <input
-          type="password"
-          v-model="password"
-          placeholder="Password"
-          required
-          class="input"
-        />
-
-        <button type="submit" class="btn">Sign Up</button>
-        <button class="btn m-4" @click="loginWithGoogle">
-          Log in with Google
-        </button>
-      </form>
-      <p>
-        Don't have an account?
-        <NuxtLink class="text-[#0097d3]" to="/auth/signup">signup</NuxtLink>
-      </p>
-    </div>
-  </div>
-</template>
-
 <script setup>
 // import { ToastService } from 'primevue/toastservice';
 // import { Toast } from 'primevue/toast';
@@ -100,33 +48,75 @@ const loginWithGoogle = async () => {
   }
 };
 </script>
-
-<style scoped>
-.input {
-  padding: 0.5rem;
-  margin: 0.5rem 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.btn {
-  padding: 0.5rem 1rem;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin: 12px;
-}
-
-.form-card {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 400px;
-  padding: 2rem;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-</style>
+<template>
+  <div class="flex w-[100%] h-[100vh] justify-center items-center">
+    <div class="w-[38.19%] h-[100%]">
+      <h1
+        class="fixed font-bold text-[82px] text-white text-center mt-[2rem] w-[30%] h-[96px]"
+      >
+        Afalagi
+      </h1>
+      <p
+        class="fixed font-[sora] text-center font-semibold text-[36px] text-white mt-[10.5rem] w-[478px] h-[130px] z-1"
+      >
+        Connecting Hearts, Finding Hope
+      </p>
+      <img
+        class="object-fit w-[500px] h-full"
+        src="/assets/img/signup.png"
+        alt="two-people-hugging"
+      />
+    </div>
+    <div
+      class="right w-[61.81%] h-[100vh] flex flex-col gap-[58px] justify-center items-center"
+    >
+      <h1 class="text-[#005782] font-semibold text-4xl">Login</h1>
+      <!-- <Toast /> -->
+      <form
+        @submit.prevent="submitForm"
+        class="form-card flex flex-col w-[40%] rounded-md py-[3rem] border border-[#8d8d8d] justify-start gap-[1rem] items-center"
+      >
+        <div class="flex flex-col items-center w-[100%] py-[1rem]">
+          <input
+            type="email"
+            v-model="email"
+            placeholder="Email"
+            required
+            class="input outline-none p-2 w-4/5 my-2 border border-gray-300 rounded"
+          />
+          <input
+            type="password"
+            v-model="password"
+            placeholder="Password"
+            required
+            class="input outline-none p-2 w-4/5 my-2 border border-gray-300 rounded"
+          />
+        </div>
+        <div class="flex flex-col items-center gap-[1rem] justify-center">
+          <button
+            type="submit"
+            class="px-4 py-2 bg-[#0097d3] flex gap-[0.5rem] text-white rounded-lg"
+          >
+            <span class="flex items-center"
+              ><Icon name="iconoir:log-in" size="22px"
+            /></span>
+            Login
+          </button>
+          <button
+            class="m-4 px-4 py-2 bg-[#b2b2b2] flex gap-[0.8rem] justify-center w-[250px] text-white rounded-lg"
+            @click="loginWithGoogle"
+          >
+            <span class="flex items-center"
+              ><Icon name="mdi:google" size="22px"
+            /></span>
+            Login with Google
+          </button>
+        </div>
+      </form>
+      <p class="text-center mt-4">
+        Don't have an account?
+        <NuxtLink class="text-blue-500" to="/auth/signup">Signup</NuxtLink>
+      </p>
+    </div>
+  </div>
+</template>

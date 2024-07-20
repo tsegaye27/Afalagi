@@ -2,5 +2,9 @@
 definePageMeta({ layout: "profile" });
 </script>
 <template>
-  <div>Settings</div>
+  <div
+    class="flex h-screen items-center justify-center text-[#0097d3] text-4xl font-semibold"
+  >
+    Settings
+  </div>
 </template>

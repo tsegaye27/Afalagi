@@ -1,5 +1,6 @@
 <script setup>
-const logut = async () => {
+const { $axios } = useNuxtApp();
+const logoutHandler = async () => {
   try {
     const response = await $axios.post("/auth/logout");
     console.log("log out successful:", response.data);
@@ -70,8 +71,8 @@ const logut = async () => {
       </nuxt-link>
     </ul>
     <button
-      @click="logut"
-      class="w-[100%] mb-[30px] flex justify-center gap-[0.35rem] text-red-600 border border-slate-300 rounded-md"
+      @click="logoutHandler"
+      class="w-[100%] mb-[30px] flex justify-center py-1 gap-[0.35rem] text-red-600 border border-slate-300 rounded-md"
     >
       <span class="flex justify-center items-center"
         ><Icon size="22px" name="iconoir:log-out"
@@ -80,3 +81,10 @@ const logut = async () => {
     </button>
   </div>
 </template>
+
+<style scoped>
+.router-link-active,
+.router-link-exact-active {
+  color: #0097d3;
+}
+</style>
