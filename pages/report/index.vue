@@ -1,21 +1,4 @@
-<script setup>
-import ProfileImageInput from "~/components/ProfileImageInput.vue";
-
-definePageMeta({ layout: "default" });
-// const headers = new Headers();
-// headers.append("X-CSCAPI-KEY", "API_KEY");
-
-// const requestOptions = {
-//   method: "GET",
-//   headers: headers,
-//   redirect: "follow",
-// };
-
-// fetch("https://api.countrystatecity.in/v1/countries", requestOptions)
-//   .then((response) => response.text())
-//   .then((result) => console.log(result))
-//   .catch((error) => console.log("error", error));
-</script>
+<script setup></script>
 
 <template>
   <div class="report-form flex justify-center items-start my-[2rem]">
@@ -139,6 +122,17 @@ definePageMeta({ layout: "default" });
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
           <label class="text-[var(--primary-color)] text-[1rem] font-medium"
+            >Description:
+          </label>
+          <textarea
+            class="border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] p-[0.1rem] pt-[0.5rem] pl-[0.5rem] w-[320px]"
+            :name="description"
+            id="description"
+            placeholder="write your description here..."
+          />
+        </div>
+        <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
+          <label class="text-[var(--primary-color)] text-[1rem] font-medium"
             >Height(cm):
           </label>
           <input
@@ -193,12 +187,18 @@ definePageMeta({ layout: "default" });
           <label class="text-[var(--primary-color)] text-[1rem] font-medium"
             >Physical Disability:
           </label>
-          <input
-            type="text"
-            class="border border-[var(--primary-color)] rounded w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            :name="physicalDisability"
-            id="physicalDisability"
-          />
+          <select
+            class="border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] p-[0.1rem] w-[320px]"
+          >
+            <option selected>None</option>
+            <option value="">Mobility Issue</option>
+            <option value="">Vision Impairment</option>
+            <option value="">Hearing Loss</option>
+            <option value="">Neurological Condition</option>
+            <option value="">Non Verbal</option>
+            <option value="">Limb Difference</option>
+            <option value="">Other</option>
+          </select>
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
           <label class="text-[var(--primary-color)] text-[1rem] font-medium"
