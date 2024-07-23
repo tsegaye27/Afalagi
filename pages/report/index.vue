@@ -272,6 +272,20 @@
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
           <label class="text-[var(--primary-color)] text-[1rem] font-medium"
+            >Martial Status:
+          </label>
+          <select
+            class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
+          >
+            <option selected>Single</option>
+            <option value="">Married</option>
+            <option value="">Divorced</option>
+            <option value="">Widowed</option>
+            <option value="">Other</option>
+          </select>
+        </div>
+        <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
+          <label class="text-[var(--primary-color)] text-[1rem] font-medium"
             >Video:
           </label>
           <input
@@ -279,6 +293,7 @@
             class="border border-[var(--primary-color)] w-[320px] rounded outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
             :name="video"
             id="video"
+            accept="video/*"
           />
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
@@ -290,6 +305,19 @@
             class="border border-[var(--primary-color)] w-[320px] rounded outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
             :name="image"
             id="image"
+            accept=".jpg, .jpeg, .png, .gif"
+          />
+        </div>
+        <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
+          <label class="text-[var(--primary-color)] text-[1rem] font-medium"
+            >Legal Documents:
+          </label>
+          <input
+            type="file"
+            class="border border-[var(--primary-color)] w-[320px] rounded outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
+            :name="legalDocuments"
+            id="legalDocuments"
+            accept=".pdf, .doc, .docx, .txt"
           />
         </div>
       </div>
