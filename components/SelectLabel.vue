@@ -21,7 +21,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="flex justify-start items-baseline gap-[3rem]">
+  <div class="flex justify-start items-baseline gap-[3.8rem]">
     <label class="text-[var(--primary-color)] font-medium">{{ label }}: </label>
     <select
       class="outline-none p-1 rounded bg-whitesmoke text-[var(--primary-color)] border border-[var(--primary-color)]"

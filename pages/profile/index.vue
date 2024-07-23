@@ -105,16 +105,16 @@ const props = defineProps({
             ]"
             placeholder="Select your Gender"
           />
-          <div class="flex justify-start items-baseline gap-[0.5rem]">
+          <div class="flex justify-start items-baseline gap-[1.3rem]">
             <label class="text-[var(--primary-color)] font-semibold"
               >Date of Birth:
             </label>
             <input
-              class="outline-none w-[265px] p-1 pl-2 rounded text-[#606060] border border-[var(--primary-color)]"
+              class="outline-none w-[300px] p-1 pl-2 rounded text-[#606060] border border-[var(--primary-color)]"
               type="date"
             />
           </div>
-          <div class="flex justify-start items-baseline gap-[3.5rem]">
+          <div class="flex justify-start items-baseline gap-[4.5rem]">
             <label class="text-[var(--primary-color)] font-semibold"
               >Phone:
             </label>
@@ -155,10 +155,10 @@ const props = defineProps({
           </div> -->
         </div>
       </form>
-      <button
-        class="px-4 py-1 w-[300px] bg-[var(--secondary-color)] text-white rounded-2xl"
-      >
-        Save
+      <button class="flex justify-center gap-[0.6rem] btn">
+        <span class="flex justify-center items-center"
+          ><Icon name="mdi:content-save" size="22px" /></span
+        >Save
       </button>
     </div>
   </div>
