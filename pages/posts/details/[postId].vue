@@ -90,7 +90,7 @@ const missingPerson = missingPersons[postId];
         class="flex btn-round justify-center items-center mr-[1rem]"
       >
         <</button
-      ><span class="text-[#005782] text-2xl">Back</span>
+      ><span class="text-[var(--primary-color)] text-2xl">Back</span>
     </div>
 
     <hr />
@@ -107,53 +107,81 @@ const missingPerson = missingPersons[postId];
           <div class="w-[800px] justify-start flex mt-[2rem]">
             <ul class="flex flex-col gap-4">
               <div class="flex justify-start gap-[6rem]">
-                <li class="font-medium w-[170px] text-[#001001] text-lg">
+                <li
+                  class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
+                >
                   Full Name:
                 </li>
-                <span>{{ missingPerson.fullName }}</span
+                <span class="text-[var(--primary-color)]">{{
+                  missingPerson.fullName
+                }}</span
                 ><!-- fullName-->
               </div>
               <div class="flex justify-start">
-                <li class="font-medium w-[265px] text-[#001001] text-lg">
+                <li
+                  class="font-medium w-[265px] text-[var(--primary-color)] text-lg"
+                >
                   date of Birth:
                 </li>
                 <!-- Calculate from dob -->
-                <span>{{ missingPerson.dateOfBirth }}</span>
+                <span class="text-[var(--primary-color)]">{{
+                  missingPerson.dateOfBirth
+                }}</span>
               </div>
               <div class="flex justify-start gap-[6rem] wrap">
-                <li class="font-medium w-[170px] text-[#001001] text-lg">
+                <li
+                  class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
+                >
                   <!-- gender -->
                   Gender:
                 </li>
-                <span>{{ missingPerson.gender }}</span>
+                <span class="text-[var(--primary-color)]">{{
+                  missingPerson.gender
+                }}</span>
               </div>
               <div class="flex justify-start gap-[6rem] wrap">
-                <li class="font-medium w-[170px] text-[#001001] text-lg">
+                <li
+                  class="font-medium w-[180px] text-[var(--primary-color)] text-lg"
+                >
                   <!-- lastSeenWearing -->
                   Last-seen Wearing:
                 </li>
-                <span>{{ missingPerson.lastSeenWearing }}</span>
+                <span class="text-[var(--primary-color)]">{{
+                  missingPerson.lastSeenWearing
+                }}</span>
               </div>
               <div class="flex justify-start gap-[4.25rem] wrap">
                 <!-- lastSeenLocation -->
-                <li class="font-medium w-[200px] text-[#001001] text-lg">
+                <li
+                  class="font-medium w-[200px] text-[var(--primary-color)] text-lg"
+                >
                   Last-seen Location:
                 </li>
-                <span>{{ missingPerson.lastSeenLocation }}</span>
+                <span class="text-[var(--primary-color)]">{{
+                  missingPerson.lastSeenLocation
+                }}</span>
               </div>
               <div class="flex justify-start gap-[6rem] wrap">
                 <!-- lastSeenDate -->
-                <li class="font-medium w-[170px] text-[#181818] text-lg">
+                <li
+                  class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
+                >
                   Last-seen Date:
                 </li>
-                <span>{{ missingPerson.lastSeenDate }}</span>
+                <span class="text-[var(--primary-color)]">{{
+                  missingPerson.lastSeenDate
+                }}</span>
               </div>
               <div class="flex justify-start gap-[10rem] wrap">
-                <li class="font-medium w-[170px] text-[#001001] text-lg">
+                <li
+                  class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
+                >
                   <!-- Description -->
                   Description:
                 </li>
-                <span>{{ missingPerson.description }}</span>
+                <span class="text-[var(--primary-color)]">{{
+                  missingPerson.description
+                }}</span>
               </div>
             </ul>
           </div>
@@ -164,12 +192,14 @@ const missingPerson = missingPersons[postId];
         <div
           class="flex flex-col items-center justify-center gap-[1rem] mb-[3rem]"
         >
-          <h1 class="text-[30px] text-[#393939] font-medium font-[sora]">
+          <h1
+            class="text-[30px] text-[var(--primary-color)] font-medium font-[sora]"
+          >
             Message from his mother
           </h1>
           <video class="w-[600px] h-[400px] rounded-md" controls src=""></video>
           <button
-            class="p-3 bg-[#0097d3] rounded-lg text-medium text-white"
+            class="p-3 bg-[var(--secondary-color)] rounded-lg text-medium text-white"
             @click="navigateTo('/profile/messages')"
           >
             Chat with the reporter

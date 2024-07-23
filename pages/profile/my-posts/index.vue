@@ -41,7 +41,9 @@ const missingPersons = [
 </script>
 <template>
   <div class="w-[80%] overflow-y-auto h-[40rem]">
-    <h1 class="text-center font-semibold text-[25px] text-[#0097d3] mt-[3rem]">
+    <h1
+      class="text-center font-semibold text-[25px] text-[var(--secondary-color)] mt-[3rem]"
+    >
       My Posts
     </h1>
     <hr class="my-[1rem]" />

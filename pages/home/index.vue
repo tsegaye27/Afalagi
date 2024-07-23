@@ -7,7 +7,7 @@
     class="visions flex flex-col w-[100%] bg-[#f6f6f6] h-[500px] justify-start items-center"
   >
     <h1
-      class="text-[38px] font-[sora] font-semibold text-[#0097d3] align-center py-[3rem]"
+      class="text-[38px] font-[sora] font-semibold text-[var(--secondary-color)] align-center py-[3rem]"
     >
       Our Vision
     </h1>
@@ -24,7 +24,7 @@
   </div>
   <div class="testimonial flex flex-col w-[1580px] h-[500px] items-center">
     <h1
-      class="text-[38px] font-[sora] font-semibold text-[#0097d3] align-center py-[3rem]"
+      class="text-[38px] font-[sora] font-semibold text-[var(--secondary-color)] align-center py-[3rem]"
     >
       Testimonials
     </h1>
@@ -41,11 +41,11 @@
           />
           <div class="flex flex-col justify-center">
             <h2
-              class="text-[40px] pl-5 font-[sora] font-semibold text-[#0097d3]"
+              class="text-[40px] pl-5 font-[sora] font-semibold text-[var(--secondary-color)]"
             >
               Eden E.
             </h2>
-            <p class="pl-3 text-[#005782] font-[sora]">
+            <p class="pl-3 text-[var(--primary-color)] font-[sora]">
               "At volutpat diam ut venenatis tellus in. Est ullamcorper eget
               nulla facilisi etiam dignissim. Ut aliquam purus sit amet."
             </p>
@@ -59,7 +59,7 @@
     class="contact-us w-[100%] h-[400px] bg-white shadow-lg flex flex-col justify-center items-center"
   >
     <h1
-      class="text-[38px] font-[sora] font-semibold text-[#0097d3] align-center py-[3rem]"
+      class="text-[38px] font-[sora] font-semibold text-[var(--secondary-color)] align-center py-[3rem]"
     >
       Get in touch
     </h1>

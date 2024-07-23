@@ -1,7 +1,7 @@
 <template>
   <div class="testimonial flex flex-col w-[1580px] h-[500px] items-center">
     <h1
-      class="text-[38px] font-[sora] font-semibold text-[#0097d3] align-center py-[3rem]"
+      class="text-[38px] font-[sora] font-semibold text-[var(--secondary-color)] align-center py-[3rem]"
     >
       Testimonials
     </h1>
@@ -18,11 +18,11 @@
           />
           <div class="flex flex-col justify-start gap-[2rem] px-2 py-5">
             <h2
-              class="text-[40px] text-center font-[sora] font-semibold text-[#0097d3]"
+              class="text-[40px] text-center font-[sora] font-semibold text-[var(--secondary-color)]"
             >
               Eden E.
             </h2>
-            <p class="pl-3 text-[#005782] font-[sora]">
+            <p class="pl-3 text-[var(--primary-color)] font-[sora]">
               <i>
                 "At volutpat diam ut venenatis tellus in. Est ullamcorper eget
                 nissim. Ut aliquam purt diam ut venenatis tellus in. Est

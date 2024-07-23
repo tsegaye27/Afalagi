@@ -70,7 +70,7 @@ const loginWithGoogle = async () => {
     <div
       class="right w-[61.81%] h-[100vh] flex flex-col gap-[58px] justify-center items-center"
     >
-      <h1 class="text-[#005782] font-semibold text-4xl">Login</h1>
+      <h1 class="text-[var(--primary-color)] font-semibold text-4xl">Login</h1>
       <!-- <Toast /> -->
       <form
         @submit.prevent="submitForm"
@@ -95,7 +95,7 @@ const loginWithGoogle = async () => {
         <div class="flex flex-col items-center gap-[1rem] justify-center">
           <button
             type="submit"
-            class="px-4 py-2 bg-[#0097d3] flex gap-[0.5rem] text-white rounded-lg"
+            class="px-4 py-2 bg-[var(--secondary-color)] flex gap-[0.5rem] text-white rounded-lg"
           >
             <span class="flex items-center"
               ><Icon name="iconoir:log-in" size="22px"

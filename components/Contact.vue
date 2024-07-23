@@ -2,9 +2,11 @@
   <div
     class="contact-us w-[100%] my-[7rem] h-[400px] flex flex-col justify-center items-center"
   >
-    <div class="bg-white border-2 rounded-lg border-[#0097d3] w-[45%] p-[3rem]">
+    <div
+      class="bg-white border-2 rounded-lg border-[var(--secondary-color)] w-[45%] p-[3rem]"
+    >
       <h1
-        class="text-[38px] font-[sora] flex justify-center font-semibold text-[#0097d3] py-[2rem]"
+        class="text-[38px] font-[sora] flex justify-center font-semibold text-[var(--secondary-color)] py-[2rem]"
       >
         Get in touch
       </h1>
@@ -17,27 +19,27 @@
             type="text"
             placeholder="Name"
             v-model="name"
-            class="w-[100%] h-[40px] border-2 border-[#0097d3] outline-none text-[#005782] rounded-[5px] mb-[1rem] px-[1rem]"
+            class="w-[100%] h-[40px] border-2 border-[var(--secondary-color)] outline-none text-[var(--primary-color)] rounded-[5px] mb-[1rem] px-[1rem]"
           />
           <input
             type="email"
             placeholder="Email"
             v-model="email"
-            class="w-[100%] h-[40px] border-2 border-[#0097d3] outline-none text-[#005782] rounded-[5px] mb-[1rem] px-[1rem]"
+            class="w-[100%] h-[40px] border-2 border-[var(--secondary-color)] outline-none text-[var(--primary-color)] rounded-[5px] mb-[1rem] px-[1rem]"
           />
           <input
             type="text"
             placeholder="Subject"
             v-model="subject"
-            class="w-[100%] h-[40px] border-2 border-[#0097d3] outline-none text-[#005782] rounded-[5px] mb-[1rem] px-[1rem]"
+            class="w-[100%] h-[40px] border-2 border-[var(--secondary-color)] outline-none text-[var(--primary-color)] rounded-[5px] mb-[1rem] px-[1rem]"
           />
           <textarea
             placeholder="Message"
             v-model="message"
-            class="w-[100%] h-[100px] border-2 border-[#0097d3] outline-none text-[#005782] rounded-[5px] mb-[1rem] py-[0.5rem] px-[1rem]"
+            class="w-[100%] h-[100px] border-2 border-[var(--secondary-color)] outline-none text-[var(--primary-color)] rounded-[5px] mb-[1rem] py-[0.5rem] px-[1rem]"
           ></textarea>
           <button
-            class="w-[200px] h-[40px] bg-[#0097d3] text-white rounded-[5px] font-[sora] font-semibold"
+            class="w-[200px] h-[40px] bg-[var(--secondary-color)] text-white rounded-[5px] font-[sora] font-semibold"
           >
             Send
           </button>

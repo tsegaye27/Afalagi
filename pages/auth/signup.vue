@@ -21,10 +21,10 @@
       class="right w-[61.81%] h-[100vh] flex flex-col gap-[58px] justify-center items-center"
     >
       <!-- <Toast /> -->
-      <h1 class="text-[#005782] font-semibold text-4xl">Signup</h1>
+      <h1 class="text-[var(--primary-color)] font-semibold text-4xl">Signup</h1>
       <form
         @submit.prevent="submitForm"
-        class="form-card flex flex-col w-[40%] rounded-md py-[3rem] border border-[#005782] justify-start gap-[1.5rem] items-center"
+        class="form-card flex flex-col w-[40%] rounded-md py-[3rem] border border-[var(--primary-color)] justify-start gap-[1.5rem] items-center"
       >
         <div class="flex flex-col items-center w-[100%] py-[1rem]">
           <input
@@ -52,7 +52,7 @@
         <div class="flex flex-col items-center gap-[1rem] justify-center">
           <button
             type="submit"
-            class="px-4 py-2 bg-[#0097d3] flex gap-[0.5rem] text-white rounded-lg"
+            class="px-4 py-2 bg-[var(--secondary-color)] flex gap-[0.5rem] text-white rounded-lg"
           >
             <span class="flex items-center"
               ><Icon name="ri:user-add-line" size="22px"

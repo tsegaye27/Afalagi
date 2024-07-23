@@ -11,8 +11,10 @@
     >
       <img src="/assets/img/success-story.png" alt="happy-family" />
       <div class="flex flex-col h-full py-[4rem] gap-[1rem] items-start">
-        <h1 class="text-[30px] font-[sora] text-[#0097d3]">Biruk Weldu</h1>
-        <p class="w-[600px] text-[#005782]">
+        <h1 class="text-[30px] font-[sora] text-[var(--secondary-color)]">
+          Biruk Weldu
+        </h1>
+        <p class="w-[600px] text-[var(--primary-color)]">
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati
           minus incidunt consequuntur non delectus quam veritatis excepturi nam
           recusandae quo in reiciendis quia ad harum, repellendus officia,
@@ -31,8 +33,10 @@
   >
     <img src="/assets/img/success-story.png" alt="happy-family" />
     <div class="flex flex-col h-full py-[4rem] gap-[1rem] items-start">
-      <h1 class="text-[30px] font-[sora] text-[#0097d3]">Biruk Weldu</h1>
-      <p class="w-[600px] text-[#005782]">
+      <h1 class="text-[30px] font-[sora] text-[var(--secondary-color)]">
+        Biruk Weldu
+      </h1>
+      <p class="w-[600px] text-[var(--primary-color)]">
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati
         minus incidunt consequuntur non delectus quam veritatis excepturi nam
         recusandae quo in reiciendis quia ad harum, repellendus officia,
