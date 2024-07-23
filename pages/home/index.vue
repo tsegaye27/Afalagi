@@ -1,3 +1,5 @@
+<script setup>
+</script>
 <template>
   <!-- <NavBar class="shadow-md px-[2rem] h-[6rem]" /> -->
   <Hero />
@@ -66,4 +68,4 @@
 
 <style></style>
 
-<script setup></script>
+
