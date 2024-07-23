@@ -85,23 +85,23 @@
           <label class="text-[var(--primary-color)] text-[1rem] font-medium"
             >Last Seen Location:
           </label>
-          <div class="flex gap-[0.5rem]">
+          <div class="flex gap-[0.5rem] w-[320px] flex-wrap">
             <select
-              class="p-1 border order-[var(--primary-color)] text-[var(--primary-color)]"
+              class="outline-none h-[30px] rounded-md p-1 border border-[var(--primary-color)] text-[var(--primary-color)]"
               name="lastSeenLocation"
               id="country"
             >
               <option disabled selected>Country</option>
             </select>
             <select
-              class="p-1 border order-[var(--primary-color)] text-[var(--primary-color)]"
+              class="outline-none h-[30px] rounded-md p-1 border border-[var(--primary-color)] text-[var(--primary-color)]"
               name="lastSeenLocation"
               id="state"
             >
               <option disabled selected>State</option>
             </select>
             <select
-              class="p-1 border order-[var(--primary-color)] text-[var(--primary-color)]"
+              class="outline-none h-[30px] rounded-md p-1 border border-[var(--primary-color)] text-[var(--primary-color)]"
               name="lastSeenLocation"
               id="city"
             >
@@ -148,14 +148,16 @@
             >Skin Color:
           </label>
           <select
-            class="border border-[var(--primary-color)] rounded w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
+            class="border border-[var(--primary-color)] h-[30px] rounded w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
             :name="skinColor"
             id="skinColor"
           >
             <option selected disabled>Select the Skin Color</option>
-            <option value="black">Black</option>
+            <option value="dark">Dark</option>
             <option value="brown">Brown</option>
             <option value="white">White</option>
+            <option value="light-skin">light-skin</option>
+            <option value="other">Other</option>
           </select>
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
@@ -163,7 +165,7 @@
             >Hair Color:
           </label>
           <select
-            class="border border-[var(--primary-color)] rounded w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
+            class="border border-[var(--primary-color)] rounded h-[30px] w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
             :name="hairColor"
             id="hairColor"
           >
@@ -171,6 +173,10 @@
             <option value="black">Black</option>
             <option value="brown">Brown</option>
             <option value="white">White</option>
+            <option value="blonde">Blonde</option>
+            <option value="grey">Grey</option>
+            <option value="orange">Orange</option>
+            <option value="other">Other</option>
           </select>
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
@@ -188,7 +194,7 @@
             >Physical Disability:
           </label>
           <select
-            class="border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] p-[0.1rem] w-[320px]"
+            class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
           >
             <option selected>None</option>
             <option value="">Mobility Issue</option>
@@ -202,25 +208,67 @@
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
           <label class="text-[var(--primary-color)] text-[1rem] font-medium"
+            >Mental Disability:
+          </label>
+          <select
+            class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
+          >
+            <option selected>None</option>
+            <option value="">Intellectual Disability</option>
+            <option value="">Autism Spectrum Disorder</option>
+            <option value="">ADHD</option>
+            <option value="">Schizophrenia</option>
+            <option value="">Bipolar Disorder</option>
+            <option value="">Anxiety Disorder</option>
+            <option value="">Depression</option>
+            <option value="">OCD</option>
+            <option value="">PTSD</option>
+            <option value="">Dementia</option>
+            <option value="">Other</option>
+          </select>
+        </div>
+        <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
+          <label class="text-[var(--primary-color)] text-[1rem] font-medium"
             >Health Condition:
           </label>
-          <input
-            type="text"
-            class="border border-[var(--primary-color)] rounded w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            :name="healthCondition"
-            id="healthCondition"
-          />
+          <select
+            class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
+          >
+            <option selected>None</option>
+            <option value="">Diabetes</option>
+            <option value="">Astma</option>
+            <option value="">Hypertension</option>
+            <option value="">Heart Disease</option>
+            <option value="">Auto Immune Disorder</option>
+            <option value="">Epilepsy</option>
+            <option value="">Multiple Sclerosis</option>
+            <option value="">Lupus</option>
+            <option value="">Crohns Disease</option>
+            <option value="">Migraine</option>
+            <option value="">Fibromyalgia</option>
+            <option value="">Psoriasis</option>
+            <option value="">Irritable Bowel Syndrome</option>
+            <option value="">Parkinsons Disease</option>
+            <option value="">Other</option>
+          </select>
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
           <label class="text-[var(--primary-color)] text-[1rem] font-medium"
             >Education Qualification:
           </label>
-          <input
-            type="text"
-            class="border border-[var(--primary-color)] rounded w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            :name="education"
-            id="education"
-          />
+          <select
+            class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
+          >
+            <option selected>None</option>
+            <option value="">Primary School</option>
+            <option value="">Secondary School</option>
+            <option value="">High School</option>
+            <option value="">Associate</option>
+            <option value="">Bachelor</option>
+            <option value="">Master</option>
+            <option value="">Doctorate</option>
+            <option value="">Other</option>
+          </select>
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
           <label class="text-[var(--primary-color)] text-[1rem] font-medium"
