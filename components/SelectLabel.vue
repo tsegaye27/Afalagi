@@ -22,9 +22,9 @@ const props = defineProps({
 
 <template>
   <div class="flex justify-start items-baseline gap-[3rem]">
-    <label class="text-[#005782] font-medium">{{ label }}: </label>
+    <label class="text-[var(--primary-color)] font-medium">{{ label }}: </label>
     <select
-      class="outline-none p-1 rounded bg-whitesmoke text-[#005782] border border-[#005782]"
+      class="outline-none p-1 rounded bg-whitesmoke text-[var(--primary-color)] border border-[var(--primary-color)]"
     >
       <option disabled selected value="">{{ placeholder }}</option>
       <option

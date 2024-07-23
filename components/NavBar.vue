@@ -35,9 +35,14 @@
         >
       </li>
       <ReportBtn />
-      <select class="p-2 rounded-md outline-none" name="lang" id="lang">
-        <option class="rounded-md bg-slate-100" value="English">🇬🇧</option>
-        <option class="rounded-md bg-slate-100" value="አማርኛ">🇪🇹</option>
+      <select
+        class="p-2 rounded-md outline-none"
+        @change="handleChange"
+        name="lang"
+        id="lang"
+      >
+        <option class="rounded-md bg-slate-100" value="Eng">🇬🇧</option>
+        <option class="rounded-md bg-slate-100" value="Amh">🇪🇹</option>
       </select>
       <li v-if="!isLogged" class="nav-menu">
         <NuxtLink
@@ -50,13 +55,15 @@
       </li>
       <li
         v-else
-        class="rounded-full p-2 border border-[#0097d3] hover:text-[#0097d3]"
+        class="rounded-full p-2 border border-[var(--secondary-color)] hover:text-[var(--secondary-color)]"
       >
         <NuxtLink
           class="flex gap-[0.35rem] justify-center items-center"
           to="/profile"
         >
-          <span class="text-[#005782] flex justify-center items-center">
+          <span
+            class="text-[var(--primary-color)] flex justify-center items-center"
+          >
             <Icon name="humbleicons:user" size="25px" />
           </span>
         </NuxtLink>
@@ -73,18 +80,19 @@ const lang = ref("English");
 
 const handleChange = () => {
   lang.value = document.getElementById("lang").value;
+  console.log(lang.value);
 };
 </script>
 
 <style scoped>
 .router-link-active {
-  color: #0097d3;
-  border-bottom: 2px solid #0097d3;
+  color: var(--secondary-color);
+  border-bottom: 2px solid var(--secondary-color);
   transition: all 0.5s;
 }
 .router-link-exact-active {
-  color: #0097d3;
-  border-bottom: 2px solid #0097d3;
+  color: var(--secondary-color);
+  border-bottom: 2px solid var(--secondary-color);
   transition: all 0.5s;
 }
 </style>

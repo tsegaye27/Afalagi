@@ -42,23 +42,27 @@ const showModal = ref(false);
 <template>
   <div class="mt-[3rem]">
     <div
-      class="flex mx-[2.5rem] mb-[2rem] gap-[7rem] justify-between items-center"
+      class="flex mx-[2.5rem] mb-[1rem] gap-[7rem] justify-between items-center"
     >
-      <div class="flex justify-between w-[900px] items-center">
-        <h1 class="text-[40px] text-[#005782] font-[sora] font-semibold">
+      <div class="flex justify-between w-full items-center">
+        <h1
+          class="text-[40px] text-[var(--primary-color)] text-center w-full font-[sora] font-semibold"
+        >
           Missing Reported
         </h1>
-        <SearchBar />
       </div>
-      <Modal v-if="showModal"><FilterBox /></Modal>
+    </div>
+    <hr />
+    <div class="flex justify-center mt-[1rem] gap-[1rem]">
+      <SearchBar />
       <button
         @click="showModal = true"
-        class="p-2 text-[#005782] font-medium border border-[#707070]"
+        class="p-2 text-[var(--primary-color)] font-medium rounded-md border border-[#0972d3]"
       >
         Filter
       </button>
     </div>
-    <hr />
+    <!-- <Modal v-if="showModal"><FilterBox /></Modal> -->
     <div
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[2rem] m-[2rem]"
     >

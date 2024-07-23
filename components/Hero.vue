@@ -1,10 +1,12 @@
 <template>
   <div class="hero flex w-[100%] justify-between">
     <div class="left flex flex-col justify-start mt-[6rem] gap-[30px]">
-      <h2 class="text-[55px] pl-[6rem] w-[700px] font-bold text-[#0097d3]">
+      <h2
+        class="text-[55px] pl-[6rem] w-[700px] font-bold text-[var(--secondary-color)]"
+      >
         Bringing loved ones together
       </h2>
-      <p class="text-[20px] w-[700px] pl-[6rem] text-[#005782]">
+      <p class="text-[20px] w-[700px] pl-[6rem] text-[var(--primary-color)]">
         At volutpat diam ut venenatis tellus in. Est ullamcorper eget nulla
         facilisi etiam dignissim. Ut aliquam purus sit amet.At volutpat diam ut
         venenatis tellus in. Est ullamcorper eget nulla facilisi etiam

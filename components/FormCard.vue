@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white shadow-[0px_0px_4px_1px_#0097d3] w-[729px] p-4 rounded-lg h-fit"
+    class="bg-white shadow-[0px_0px_4px_1px_var(--secondary-color)] w-[729px] p-4 rounded-lg h-fit"
     v-if="formType === 'signup'"
   >
     <form
@@ -12,9 +12,9 @@
       <div
         class="field flex justify-center gap-[3rem] pl-[1rem] items-center w-[100%] h-[40px]"
       >
-        <label class="text-[#6F6F6F]">Email: </label>
+        <label class="text-[var(--primary-color)]">Email: </label>
         <input
-          class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[#6f6f6f]"
+          class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[var(--primary-color)]"
           type="email"
           name="email"
           v-model="email"
@@ -26,9 +26,9 @@
       <div
         class="field flex justify-center pr-[1rem] gap-[3rem] items-center w-[100%] h-[40px]"
       >
-        <label class="text-[#6F6F6F]">Password: </label>
+        <label class="text-[var(--primary-color)]">Password: </label>
         <input
-          class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[#6f6f6f]"
+          class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[var(--primary-color)]"
           type="password"
           v-model="password"
           @input="validatePassword"
@@ -40,9 +40,9 @@
       <div
         class="field flex justify-center pr-[5rem] gap-[3rem] items-center w-[100%] h-[40px]"
       >
-        <label class="text-[#6F6F6F]">Confirm Password: </label>
+        <label class="text-[var(--primary-color)]">Confirm Password: </label>
         <input
-          class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[#6f6f6f]"
+          class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[var(--primary-color)]"
           type="password"
           v-model="confirmPassword"
           @input="validateConfirmPassword"
@@ -55,14 +55,14 @@
       }}</span>
       <button
         type="submit"
-        class="flex justify-center items-center bg-[#0097d3] text-white w-[10rem] mt-4 h-[2.5rem] rounded-full"
+        class="flex justify-center items-center bg-[var(--secondary-color)] text-white w-[10rem] mt-4 h-[2.5rem] rounded-full"
       >
         Submit
       </button>
     </form>
   </div>
   <div
-    class="bg-white shadow-[0px_0px_4px_1px_#0097d3] w-[650px] pb-6 rounded-lg"
+    class="bg-white shadow-[0px_0px_4px_1px_var(--secondary-color)] w-[650px] pb-6 rounded-lg"
     v-if="formType === 'login'"
   >
     <form
@@ -73,9 +73,9 @@
       <div
         class="field flex justify-center gap-[3rem] pl-[1rem] items-center w-[100%] h-[40px]"
       >
-        <label class="text-[#6F6F6F]">Email: </label>
+        <label class="text-[var(--primary-color)]">Email: </label>
         <input
-          class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[#6f6f6f]"
+          class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[var(--primary-color)]"
           type="email"
           name="email"
           v-model="email"
@@ -87,9 +87,9 @@
       <div
         class="field flex justify-center pr-[1rem] gap-[3rem] items-center w-[100%] h-[40px]"
       >
-        <label class="text-[#6F6F6F]">Password: </label>
+        <label class="text-[var(--primary-color)]">Password: </label>
         <input
-          class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[#6f6f6f]"
+          class="rounded-[7px] w-[352px] h-[40px] px-5 bg-[#F6F6F6] outline-none border border-gray-200 text-[var(--primary-color)]"
           type="password"
           v-model="password"
           @input="validatePassword"
@@ -100,7 +100,7 @@
       <span v-if="passwordError" class="text-red-500">{{ passwordError }}</span>
       <button
         type="submit"
-        class="flex justify-center items-center bg-[#0097d3] text-white w-[10rem] mt-4 h-[2.5rem] rounded-full"
+        class="flex justify-center items-center bg-[var(--secondary-color)] text-white w-[10rem] mt-4 h-[2.5rem] rounded-full"
       >
         Submit
       </button>

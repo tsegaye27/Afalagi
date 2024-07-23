@@ -13,42 +13,42 @@ const verify = () => {
       :id="1"
       :maxlength="1"
       :value="0"
-      class="w-[50px] h-[50px] text-center text-[#005782] text-[1.75rem] border-2 border-[#0097d3] outline-none rounded-lg"
+      class="w-[50px] h-[50px] text-center text-[var(--primary-color)] text-[1.75rem] border-2 border-[var(--secondary-color)] outline-none rounded-lg"
     />
     <input
       type="text"
       :id="2"
       :maxlength="1"
       :value="1"
-      class="w-[50px] h-[50px] text-center text-[#005782] text-[1.75rem] border-2 border-[#0097d3] outline-none rounded-lg"
+      class="w-[50px] h-[50px] text-center text-[var(--primary-color)] text-[1.75rem] border-2 border-[var(--secondary-color)] outline-none rounded-lg"
     />
     <input
       type="text"
       :id="3"
       :maxlength="1"
       :value="2"
-      class="w-[50px] h-[50px] text-center text-[#005782] text-[1.75rem] border-2 border-[#0097d3] outline-none rounded-lg"
+      class="w-[50px] h-[50px] text-center text-[var(--primary-color)] text-[1.75rem] border-2 border-[var(--secondary-color)] outline-none rounded-lg"
     />
     <input
       type="text"
       :id="4"
       :maxlength="1"
       :value="2"
-      class="w-[50px] h-[50px] text-center text-[#005782] text-[1.75rem] border-2 border-[#0097d3] outline-none rounded-lg"
+      class="w-[50px] h-[50px] text-center text-[var(--primary-color)] text-[1.75rem] border-2 border-[var(--secondary-color)] outline-none rounded-lg"
     />
     <input
       type="text"
       :id="5"
       :maxlength="1"
       :value="2"
-      class="w-[50px] h-[50px] text-center text-[#005782] text-[1.75rem] border-2 border-[#0097d3] outline-none rounded-lg"
+      class="w-[50px] h-[50px] text-center text-[var(--primary-color)] text-[1.75rem] border-2 border-[var(--secondary-color)] outline-none rounded-lg"
     />
     <input
       type="text"
       :id="4"
       @input="verify"
       :value="verificationCode.value"
-      class="w-[50px] h-[50px] text-center text-[#005782] text-[1.75rem] border-2 border-[#0097d3] outline-none rounded-lg"
+      class="w-[50px] h-[50px] text-center text-[var(--primary-color)] text-[1.75rem] border-2 border-[var(--secondary-color)] outline-none rounded-lg"
     />
   </div>
 </template>

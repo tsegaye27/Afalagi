@@ -7,12 +7,12 @@ definePageMeta({ layout: "" });
       class="bg-white rounded-md shadow-md h-[45%] px-[2rem] py-[1rem] flex flex-col justify-center gap-[3rem] items-center"
     >
       <h1
-        class="text-[#424242] font-medium w-[70%] text-center text-[25px] uppercase"
+        class="text-[var(--primary-color)] font-medium w-[70%] text-center text-[25px] uppercase"
       >
         we've sent a code to your email address please enter it below
       </h1>
       <VerificationCode />
-      <p class="text-[#0097d3]">Resend the code(30s)</p>
+      <p class="text-[var(--secondary-color)]">Resend the code(30s)</p>
     </div>
   </div>
 </template>
