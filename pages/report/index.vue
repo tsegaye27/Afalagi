@@ -1,8 +1,64 @@
-<script setup></script>
+<script setup>
+const firstName = ref("");
+const middleName = ref("");
+const lastName = ref("");
+const dob = ref("");
+const gender = ref("");
+const lastSeenDate = ref("");
+const lastSeenLocation = ref("");
+const lastSeenWearing = ref("");
+const description = ref("");
+const height = ref("");
+const nationality = ref("");
+const languageSpoken = ref("");
+const skinColor = ref("");
+const hairColor = ref("");
+const recognizableFeature = ref("");
+const physicalDisability = ref("");
+const mentalDisability = ref("");
+const healthCondition = ref("");
+const educationalQualification = ref("");
+const martialStatus = ref("");
+const video = ref("");
+const image = ref("");
+const legalDocuments = ref("");
 
+// const handleSelection = (event, prop) => {
+//   prop.value = event.target.value;
+// };
+
+const reportMissing = () => {
+  console.log({
+    firstName: firstName.value,
+    middleName: middleName.value,
+    lastName: lastName.value,
+    dob: dob.value,
+    gender: gender.value,
+    nationality: nationality.value,
+    languageSpoken: languageSpoken.value,
+    lastSeenDate: lastSeenDate.value,
+    lastSeenLocation: lastSeenLocation.value,
+    lastSeenWearing: lastSeenWearing.value,
+    description: description.value,
+    height: height.value,
+    skinColor: skinColor.value,
+    hairColor: hairColor.value,
+    recognizableFeature: recognizableFeature.value,
+    physicalDisability: physicalDisability.value,
+    mentalDisability: mentalDisability.value,
+    healthCondition: healthCondition.value,
+    educationalQualification: educationalQualification.value,
+    martialStatus: martialStatus.value,
+    video: video.value,
+    image: image.value,
+    legalDocuments: legalDocuments.value,
+  });
+};
+</script>
 <template>
   <div class="report-form flex justify-center items-start my-[2rem]">
     <form
+      @submit.prevent="reportMissing"
       class="flex flex-col gap-[3.5rem] px-[2rem] border border-slate-400 py-[2rem] w-[50%] rounded-md justify-start items-start"
     >
       <h1
@@ -10,6 +66,7 @@
       >
         Missing person details
       </h1>
+
       <div class="flex flex-col gap-[0.7rem]">
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
           <label class="text-[var(--primary-color)] text-[1rem] font-medium"
@@ -18,7 +75,7 @@
           <input
             type="text"
             class="border border-[var(--primary-color)] rounded w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            :name="firstName"
+            v-model="firstName"
             placeholder="Abraham"
             id="firstName"
           />
@@ -30,7 +87,7 @@
           <input
             type="text"
             class="border border-[var(--primary-color)] rounded w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            :name="middleName"
+            v-model="middleName"
             placeholder="Desalegn"
             id="middleName"
           />
@@ -42,7 +99,7 @@
           <input
             type="text"
             class="border border-[var(--primary-color)] rounded w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            :name="lastName"
+            v-model="lastName"
             placeholder="Feleke"
             id="lastName"
           />
@@ -52,13 +109,28 @@
             >Gender:</label
           >
           <select
+            v-model="gender"
             class="border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] p-[0.1rem] w-[320px]"
           >
-            <option selected disabled>Select your Gender</option>
+            <option value="" selected disabled>Select gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
         </div>
+        <div class="flex justify-between px-[3rem] items-center">
+          <label class="text-[var(--primary-color)] text-[1rem] font-medium"
+            >Nationality:</label
+          >
+          <select
+            v-model="nationality"
+            class="border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] p-[0.1rem] w-[320px]"
+          >
+            <option value="" selected disabled>Select nationality</option>
+            <option value="ethiopian">Ethiopian</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
         <div class="flex gap-[0.9rem] justify-between px-[3rem] items-center">
           <label class="text-[var(--primary-color)] text-[1rem] font-medium"
             >Date of birth:
@@ -66,7 +138,7 @@
           <input
             type="date"
             class="border border-[var(--primary-color)] w-[320px] rounded outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            :name="dob"
+            v-model="dob"
             id="dob"
           />
         </div>
@@ -77,7 +149,7 @@
           <input
             type="date"
             class="border border-[var(--primary-color)] w-[320px] rounded outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            :name="lastSeenDate"
+            v-model="lastSeenDate"
             id="lastSeenDate"
           />
         </div>
@@ -88,24 +160,28 @@
           <div class="flex gap-[0.5rem] w-[320px] flex-wrap">
             <select
               class="outline-none h-[30px] rounded-md p-1 border border-[var(--primary-color)] text-[var(--primary-color)]"
-              name="lastSeenLocation"
               id="country"
             >
-              <option disabled selected>Country</option>
+              <option value="" disabled selected>Country</option>
+              <option value="ethiopia">Ethiopia</option>
+              <option value="other">Other</option>
             </select>
             <select
               class="outline-none h-[30px] rounded-md p-1 border border-[var(--primary-color)] text-[var(--primary-color)]"
-              name="lastSeenLocation"
               id="state"
             >
-              <option disabled selected>State</option>
+              <option value="" disabled selected>State</option>
+              <option value="addis-ababa">Addis-Ababa</option>
+              <option value="other">other</option>
             </select>
             <select
               class="outline-none h-[30px] rounded-md p-1 border border-[var(--primary-color)] text-[var(--primary-color)]"
-              name="lastSeenLocation"
+              v-model="lastSeenLocation"
               id="city"
             >
-              <option disabled selected>City</option>
+              <option value="" disabled selected>City</option>
+              <option value="nefas-silk">nefas-silk</option>
+              <option value="other">other</option>
             </select>
           </div>
         </div>
@@ -115,8 +191,8 @@
           </label>
           <textarea
             class="border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] p-[0.1rem] pt-[0.5rem] pl-[0.5rem] w-[320px]"
-            :name="cloth"
-            id="cloth"
+            v-model="lastSeenWearing"
+            id="lastSeenWearing"
             placeholder="yellow jacket, blue jeans..."
           />
         </div>
@@ -126,7 +202,7 @@
           </label>
           <textarea
             class="border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] p-[0.1rem] pt-[0.5rem] pl-[0.5rem] w-[320px]"
-            :name="description"
+            v-model="description"
             id="description"
             placeholder="write your description here..."
           />
@@ -138,9 +214,21 @@
           <input
             type="text"
             class="border border-[var(--primary-color)] rounded w-[320px] p-[0.1rem] outline-none text-[var(--primary-color)] pl-[0.5rem]"
-            :name="height"
+            v-model="height"
             placeholder="180"
             id="height"
+          />
+        </div>
+        <div class="flex gap-2 justify-between px-[3rem] items-center">
+          <label class="text-[var(--primary-color)] text-[1rem] font-medium"
+            >Language Spoken:
+          </label>
+          <input
+            type="text"
+            class="border border-[var(--primary-color)] rounded w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
+            v-model="languageSpoken"
+            placeholder="Amharic"
+            id="languageSpoken"
           />
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
@@ -149,10 +237,10 @@
           </label>
           <select
             class="border border-[var(--primary-color)] h-[30px] rounded w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            :name="skinColor"
+            v-model="skinColor"
             id="skinColor"
           >
-            <option selected disabled>Select the Skin Color</option>
+            <option value="" selected disabled>Select the Skin Color</option>
             <option value="dark">Dark</option>
             <option value="brown">Brown</option>
             <option value="white">White</option>
@@ -166,7 +254,7 @@
           </label>
           <select
             class="border border-[var(--primary-color)] rounded h-[30px] w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            :name="hairColor"
+            v-model="hairColor"
             id="hairColor"
           >
             <option selected disabled>Select the Hair Color</option>
@@ -185,7 +273,7 @@
           </label>
           <textarea
             class="border border-[var(--primary-color)] w-[320px] rounded outline-none py-[0.5rem] text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            :name="recognizableFeature"
+            v-model="recognizableFeature"
             id="recognizableFeature"
           />
         </div>
@@ -194,16 +282,19 @@
             >Physical Disability:
           </label>
           <select
+            v-model="physicalDisability"
             class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
           >
-            <option selected>None</option>
-            <option value="">Mobility Issue</option>
-            <option value="">Vision Impairment</option>
-            <option value="">Hearing Loss</option>
-            <option value="">Neurological Condition</option>
-            <option value="">Non Verbal</option>
-            <option value="">Limb Difference</option>
-            <option value="">Other</option>
+            <option selected value="none">None</option>
+            <option value="mobility issue">Mobility Issue</option>
+            <option value="vision impairment">Vision Impairment</option>
+            <option value="hearing loss">Hearing Loss</option>
+            <option value="neurological condition">
+              Neurological Condition
+            </option>
+            <option value="non verbal">Non Verbal</option>
+            <option value="limb difference">Limb Difference</option>
+            <option value="other">Other</option>
           </select>
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
@@ -211,20 +302,25 @@
             >Mental Disability:
           </label>
           <select
+            v-model="mentalDisability"
             class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
           >
-            <option selected>None</option>
-            <option value="">Intellectual Disability</option>
-            <option value="">Autism Spectrum Disorder</option>
-            <option value="">ADHD</option>
-            <option value="">Schizophrenia</option>
-            <option value="">Bipolar Disorder</option>
-            <option value="">Anxiety Disorder</option>
-            <option value="">Depression</option>
-            <option value="">OCD</option>
-            <option value="">PTSD</option>
-            <option value="">Dementia</option>
-            <option value="">Other</option>
+            <option selected value="none">None</option>
+            <option value="intellectual disability">
+              Intellectual Disability
+            </option>
+            <option value="autism spectrum disorder">
+              Autism Spectrum Disorder
+            </option>
+            <option value="adhd">ADHD</option>
+            <option value="schizophrenia">Schizophrenia</option>
+            <option value="bipolar disorder">Bipolar Disorder</option>
+            <option value="anxiety disorder">Anxiety Disorder</option>
+            <option value="depression">Depression</option>
+            <option value="ocd">OCD</option>
+            <option value="ptsd">PTSD</option>
+            <option value="dementia">Dementia</option>
+            <option value="other">Other</option>
           </select>
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
@@ -232,23 +328,26 @@
             >Health Condition:
           </label>
           <select
+            v-model="healthCondition"
             class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
           >
-            <option selected>None</option>
-            <option value="">Diabetes</option>
-            <option value="">Astma</option>
-            <option value="">Hypertension</option>
-            <option value="">Heart Disease</option>
-            <option value="">Auto Immune Disorder</option>
-            <option value="">Epilepsy</option>
-            <option value="">Multiple Sclerosis</option>
-            <option value="">Lupus</option>
-            <option value="">Crohns Disease</option>
-            <option value="">Migraine</option>
-            <option value="">Fibromyalgia</option>
-            <option value="">Psoriasis</option>
-            <option value="">Irritable Bowel Syndrome</option>
-            <option value="">Parkinsons Disease</option>
+            <option selected value="none">None</option>
+            <option value="diabetes">Diabetes</option>
+            <option value="astma">Astma</option>
+            <option value="hypertension">Hypertension</option>
+            <option value="heart disease">Heart Disease</option>
+            <option value="autoImmune disorder">Auto Immune Disorder</option>
+            <option value="epilepsy">Epilepsy</option>
+            <option value="multiple sclerosis">Multiple Sclerosis</option>
+            <option value="lupus">Lupus</option>
+            <option value="crohns disease">Crohns Disease</option>
+            <option value="migraine">Migraine</option>
+            <option value="fibromyalgia">Fibromyalgia</option>
+            <option value="psoriasis">Psoriasis</option>
+            <option value="irritable bowel syndrome">
+              Irritable Bowel Syndrome
+            </option>
+            <option value="parkinsons">Parkinsons Disease</option>
             <option value="">Other</option>
           </select>
         </div>
@@ -257,17 +356,18 @@
             >Education Qualification:
           </label>
           <select
+            v-model="educationalQualification"
             class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
           >
-            <option selected>None</option>
-            <option value="">Primary School</option>
-            <option value="">Secondary School</option>
-            <option value="">High School</option>
-            <option value="">Associate</option>
-            <option value="">Bachelor</option>
-            <option value="">Master</option>
-            <option value="">Doctorate</option>
-            <option value="">Other</option>
+            <option selected value="none">None</option>
+            <option value="primary school">Primary School</option>
+            <option value="secondary school">Secondary School</option>
+            <option value="high school">High School</option>
+            <option value="associate">Associate</option>
+            <option value="bachelor">Bachelor</option>
+            <option value="master">Master</option>
+            <option value="doctorate">Doctorate</option>
+            <option value="other">Other</option>
           </select>
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
@@ -275,26 +375,15 @@
             >Martial Status:
           </label>
           <select
+            v-model="martialStatus"
             class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
           >
-            <option selected>Single</option>
-            <option value="">Married</option>
-            <option value="">Divorced</option>
-            <option value="">Widowed</option>
-            <option value="">Other</option>
+            <option selected value="single">Single</option>
+            <option value="married">Married</option>
+            <option value="divorced">Divorced</option>
+            <option value="widowed">Widowed</option>
+            <option value="other">Other</option>
           </select>
-        </div>
-        <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
-          <label class="text-[var(--primary-color)] text-[1rem] font-medium"
-            >Video:
-          </label>
-          <input
-            type="file"
-            class="border border-[var(--primary-color)] w-[320px] rounded outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            :name="video"
-            id="video"
-            accept="video/*"
-          />
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
           <label class="text-[var(--primary-color)] text-[1rem] font-medium"
@@ -303,9 +392,21 @@
           <input
             type="file"
             class="border border-[var(--primary-color)] w-[320px] rounded outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            :name="image"
+            @change="(e) => (image = e.target.files[0])"
             id="image"
             accept=".jpg, .jpeg, .png, .gif"
+          />
+        </div>
+        <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
+          <label class="text-[var(--primary-color)] text-[1rem] font-medium"
+            >Video Message:
+          </label>
+          <input
+            type="file"
+            class="border border-[var(--primary-color)] w-[320px] rounded outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
+            @change="(e) => (video = e.target.files[0])"
+            id="video"
+            accept="video/*"
           />
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
@@ -315,7 +416,7 @@
           <input
             type="file"
             class="border border-[var(--primary-color)] w-[320px] rounded outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            :name="legalDocuments"
+            @change="(e) => (legalDocuments = e.target.files[0])"
             id="legalDocuments"
             accept=".pdf, .doc, .docx, .txt"
           />
