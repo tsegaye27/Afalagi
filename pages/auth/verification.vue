@@ -1,5 +1,8 @@
 <script setup>
 definePageMeta({ layout: "" });
+const store=useUserStore()
+
+console.log(store.token,store.refreshToken)
 </script>
 <template>
   <div class="h-[100vh] w-[100%] flex justify-center bg-[#f3f3f3] items-center">

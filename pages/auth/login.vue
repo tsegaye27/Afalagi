@@ -3,7 +3,7 @@
 // import { Toast } from 'primevue/toast';
 
 // const toastService = new ToastService();
-
+const store=useUserStore()
 definePageMeta({ layout: "" });
 
 const email = ref("");
@@ -18,6 +18,9 @@ const submitForm = async () => {
       password: password.value,
     });
     console.log("log in successful:", response.data);
+    await store.setToken(response.data.access_token);
+    await store.setRefreshToken(response.data.refresh_token)
+    navigateTo("/auth/verification");
     // Redirect to login page or dashboard after successful signup
   } catch (error) {
     console.error(
