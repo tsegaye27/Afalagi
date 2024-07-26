@@ -2,12 +2,32 @@
 import { useUserStore } from "@/stores/user";
 
 const store = useUserStore();
-
-console.log(store);
+const { $axios } = useNuxtApp();
 
 const inputs = ref(["", "", "", "", "", ""]);
-const verify = () => {
-  const verificationCode = inputs.value.join("");
+const verify = async () => {
+  const verificationCode = inputs.value.join("") * 1;
+  try {
+    const response = await $axios.post(
+      "/auth/verify-email",
+      {
+        email: store.user,
+        verificationCode,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${store.token}`,
+        },
+      }
+    );
+    console.log("verification success", response.data);
+    navigateTo("/");
+  } catch (error) {
+    console.error(
+      "verification failed",
+      error.response ? error.response.data : error.message
+    );
+  }
 };
 </script>
 <template>
