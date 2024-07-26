@@ -16,5 +16,13 @@ export const useUserStore = defineStore("user", () => {
     setUser();
   };
   // signIn
-  return { user, token, logout, setToken, setRefreshToken, fetchUser };
+  return {
+    user,
+    token,
+    refreshToken,
+    logout,
+    setToken,
+    setRefreshToken,
+    fetchUser,
+  };
 });

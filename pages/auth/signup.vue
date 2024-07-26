@@ -81,9 +81,8 @@
 <style></style>
 
 <script setup>
-definePageMeta({ layout: "" });
-
 import { useUserStore } from "@/stores/user";
+definePageMeta({ layout: "" });
 
 const store = useUserStore();
 const { $axios } = useNuxtApp();
@@ -105,7 +104,10 @@ const submitForm = async () => {
     navigateTo("/auth/verification");
     // Redirect to login page or dashboard after successful signup
   } catch (error) {
-    console.error("Signup failed:", error.message);
+    console.error(
+      "Signup failed:",
+      error.response ? error.response.data : error.message
+    );
   }
 };
 
