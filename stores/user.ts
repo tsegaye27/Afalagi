@@ -23,6 +23,6 @@ export const useUserStore = defineStore("user", () => {
     logout,
     setToken,
     setRefreshToken,
-    fetchUser,
+    setUser,
   };
 });
