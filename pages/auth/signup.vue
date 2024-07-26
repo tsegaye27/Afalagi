@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-[100%] h-[100vh] justify-center items-center">
+  <div class="signup flex w-[100%] h-[100vh] justify-center items-center">
     <div class="w-[38.19%] h-[100%]">
       <h1
         class="fixed font-bold text-[82px] text-white text-center mt-[2rem] w-[30%] h-[96px]"
@@ -11,11 +11,6 @@
       >
         Connecting Hearts, Finding Hope
       </p>
-      <img
-        class="object-fit w-[500px] h-full"
-        src="/assets/img/signup.png"
-        alt="two-people-hugging"
-      />
     </div>
     <div
       class="right w-[61.81%] h-[100vh] flex flex-col gap-[58px] justify-center items-center"
@@ -78,11 +73,12 @@
   </div>
 </template>
 
+<style scoped></style>
+
 <script setup>
-import {useUserStore} from "~/stores"
+import { useUserStore } from "@/stores/user";
 
-
-const store=useUserStore()
+const store = useUserStore();
 definePageMeta({ layout: "" });
 
 const confirmPassword = ref("");
@@ -99,8 +95,8 @@ const submitForm = async () => {
       password: password.value,
     });
     console.log("Signup successful:", response.data);
-    store.setToken(response.data.access_token)
-    store.setRefreshToken(response.data.refresh_token)
+    store.setToken(response.data.access_token);
+    store.setRefreshToken(response.data.refresh_token);
     navigateTo("/auth/verification");
     // Redirect to login page or dashboard after successful signup
   } catch (error) {

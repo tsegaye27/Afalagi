@@ -1,58 +1,56 @@
 <script setup>
-const firstName = ref("");
-const middleName = ref("");
-const lastName = ref("");
-const dob = ref("");
-const gender = ref("");
-const lastSeenDate = ref("");
-const lastSeenLocation = ref("");
-const lastSeenWearing = ref("");
-const description = ref("");
+const postData = ref({
+  firstName: "",
+  middleName: "",
+  lastName: "",
+  postImages: "",
+  legalDocs: "",
+  description: "",
+  lastSeenLocation: "",
+  lastSeenDate: "",
+  languageSpoken: "",
+  nationality: "",
+  hairColor: "",
+  skinColor: "",
+  recognizableFeature: "",
+  physicalDisability: "",
+  mentalDisability: "",
+  medicalIssues: "",
+  gender: "",
+  birthDate: "",
+  educationalLevel: "",
+});
+
 const height = ref("");
-const nationality = ref("");
-const languageSpoken = ref("");
-const skinColor = ref("");
-const hairColor = ref("");
-const recognizableFeature = ref("");
-const physicalDisability = ref("");
-const mentalDisability = ref("");
-const healthCondition = ref("");
-const educationalQualification = ref("");
+const lastSeenWearing = ref("");
 const martialStatus = ref("");
 const video = ref("");
-const image = ref("");
-const legalDocuments = ref("");
+// const firstName = ref("");
+// const middleName = ref("");
+// const lastName = ref("");
+// const dob = ref("");
+// const gender = ref("");
+// const lastSeenDate = ref("");
+// const lastSeenLocation = ref("");
+// const description = ref("");
+// const nationality = ref("");
+// const languageSpoken = ref("");
+// const skinColor = ref("");
+// const hairColor = ref("");
+// const recognizableFeature = ref("");
+// const physicalDisability = ref("");
+// const mentalDisability = ref("");
+// const healthCondition = ref("");
+// const educationalQualification = ref("");
+// const image = ref("");
+// const legalDocuments = ref("");
 
 // const handleSelection = (event, prop) => {
 //   prop.value = event.target.value;
 // };
 
 const reportMissing = () => {
-  console.log({
-    firstName: firstName.value,
-    middleName: middleName.value,
-    lastName: lastName.value,
-    dob: dob.value,
-    gender: gender.value,
-    nationality: nationality.value,
-    languageSpoken: languageSpoken.value,
-    lastSeenDate: lastSeenDate.value,
-    lastSeenLocation: lastSeenLocation.value,
-    lastSeenWearing: lastSeenWearing.value,
-    description: description.value,
-    height: height.value,
-    skinColor: skinColor.value,
-    hairColor: hairColor.value,
-    recognizableFeature: recognizableFeature.value,
-    physicalDisability: physicalDisability.value,
-    mentalDisability: mentalDisability.value,
-    healthCondition: healthCondition.value,
-    educationalQualification: educationalQualification.value,
-    martialStatus: martialStatus.value,
-    video: video.value,
-    image: image.value,
-    legalDocuments: legalDocuments.value,
-  });
+  console.log(postData);
 };
 </script>
 <template>
@@ -75,7 +73,7 @@ const reportMissing = () => {
           <input
             type="text"
             class="border border-[var(--primary-color)] rounded w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            v-model="firstName"
+            v-model="postData.firstName"
             placeholder="Abraham"
             id="firstName"
           />
@@ -87,7 +85,7 @@ const reportMissing = () => {
           <input
             type="text"
             class="border border-[var(--primary-color)] rounded w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            v-model="middleName"
+            v-model="postData.middleName"
             placeholder="Desalegn"
             id="middleName"
           />
@@ -99,7 +97,7 @@ const reportMissing = () => {
           <input
             type="text"
             class="border border-[var(--primary-color)] rounded w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            v-model="lastName"
+            v-model="postData.lastName"
             placeholder="Feleke"
             id="lastName"
           />
@@ -109,7 +107,7 @@ const reportMissing = () => {
             >Gender:</label
           >
           <select
-            v-model="gender"
+            v-model="postData.gender"
             class="border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] p-[0.1rem] w-[320px]"
           >
             <option value="" selected disabled>Select gender</option>
@@ -122,7 +120,7 @@ const reportMissing = () => {
             >Nationality:</label
           >
           <select
-            v-model="nationality"
+            v-model="postData.nationality"
             class="border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] p-[0.1rem] w-[320px]"
           >
             <option value="" selected disabled>Select nationality</option>
@@ -138,8 +136,7 @@ const reportMissing = () => {
           <input
             type="date"
             class="border border-[var(--primary-color)] w-[320px] rounded outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            v-model="dob"
-            id="dob"
+            v-model="postData.birthDate"
           />
         </div>
         <div class="flex gap-[0.9rem] justify-between px-[3rem] items-center">
@@ -149,8 +146,7 @@ const reportMissing = () => {
           <input
             type="date"
             class="border border-[var(--primary-color)] w-[320px] rounded outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            v-model="lastSeenDate"
-            id="lastSeenDate"
+            v-model="postData.lastSeenDate"
           />
         </div>
         <div class="flex gap-[5.5rem] justify-between px-[3rem] items-center">
@@ -176,7 +172,7 @@ const reportMissing = () => {
             </select>
             <select
               class="outline-none h-[30px] rounded-md p-1 border border-[var(--primary-color)] text-[var(--primary-color)]"
-              v-model="lastSeenLocation"
+              v-model="postData.lastSeenLocation"
               id="city"
             >
               <option value="" disabled selected>City</option>
@@ -202,7 +198,7 @@ const reportMissing = () => {
           </label>
           <textarea
             class="border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] p-[0.1rem] pt-[0.5rem] pl-[0.5rem] w-[320px]"
-            v-model="description"
+            v-model="postData.description"
             id="description"
             placeholder="write your description here..."
           />
@@ -226,7 +222,7 @@ const reportMissing = () => {
           <input
             type="text"
             class="border border-[var(--primary-color)] rounded w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            v-model="languageSpoken"
+            v-model="postData.languageSpoken"
             placeholder="Amharic"
             id="languageSpoken"
           />
@@ -237,7 +233,7 @@ const reportMissing = () => {
           </label>
           <select
             class="border border-[var(--primary-color)] h-[30px] rounded w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            v-model="skinColor"
+            v-model="postData.skinColor"
             id="skinColor"
           >
             <option value="" selected disabled>Select the Skin Color</option>
@@ -254,7 +250,7 @@ const reportMissing = () => {
           </label>
           <select
             class="border border-[var(--primary-color)] rounded h-[30px] w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            v-model="hairColor"
+            v-model="postData.hairColor"
             id="hairColor"
           >
             <option selected disabled>Select the Hair Color</option>
@@ -273,7 +269,7 @@ const reportMissing = () => {
           </label>
           <textarea
             class="border border-[var(--primary-color)] w-[320px] rounded outline-none py-[0.5rem] text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            v-model="recognizableFeature"
+            v-model="postData.recognizableFeature"
             id="recognizableFeature"
           />
         </div>
@@ -282,7 +278,7 @@ const reportMissing = () => {
             >Physical Disability:
           </label>
           <select
-            v-model="physicalDisability"
+            v-model="postData.physicalDisability"
             class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
           >
             <option selected value="none">None</option>
@@ -302,7 +298,7 @@ const reportMissing = () => {
             >Mental Disability:
           </label>
           <select
-            v-model="mentalDisability"
+            v-model="postData.mentalDisability"
             class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
           >
             <option selected value="none">None</option>
@@ -328,7 +324,7 @@ const reportMissing = () => {
             >Health Condition:
           </label>
           <select
-            v-model="healthCondition"
+            v-model="postData.medicalIssues"
             class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
           >
             <option selected value="none">None</option>
@@ -356,7 +352,7 @@ const reportMissing = () => {
             >Education Qualification:
           </label>
           <select
-            v-model="educationalQualification"
+            v-model="postData.educationalLevel"
             class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
           >
             <option selected value="none">None</option>
@@ -392,7 +388,7 @@ const reportMissing = () => {
           <input
             type="file"
             class="border border-[var(--primary-color)] w-[320px] rounded outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            @change="(e) => (image = e.target.files[0])"
+            @change="(e) => (postData.postImages = e.target.files[0])"
             id="image"
             accept=".jpg, .jpeg, .png, .gif"
           />
@@ -416,7 +412,7 @@ const reportMissing = () => {
           <input
             type="file"
             class="border border-[var(--primary-color)] w-[320px] rounded outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            @change="(e) => (legalDocuments = e.target.files[0])"
+            @change="(e) => (postData.legalDocs = e.target.files[0])"
             id="legalDocuments"
             accept=".pdf, .doc, .docx, .txt"
           />
