@@ -28,7 +28,7 @@ const props = defineProps({
       class="outline-none p-1 w-[300px] pl-2 rounded text-[var(--primary-color)] border border-[var(--primary-color)]"
       :type="type"
       :placeholder="placeholder"
-      :value="value"
+      v-bind="value"
     />
   </div>
 </template>

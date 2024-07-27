@@ -21,7 +21,7 @@ const verify = async () => {
       }
     );
     console.log("verification success", response.data);
-    navigateTo("/");
+    navigateTo("/profile");
   } catch (error) {
     console.error(
       "verification failed",
