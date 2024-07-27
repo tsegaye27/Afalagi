@@ -15,10 +15,9 @@ const submitForm = async () => {
       password: password.value,
     });
     console.log("log in successful:", response.data);
-    store.setUser(email.value);
     store.setToken(response.data.access_token);
     store.setRefreshToken(response.data.refresh_token);
-    navigateTo("/auth/verification");
+    navigateTo("/");
   } catch (error) {
     console.error(
       "login failed:",
