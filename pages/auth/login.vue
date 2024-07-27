@@ -1,15 +1,12 @@
 <script setup>
-// import { ToastService } from 'primevue/toastservice';
-// import { Toast } from 'primevue/toast';
-
-// const toastService = new ToastService();
-const store=useUserStore()
+import { useUserStore } from "@/stores/user";
 definePageMeta({ layout: "" });
+
+const store = useUserStore();
+const { $axios } = useNuxtApp();
 
 const email = ref("");
 const password = ref("");
-
-const { $axios } = useNuxtApp();
 
 const submitForm = async () => {
   try {
@@ -18,23 +15,14 @@ const submitForm = async () => {
       password: password.value,
     });
     console.log("log in successful:", response.data);
-    await store.setToken(response.data.access_token);
-    await store.setRefreshToken(response.data.refresh_token)
-    navigateTo("/auth/verification");
-    // Redirect to login page or dashboard after successful signup
+    store.setToken(response.data.access_token);
+    store.setRefreshToken(response.data.refresh_token);
+    navigateTo("/");
   } catch (error) {
     console.error(
       "login failed:",
       error.response ? error.response.data : error.message
     );
-    // Handle error, show error message to user
-
-    //   ToastService.add({
-    //   severity: 'success',
-    //   summary: 'Success!',
-    //   detail: error.response.data,
-    //   life: 3000 // Adjust duration (optional)
-    // });
   }
 };
 
@@ -42,7 +30,6 @@ const loginWithGoogle = async () => {
   try {
     const response = await $axios.get("/auth/google/login");
     console.log("log in successful:", response.data);
-    // Redirect to login page or dashboard after successful signup
   } catch (error) {
     console.error(
       "login failed:",
@@ -77,7 +64,7 @@ const loginWithGoogle = async () => {
       <!-- <Toast /> -->
       <form
         @submit.prevent="submitForm"
-        class="form-card flex flex-col w-[40%] rounded-md py-[3rem] border border-[#8d8d8d] justify-start gap-[1rem] items-center"
+        class="form-card flex flex-col w-[40%] rounded-md py-[3rem] border border-[var(--secondary-color)] justify-start gap-[1rem] items-center"
       >
         <div class="flex flex-col items-center w-[100%] py-[1rem]">
           <input
@@ -85,14 +72,14 @@ const loginWithGoogle = async () => {
             v-model="email"
             placeholder="Email"
             required
-            class="input outline-none p-2 w-4/5 my-2 border border-gray-300 rounded"
+            class="input outline-none p-2 w-4/5 my-2 text-[var(--primary-color)] border border-[var(--secondary-color)] rounded"
           />
           <input
             type="password"
             v-model="password"
             placeholder="Password"
             required
-            class="input outline-none p-2 w-4/5 my-2 border border-gray-300 rounded"
+            class="input outline-none p-2 w-4/5 my-2 text-[var(--primary-color)] border border-[var(--secondary-color)] rounded"
           />
         </div>
         <div class="flex flex-col items-center gap-[1rem] justify-center">
@@ -106,7 +93,7 @@ const loginWithGoogle = async () => {
             Login
           </button>
           <button
-            class="m-4 px-4 py-2 bg-[#b2b2b2] flex gap-[0.8rem] justify-center w-[250px] text-white rounded-lg"
+            class="m-4 px-4 py-2 bg-[var(--primary-color)] flex gap-[0.8rem] justify-center w-[250px] text-white rounded-lg"
             @click="loginWithGoogle"
           >
             <span class="flex items-center"
@@ -116,9 +103,11 @@ const loginWithGoogle = async () => {
           </button>
         </div>
       </form>
-      <p class="text-center mt-4">
+      <p class="text-center text-[var(--primary-color)] mt-4">
         Don't have an account?
-        <NuxtLink class="text-blue-500" to="/auth/signup">Signup</NuxtLink>
+        <NuxtLink class="text-[var(--secondary-color)]" to="/auth/signup"
+          >Signup</NuxtLink
+        >
       </p>
     </div>
   </div>

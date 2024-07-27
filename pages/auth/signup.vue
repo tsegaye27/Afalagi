@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-[100%] h-[100vh] justify-center items-center">
+  <div class="signup flex w-[100%] h-[100vh] justify-center items-center">
     <div class="w-[38.19%] h-[100%]">
       <h1
         class="fixed font-bold text-[82px] text-white text-center mt-[2rem] w-[30%] h-[96px]"
@@ -24,7 +24,7 @@
       <h1 class="text-[var(--primary-color)] font-semibold text-4xl">Signup</h1>
       <form
         @submit.prevent="submitForm"
-        class="form-card flex flex-col w-[40%] rounded-md py-[3rem] border border-[var(--primary-color)] justify-start gap-[1.5rem] items-center"
+        class="form-card flex flex-col w-[40%] rounded-md py-[3rem] border border-[var(--secondary-color)] justify-start gap-[1.5rem] items-center"
       >
         <div class="flex flex-col items-center w-[100%] py-[1rem]">
           <input
@@ -32,21 +32,21 @@
             v-model="email"
             placeholder="Email"
             required
-            class="input outline-none p-2 w-4/5 my-2 border border-gray-300 rounded"
+            class="text-[var(--primary-color)] input outline-none p-2 w-4/5 my-2 border border-[var(--secondary-color)] rounded"
           />
           <input
             type="password"
             v-model="password"
             placeholder="Password"
             required
-            class="input outline-none p-2 w-4/5 my-2 border border-gray-300 rounded"
+            class="text-[var(--primary-color)] input outline-none p-2 w-4/5 my-2 border border-[var(--secondary-color)] rounded"
           />
           <input
             type="password"
-            v-model="confirmPassword"
-            placeholder="Confrim Password"
+            v-model="passwordConfirm"
+            placeholder="Confirm Password"
             required
-            class="input outline-none p-2 w-4/5 my-2 border border-gray-300 rounded"
+            class="text-[var(--primary-color)] input outline-none p-2 w-4/5 my-2 border border-[var(--secondary-color)] rounded"
           />
         </div>
         <div class="flex flex-col items-center gap-[1rem] justify-center">
@@ -60,7 +60,7 @@
             Signup
           </button>
           <button
-            class="m-4 px-4 py-2 bg-[#b2b2b2] flex gap-[0.8rem] justify-center w-[250px] text-white rounded-lg"
+            class="m-4 px-4 py-2 bg-[var(--primary-color)] flex gap-[0.8rem] justify-center w-[250px] text-white rounded-lg"
             @click="loginWithGoogle"
           >
             <span class="flex items-center"
@@ -78,28 +78,30 @@
   </div>
 </template>
 
+<style></style>
+
 <script setup>
-
-
-const store=useUserStore()
+import { useUserStore } from "@/stores/user";
 definePageMeta({ layout: "" });
 
-const confirmPassword = ref("");
+const store = useUserStore();
+const { $axios } = useNuxtApp();
+
+const passwordConfirm = ref("");
 const email = ref("");
 const password = ref("");
-
-const { $axios } = useNuxtApp();
 
 const submitForm = async () => {
   try {
     const response = await $axios.post("/auth/local/signup", {
-      passwordConfirm: confirmPassword.value,
+      passwordConfirm: passwordConfirm.value,
       email: email.value,
       password: password.value,
     });
     console.log("Signup successful:", response.data);
-    await store.setToken(response.data.access_token);
-    await store.setRefreshToken(response.data.refresh_token)
+    store.setUser(email.value);
+    store.setToken(response.data.access_token);
+    store.setRefreshToken(response.data.refresh_token);
     navigateTo("/auth/verification");
     // Redirect to login page or dashboard after successful signup
   } catch (error) {
@@ -107,14 +109,6 @@ const submitForm = async () => {
       "Signup failed:",
       error.response ? error.response.data : error.message
     );
-    // Handle error, show error message to user
-
-    //   ToastService.add({
-    //   severity: 'success',
-    //   summary: 'Success!',
-    //   detail: error.response.data,
-    //   life: 3000 // Adjust duration (optional)
-    // });
   }
 };
 
