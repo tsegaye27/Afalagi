@@ -27,7 +27,38 @@ const user = ref({
         class="w-[600px] p-[3rem] border rounded flex-col gap-[0.25rem] flex justify-center items-center"
       >
         <div class="flex flex-col gap-[1.5rem]">
-          <InputLabel
+          <div class="flex justify-start items-baseline gap-[5rem]">
+            <label class="text-[var(--primary-color)] font-semibold"
+              >First Name:
+            </label>
+            <input
+              class="outline-none w-[300px] p-1 pl-2 rounded text-[var(--primary-color)] border border-[var(--primary-color)]"
+              type="text"
+              v-model="user.firstName"
+            />
+          </div>
+          <div class="flex justify-start items-baseline gap-[5rem]">
+            <label class="text-[var(--primary-color)] font-semibold"
+              >Middle Name:
+            </label>
+            <input
+              class="outline-none w-[300px] p-1 pl-2 rounded text-[var(--primary-color)] border border-[var(--primary-color)]"
+              type="text"
+              v-model="user.middleName"
+            />
+          </div>
+          <div class="flex justify-start items-baseline gap-[5rem]">
+            <label class="text-[var(--primary-color)] font-semibold"
+              >Last Name:
+            </label>
+            <input
+              class="outline-none w-[300px] p-1 pl-2 rounded text-[var(--primary-color)] border border-[var(--primary-color)]"
+              type="text"
+              v-model="user.lastName"
+            />
+          </div>
+
+          <!-- <InputLabel
             label="First Name"
             type="text"
             placeholder="Enter your first name here"
@@ -46,7 +77,7 @@ const user = ref({
             type="text"
             placeholder="Enter your last name here"
             :value="user.lastName"
-          />
+          /> -->
           <div class="flex justify-start items-baseline gap-[5rem]">
             <label class="text-[var(--primary-color)] font-semibold"
               >Email:
@@ -57,12 +88,22 @@ const user = ref({
               :value="email"
             />
           </div>
-          <InputLabel
+          <div class="flex justify-start items-baseline gap-[5rem]">
+            <label class="text-[var(--primary-color)] font-semibold"
+              >Country:
+            </label>
+            <input
+              class="outline-none w-[300px] p-1 pl-2 rounded text-[var(--primary-color)] border border-[var(--primary-color)]"
+              type="text"
+              v-model="user.country"
+            />
+          </div>
+          <!-- <InputLabel
             label="Country"
             type="text"
             placeholder="Enter your name here"
             value="user.country"
-          />
+          /> -->
           <div class="flex justify-start gap-[3.85rem] items-baseline">
             <label class="text-[var(--primary-color)] text-[1rem] font-semibold"
               >Gender:</label
