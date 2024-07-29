@@ -59,17 +59,17 @@
             /></span>
             Signup
           </button>
-          <button
-            class="m-4 px-4 py-2 bg-[var(--primary-color)] flex gap-[0.8rem] justify-center w-[250px] text-white rounded-lg"
-            @click="loginWithGoogle"
-          >
-            <span class="flex items-center"
-              ><Icon name="mdi:google" size="22px"
-            /></span>
-            Signup with Google
-          </button>
         </div>
       </form>
+      <button
+        class="m-4 px-4 py-2 bg-[var(--primary-color)] flex gap-[0.8rem] justify-center w-[250px] text-white rounded-lg"
+        @click="loginWithGoogle"
+      >
+        <span class="flex items-center"
+          ><Icon name="mdi:google" size="22px"
+        /></span>
+        Signup with Google
+      </button>
       <p class="text-center mt-4">
         Already have an account?
         <NuxtLink class="text-blue-500" to="/auth/login">Login</NuxtLink>
@@ -99,7 +99,7 @@ const submitForm = async () => {
       password: password.value,
     });
     console.log("Signup successful:", response.data);
-    store.setUser(email.value);
+    store.setEmail(email.value);
     store.setToken(response.data.access_token);
     store.setRefreshToken(response.data.refresh_token);
     navigateTo("/auth/verification");
