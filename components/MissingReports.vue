@@ -43,7 +43,7 @@ const showMore = () => {
 };
 </script>
 <template>
-  <div>
+  <div class="py-[3rem] bg-slate-100">
     <h1
       class="text-center my-[2rem] text-[38px] font-semibold text-[var(--secondary-color)]"
     >

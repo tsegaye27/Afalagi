@@ -19,8 +19,6 @@ const birthDate = ref("");
 const number = ref("");
 const code = ref("");
 
-const phoneNumber = `${code.value} ${number.value}`;
-
 // Function to handle file input change
 const handleFileChange = (event) => {
   profilePicture.value = event.target.files[0];
@@ -29,14 +27,13 @@ const handleFileChange = (event) => {
 const createProfile = async () => {
   const formData = new FormData();
 
-  // Append all fields
   formData.append("profilePicture", profilePicture.value);
   formData.append("firstName", firstName.value);
   formData.append("middleName", middleName.value);
   formData.append("lastName", lastName.value);
   formData.append("country", country.value);
   formData.append("gender", gender.value);
-  formData.append("phoneNumber", `${code.value} ${number.value}`);
+  formData.append("phoneNumber", `${code.value}${number.value}`);
   formData.append("birthDate", birthDate.value);
 
   try {
@@ -48,7 +45,16 @@ const createProfile = async () => {
     });
 
     console.log("✅ Profile Created Successfully!!!", response.data);
-    // navigateTo("/");
+    firstName = "";
+    middleName = "";
+    lastName = "";
+    gender = "";
+    birthDate = "";
+    number = "";
+    code = "";
+    country = "";
+    profilePicture = null;
+    navigateTo("/");
   } catch (error) {
     console.error(
       "Failed to Create Profile",

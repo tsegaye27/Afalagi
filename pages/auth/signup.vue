@@ -18,7 +18,7 @@
       />
     </div>
     <div
-      class="right w-[61.81%] h-[100vh] flex flex-col gap-[58px] justify-center items-center"
+      class="right w-[61.81%] h-[100vh] flex flex-col gap-[2rem] justify-center items-center"
     >
       <!-- <Toast /> -->
       <h1 class="text-[var(--primary-color)] font-semibold text-4xl">Signup</h1>

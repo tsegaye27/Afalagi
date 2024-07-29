@@ -5,7 +5,7 @@
         <img
           class="logo w-[180px] mt-[0.5rem] ml-[2.5rem] h-[90px] object-contain"
           src="@/assets/img/logo.png"
-          alt="reuniteus_logo"
+          alt="reuniteUs_logo"
       /></NuxtLink>
     </div>
     <ul class="flex w-[70%] justify-end gap-[2.5rem] items-center">
@@ -35,22 +35,17 @@
         >
       </li>
       <ReportBtn />
-      <select
-        class="p-2 rounded-md outline-none"
-        @change="handleChange"
-        name="lang"
-        id="lang"
-      >
-        <option class="rounded-md bg-slate-100" value="Eng">🇬🇧</option>
-        <option class="rounded-md bg-slate-100" value="Amh">🇪🇹</option>
+      <select class="p-2 rounded-md outline-none" v-model="language">
+        <option class="rounded-md bg-slate-100" value="English">🇬🇧</option>
+        <option class="rounded-md bg-slate-100" value="Amharic">🇪🇹</option>
       </select>
-      <li v-if="!isLogged" class="nav-menu">
+      <li v-if="!isLoggedIn" class="nav-menu">
         <NuxtLink
           class="flex gap-[0.35rem] justify-center items-center"
-          to="/auth/signup"
+          to="/auth/login"
           ><span class="flex items-center"
             ><Icon name="material-symbols-light:login" size="22px" /></span
-          >Signup</NuxtLink
+          >Login</NuxtLink
         >
       </li>
       <li
@@ -73,15 +68,13 @@
 </template>
 
 <script setup>
-defineProps({
-  isLogged: { type: Boolean, default: true },
-});
-const lang = ref("English");
+import { useUserStore } from "#imports";
 
-const handleChange = () => {
-  lang.value = document.getElementById("lang").value;
-  console.log(lang.value);
-};
+const store = useUserStore();
+const token = store.token;
+
+const isLoggedIn = token ? true : false;
+const language = ref("English");
 </script>
 
 <style scoped>
