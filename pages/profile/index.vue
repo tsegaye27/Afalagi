@@ -47,15 +47,15 @@ const createProfile = async () => {
     });
 
     console.log("✅ Profile Created Successfully!!!", response.data);
-    firstName = "";
-    middleName = "";
-    lastName = "";
-    gender = "";
-    birthDate = "";
-    number = "";
-    code = "";
-    country = "";
-    profilePicture = null;
+    // firstName = "";
+    // middleName = "";
+    // lastName = "";
+    // gender = "";
+    // birthDate = "";
+    // number = "";
+    // code = "";
+    // country = "";
+    // profilePicture = null;
     navigateTo("/");
   } catch (error) {
     console.error(
