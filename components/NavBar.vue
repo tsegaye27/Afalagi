@@ -1,3 +1,33 @@
+<script setup>
+import { useUserStore } from "#imports";
+
+const store = useUserStore();
+const token = store.token;
+const { $axios } = useNuxtApp();
+
+const profilePicture = ref(null);
+
+store.token &&
+  onMounted(async () => {
+    try {
+      const response = await $axios.get("/user/profile/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      profilePicture.value = response.data.profilePicture;
+      console.log("Profile Fetched Successfully", response.data);
+    } catch (error) {
+      console.error(
+        "failed to fetch profile",
+        error.response ? error.response.data : error.message
+      );
+    }
+  });
+
+const isLoggedIn = token ? true : false;
+const language = ref("English");
+</script>
 <template>
   <nav class="flex shadow-md px-[2rem] h-[7rem] justify-between pr-[3rem]">
     <div>
@@ -5,7 +35,7 @@
         <img
           class="logo w-[180px] mt-[0.5rem] ml-[2.5rem] h-[90px] object-contain"
           src="@/assets/img/logo.png"
-          alt="reuniteus_logo"
+          alt="reuniteUs_logo"
       /></NuxtLink>
     </div>
     <ul class="flex w-[70%] justify-end gap-[2.5rem] items-center">
@@ -35,22 +65,17 @@
         >
       </li>
       <ReportBtn />
-      <select
-        class="p-2 rounded-md outline-none"
-        @change="handleChange"
-        name="lang"
-        id="lang"
-      >
-        <option class="rounded-md bg-slate-100" value="Eng">🇬🇧</option>
-        <option class="rounded-md bg-slate-100" value="Amh">🇪🇹</option>
+      <select class="p-2 rounded-md outline-none" v-model="language">
+        <option class="rounded-md bg-slate-100" value="English">🇬🇧</option>
+        <option class="rounded-md bg-slate-100" value="Amharic">🇪🇹</option>
       </select>
-      <li v-if="!isLogged" class="nav-menu">
+      <li v-if="!isLoggedIn" class="nav-menu">
         <NuxtLink
           class="flex gap-[0.35rem] justify-center items-center"
-          to="/auth/signup"
+          to="/auth/login"
           ><span class="flex items-center"
             ><Icon name="material-symbols-light:login" size="22px" /></span
-          >Signup</NuxtLink
+          >Login</NuxtLink
         >
       </li>
       <li
@@ -59,30 +84,16 @@
       >
         <NuxtLink
           class="flex gap-[0.35rem] justify-center items-center"
-          to="/profile"
+          to="/profile/details"
         >
-          <span
-            class="text-[var(--primary-color)] flex justify-center items-center"
-          >
-            <Icon name="humbleicons:user" size="25px" />
-          </span>
+          <span class="flex items-center"
+            ><Icon name="heroicons-outline:user" size="22px"
+          /></span>
         </NuxtLink>
       </li>
     </ul>
   </nav>
 </template>
-
-<script setup>
-defineProps({
-  isLogged: { type: Boolean, default: true },
-});
-const lang = ref("English");
-
-const handleChange = () => {
-  lang.value = document.getElementById("lang").value;
-  console.log(lang.value);
-};
-</script>
 
 <style scoped>
 .router-link-active {

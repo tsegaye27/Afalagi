@@ -1,9 +1,9 @@
 <template>
   <div
-    class="contact-us w-[100%] my-[7rem] h-[400px] flex flex-col justify-center items-center"
+    class="w-[100%] my-[7rem] h-[400px] flex flex-col justify-center items-center"
   >
     <div
-      class="bg-white border-2 rounded-lg border-[var(--secondary-color)] w-[45%] p-[3rem]"
+      class="bg-slate-50 border-2 rounded-lg border-[var(--secondary-color)] w-[45%] p-[3rem]"
     >
       <h1
         class="text-[38px] font-[sora] flex justify-center font-semibold text-[var(--secondary-color)] py-[2rem]"

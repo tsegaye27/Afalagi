@@ -1,6 +1,6 @@
 <template>
   <div
-    class="visions flex flex-col w-[100%] bg-[#f6f6f6] h-[500px] justify-start items-center"
+    class="visions flex flex-col w-[100%] bg-slate-200 h-[500px] justify-start items-center"
   >
     <h1
       class="text-[38px] font-[sora] font-semibold text-[var(--secondary-color)] align-center py-[3rem]"

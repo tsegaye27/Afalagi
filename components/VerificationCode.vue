@@ -3,7 +3,6 @@ import { useUserStore } from "@/stores/user";
 
 const store = useUserStore();
 const { $axios } = useNuxtApp();
-
 const inputs = ref(["", "", "", "", "", ""]);
 const verify = async () => {
   const verificationCode = inputs.value.join("") * 1;
@@ -11,7 +10,7 @@ const verify = async () => {
     const response = await $axios.post(
       "/auth/verify-email",
       {
-        email: store.user,
+        email: store.email,
         verificationCode,
       },
       {

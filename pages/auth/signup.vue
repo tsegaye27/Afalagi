@@ -18,7 +18,7 @@
       />
     </div>
     <div
-      class="right w-[61.81%] h-[100vh] flex flex-col gap-[58px] justify-center items-center"
+      class="right w-[61.81%] h-[100vh] flex flex-col gap-[2rem] justify-center items-center"
     >
       <!-- <Toast /> -->
       <h1 class="text-[var(--primary-color)] font-semibold text-4xl">Signup</h1>
@@ -59,17 +59,17 @@
             /></span>
             Signup
           </button>
-          <button
-            class="m-4 px-4 py-2 bg-[var(--primary-color)] flex gap-[0.8rem] justify-center w-[250px] text-white rounded-lg"
-            @click="loginWithGoogle"
-          >
-            <span class="flex items-center"
-              ><Icon name="mdi:google" size="22px"
-            /></span>
-            Signup with Google
-          </button>
         </div>
       </form>
+      <button
+        class="m-4 px-4 py-2 bg-[var(--primary-color)] flex gap-[0.8rem] justify-center w-[250px] text-white rounded-lg"
+        @click="loginWithGoogle"
+      >
+        <span class="flex items-center"
+          ><Icon name="mdi:google" size="22px"
+        /></span>
+        Signup with Google
+      </button>
       <p class="text-center mt-4">
         Already have an account?
         <NuxtLink class="text-blue-500" to="/auth/login">Login</NuxtLink>
@@ -98,8 +98,8 @@ const submitForm = async () => {
       email: email.value,
       password: password.value,
     });
-    console.log("Signup successful:");
-    store.setUser(email.value);
+    console.log("Signup successful:", response.data);
+    store.setEmail(email.value);
     store.setToken(response.data.access_token);
     store.setRefreshToken(response.data.refresh_token);
     navigateTo("/auth/verification");

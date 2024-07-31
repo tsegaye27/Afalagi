@@ -8,9 +8,9 @@ console.log(store ,store.refreshToken)
 <template>
   <div class="overflow-y-auto">
     <Hero />
-    <hr class="mb-[3rem]" />
+    <hr class="text-lg" />
     <MissingReports />
-    <hr class="mt-[3rem]" />
+    <hr class="text-lg" />
     <Visions />
     <Testimonials class="mb-[3rem]" />
     <hr />
