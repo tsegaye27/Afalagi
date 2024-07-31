@@ -14,7 +14,7 @@ const submitForm = async () => {
       email: email.value,
       password: password.value,
     });
-    console.log("log in successful:", response.data);
+    console.log("log in successful:");
     store.setToken(response.data.access_token);
     store.setRefreshToken(response.data.refresh_token);
     navigateTo("/");

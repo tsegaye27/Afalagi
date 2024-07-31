@@ -98,7 +98,7 @@ const submitForm = async () => {
       email: email.value,
       password: password.value,
     });
-    console.log("Signup successful:", response.data);
+    console.log("Signup successful:");
     store.setUser(email.value);
     store.setToken(response.data.access_token);
     store.setRefreshToken(response.data.refresh_token);
@@ -113,10 +113,11 @@ const submitForm = async () => {
 };
 
 const loginWithGoogle = async () => {
+  console.log("login with google");
   try {
-    const response = await $axios.get("/auth/google/login");
-    console.log("log in successful:", response.data);
-    router.push("/auth/verification");
+    await $axios.get("/auth/google/login");
+    // console.log("log in successful:", response.data);
+    // router.push("/auth/verification");
     // Redirect to login page or dashboard after successful signup
   } catch (error) {
     console.error(
