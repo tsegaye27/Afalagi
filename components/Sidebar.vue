@@ -16,7 +16,7 @@ const logoutHandler = async () => {
 </script>
 <template>
   <div
-    class="w-[280px] h-[655px] flex flex-col mt-1 justify-center gap-[1rem] items-center shadow-md bg-[#fff]"
+    class="flex flex-col mt-1 justify-center gap-[1rem] items-center border-r-2 border-[slate-100] bg-[#fff]"
   >
     <div
       class="w-[200px] h-[200px] flex flex-col gap-[2rem] justify-center items-center"
@@ -28,10 +28,10 @@ const logoutHandler = async () => {
       />
       <p class="text-xl text-[var(--primary-color)] font-semibold">John Doe</p>
     </div>
-    <ul class="pt-[2rem] flex flex-col h-[50%] w-[100%]">
-      <nuxt-link class="py-1 flex justify-center w-[100%]" to="/profile">
+    <ul class="pt-[2rem] flex flex-col items-center h-[50%] w-[100%]">
+      <nuxt-link class="py-1 flex justify-center w-[60%]" to="/profile">
         <div
-          class="text-[var(--primary-color)] flex justify-start pl-[6.25rem] gap-[0.2rem] py-[0.3rem] border border-slate-300 w-[100%] text-center rounded-md cursor-pointer hover:text-[var(--secondary-color)]"
+          class="text-[var(--primary-color)] flex justify-center gap-[0.2rem] py-[0.3rem] border border-slate-300 w-[100%] text-center rounded-md cursor-pointer hover:text-[var(--secondary-color)]"
         >
           <span class="flex justify-center items-baseline"
             ><Icon name="humbleicons:user" size="20px"
@@ -39,9 +39,12 @@ const logoutHandler = async () => {
           Profile
         </div>
       </nuxt-link>
-      <nuxt-link class="py-1 w-[100%]" to="/profile/my-posts">
+      <nuxt-link
+        class="py-1 flex justify-center w-[60%]"
+        to="/profile/my-posts"
+      >
         <div
-          class="text-[var(--primary-color)] flex justify-start pl-[6.25rem] gap-[0.2rem] py-[0.3rem] border border-slate-300 w-[100%] text-center rounded-md cursor-pointer hover:text-[var(--secondary-color)]"
+          class="text-[var(--primary-color)] flex justify-center gap-[0.2rem] py-[0.3rem] border border-slate-300 w-[100%] text-center rounded-md cursor-pointer hover:text-[var(--secondary-color)]"
         >
           <span class="flex justify-center items-baseline"
             ><Icon name="humbleicons:documents" size="20px"
@@ -49,9 +52,9 @@ const logoutHandler = async () => {
           My Posts
         </div>
       </nuxt-link>
-      <nuxt-link class="py-1 w-[100%]" to="/profile/messages">
+      <nuxt-link class="py-1 w-[60%]" to="/profile/messages">
         <div
-          class="text-[var(--primary-color)] flex justify-start pl-[6.25rem] gap-[0.2rem] py-[0.3rem] border border-slate-300 w-[100%] text-center rounded-md cursor-pointer hover:text-[var(--secondary-color)]"
+          class="text-[var(--primary-color)] flex justify-center gap-[0.2rem] py-[0.3rem] border border-slate-300 w-[100%] text-center rounded-md cursor-pointer hover:text-[var(--secondary-color)]"
         >
           <span class="flex justify-center items-baseline"
             ><Icon name="humbleicons:chat" size="20px"
@@ -59,9 +62,9 @@ const logoutHandler = async () => {
           Messages
         </div>
       </nuxt-link>
-      <nuxt-link class="py-1 w-[100%]" to="/profile/settings">
+      <nuxt-link class="py-1 w-[60%]" to="/profile/settings">
         <div
-          class="text-[var(--primary-color)] flex justify-start pl-[6.25rem] gap-[0.2rem] py-[0.3rem] border border-slate-300 w-[100%] text-center rounded-md cursor-pointer hover:text-[var(--secondary-color)]"
+          class="text-[var(--primary-color)] flex justify-center gap-[0.2rem] py-[0.3rem] border border-slate-300 w-[100%] text-center rounded-md cursor-pointer hover:text-[var(--secondary-color)]"
         >
           <span class="flex justify-center items-baseline"
             ><Icon name="humbleicons:cog" size="20px"
@@ -72,7 +75,7 @@ const logoutHandler = async () => {
     </ul>
     <button
       @click="logoutHandler"
-      class="w-[100%] mb-[30px] flex justify-center py-1 gap-[0.35rem] text-red-600 border border-slate-300 rounded-md"
+      class="w-[60%] mb-[30px] flex justify-center py-1 gap-[0.35rem] text-red-600 border border-slate-300 rounded-md"
     >
       <span class="flex justify-center items-center"
         ><Icon size="22px" name="iconoir:log-out"

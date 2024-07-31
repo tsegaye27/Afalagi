@@ -58,7 +58,7 @@ const loginWithGoogle = async () => {
       />
     </div>
     <div
-      class="right w-[61.81%] h-[100vh] flex flex-col gap-[58px] justify-center items-center"
+      class="right w-[61.81%] h-[100vh] flex flex-col gap-[2rem] justify-center items-center"
     >
       <h1 class="text-[var(--primary-color)] font-semibold text-4xl">Login</h1>
       <!-- <Toast /> -->
@@ -81,6 +81,11 @@ const loginWithGoogle = async () => {
             required
             class="input outline-none p-2 w-4/5 my-2 text-[var(--primary-color)] border border-[var(--secondary-color)] rounded"
           />
+          <nuxt-link
+            class="text-[var(--secondary-color)] justify-self-start"
+            to="/auth/reset-password"
+            >Forgot Password?</nuxt-link
+          >
         </div>
         <div class="flex flex-col items-center gap-[1rem] justify-center">
           <button
@@ -92,17 +97,17 @@ const loginWithGoogle = async () => {
             /></span>
             Login
           </button>
-          <button
-            class="m-4 px-4 py-2 bg-[var(--primary-color)] flex gap-[0.8rem] justify-center w-[250px] text-white rounded-lg"
-            @click="loginWithGoogle"
-          >
-            <span class="flex items-center"
-              ><Icon name="mdi:google" size="22px"
-            /></span>
-            Login with Google
-          </button>
         </div>
       </form>
+      <button
+        class="m-4 px-4 py-2 bg-[var(--primary-color)] flex gap-[0.8rem] justify-center w-[250px] text-white rounded-lg"
+        @click="loginWithGoogle"
+      >
+        <span class="flex items-center"
+          ><Icon name="mdi:google" size="22px"
+        /></span>
+        Login with Google
+      </button>
       <p class="text-center text-[var(--primary-color)] mt-4">
         Don't have an account?
         <NuxtLink class="text-[var(--secondary-color)]" to="/auth/signup"

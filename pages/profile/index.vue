@@ -24,6 +24,8 @@ const handleFileChange = (event) => {
   profilePicture.value = event.target.files[0];
 };
 
+const phoneNumber = computed(() => `${code.value}${number.value}`);
+
 const createProfile = async () => {
   const formData = new FormData();
 
@@ -33,7 +35,7 @@ const createProfile = async () => {
   formData.append("lastName", lastName.value);
   formData.append("country", country.value);
   formData.append("gender", gender.value);
-  formData.append("phoneNumber", `${code.value}${number.value}`);
+  formData.append("phoneNumber", phoneNumber);
   formData.append("birthDate", birthDate.value);
 
   try {

@@ -1,3 +1,33 @@
+<script setup>
+import { useUserStore } from "#imports";
+
+const store = useUserStore();
+const token = store.token;
+const { $axios } = useNuxtApp();
+
+const profilePicture = ref(null);
+
+store.token &&
+  onMounted(async () => {
+    try {
+      const response = await $axios.get("/user/profile/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      profilePicture.value = response.data.profilePicture;
+      console.log("Profile Fetched Successfully", response.data);
+    } catch (error) {
+      console.error(
+        "failed to fetch profile",
+        error.response ? error.response.data : error.message
+      );
+    }
+  });
+
+const isLoggedIn = token ? true : false;
+const language = ref("English");
+</script>
 <template>
   <nav class="flex shadow-md px-[2rem] h-[7rem] justify-between pr-[3rem]">
     <div>
@@ -54,28 +84,16 @@
       >
         <NuxtLink
           class="flex gap-[0.35rem] justify-center items-center"
-          to="/profile"
+          to="/profile/details"
         >
-          <span
-            class="text-[var(--primary-color)] flex justify-center items-center"
-          >
-            <Icon name="humbleicons:user" size="25px" />
-          </span>
+          <span class="flex items-center"
+            ><Icon name="heroicons-outline:user" size="22px"
+          /></span>
         </NuxtLink>
       </li>
     </ul>
   </nav>
 </template>
-
-<script setup>
-import { useUserStore } from "#imports";
-
-const store = useUserStore();
-const token = store.token;
-
-const isLoggedIn = token ? true : false;
-const language = ref("English");
-</script>
 
 <style scoped>
 .router-link-active {
