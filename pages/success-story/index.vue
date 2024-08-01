@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <h1
-      class="text-[30px] w-full my-[3rem] text-center text-[#a9a9a9] font-semibold"
+      class="text-[30px] w-full my-[3rem] text-center text-[var(--primary-color)] font-semibold"
     >
       This are few people whose lives have been impacted by our platform
     </h1>
@@ -51,16 +51,16 @@
   <hr />
   <div class="w-full h-[300px] flex justify-evenly my-p items-center">
     <div class="flex flex-col items-start">
-      <h1 class="text-[#9e9eff] text-[70px]">1000+</h1>
-      <p class="text-[#9e9eff] pl-3 text-[35px]">Users</p>
+      <h1 class="text-[var(--primary-color)] text-[70px]">1000+</h1>
+      <p class="text-[var(--primary-color)] pl-3 text-[35px]">Users</p>
     </div>
     <div class="flex flex-col items-start">
-      <h1 class="text-[#9e9eff] text-[70px]">80+</h1>
-      <p class="text-[#9e9eff] text-[35px]">Reports</p>
+      <h1 class="text-[var(--primary-color)] text-[70px]">80+</h1>
+      <p class="text-[var(--primary-color)] text-[35px]">Reports</p>
     </div>
     <div class="flex flex-col items-start">
-      <h1 class="text-[#9e9eff] text-[70px]">50+</h1>
-      <p class="text-[#9e9eff] text-[35px]">Unions</p>
+      <h1 class="text-[var(--primary-color)] text-[70px]">50+</h1>
+      <p class="text-[var(--primary-color)] text-[35px]">Unions</p>
     </div>
   </div>
   <hr />

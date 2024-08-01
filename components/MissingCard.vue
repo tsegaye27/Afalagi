@@ -20,57 +20,57 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  dateOfBirth: {
-    type: String,
-    required: true,
-  },
-  lastSeenWearing: {
-    type: String,
-  },
+  // dateOfBirth: {
+  //   type: String,
+  //   required: true,
+  // },
+  // lastSeenWearing: {
+  //   type: String,
+  // },
   lastSeenDate: {
     type: String,
     required: true,
   },
-  height: {
-    type: String,
-    required: true,
-  },
-  languageSpoken: {
-    type: String,
-    required: true,
-  },
-  nationality: {
-    type: String,
-    required: true,
-  },
-  hairColor: {
-    type: String,
-    required: true,
-  },
-  skinColor: {
-    type: String,
-    required: true,
-  },
-  recognizableFeatures: {
-    type: String,
-    required: true,
-  },
-  maritalStatus: {
-    type: String,
-    required: true,
-  },
-  physicalDisability: {
-    type: String,
-    required: true,
-  },
-  mentalDisability: {
-    type: String,
-    required: true,
-  },
-  medicalIssues: {
-    type: String,
-    required: true,
-  },
+  // height: {
+  //   type: String,
+  //   required: true,
+  // },
+  // languageSpoken: {
+  //   type: String,
+  //   required: true,
+  // },
+  // nationality: {
+  //   type: String,
+  //   required: true,
+  // },
+  // hairColor: {
+  //   type: String,
+  //   required: true,
+  // },
+  // skinColor: {
+  //   type: String,
+  //   required: true,
+  // },
+  // recognizableFeatures: {
+  //   type: String,
+  //   required: true,
+  // },
+  // maritalStatus: {
+  //   type: String,
+  //   required: true,
+  // },
+  // physicalDisability: {
+  //   type: String,
+  //   required: true,
+  // },
+  // mentalDisability: {
+  //   type: String,
+  //   required: true,
+  // },
+  // medicalIssues: {
+  //   type: String,
+  //   required: true,
+  // },
   gender: {
     type: String,
     required: true,
@@ -78,13 +78,13 @@ const props = defineProps({
   images: {
     type: Array,
   },
-  videoMessage: {
-    type: String,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
+  // videoMessage: {
+  //   type: String,
+  // },
+  // description: {
+  //   type: String,
+  //   required: true,
+  // },
 });
 
 const viewDetails = () => {
@@ -103,7 +103,7 @@ const viewDetails = () => {
     <h1
       class="text-[27px] text-center font-semibold text-[var(--primary-color)]"
     >
-      {{ firstName middleName lastName }}
+      {{ `${firstName} ${middleName} ${lastName}` }}
     </h1>
     <p class="w-[247px] text-[var(--primary-color)]">
       Last-Seen(Location): {{ lastSeenLocation }}
