@@ -1,50 +1,90 @@
 <script setup>
 const props = defineProps({
   postId: {
-    type: Number,
-    required: true,
-  },
-  fullName: {
     type: String,
     required: true,
-    default: "John Doe",
+  },
+  firstName: {
+    type: String,
+    required: true,
+  },
+  middleName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
   },
   lastSeenLocation: {
     type: String,
     required: true,
-    default: "Ethiopia",
   },
-  dob: {
-    type: String,
-    required: true,
-    default: "12-07-2024",
-  },
-  lastSeenWearing: {
-    type: String,
-    default: "yellow jacket",
-  },
+  // dateOfBirth: {
+  //   type: String,
+  //   required: true,
+  // },
+  // lastSeenWearing: {
+  //   type: String,
+  // },
   lastSeenDate: {
     type: String,
     required: true,
-    default: "12-07-2024",
   },
+  // height: {
+  //   type: String,
+  //   required: true,
+  // },
+  // languageSpoken: {
+  //   type: String,
+  //   required: true,
+  // },
+  // nationality: {
+  //   type: String,
+  //   required: true,
+  // },
+  // hairColor: {
+  //   type: String,
+  //   required: true,
+  // },
+  // skinColor: {
+  //   type: String,
+  //   required: true,
+  // },
+  // recognizableFeatures: {
+  //   type: String,
+  //   required: true,
+  // },
+  // maritalStatus: {
+  //   type: String,
+  //   required: true,
+  // },
+  // physicalDisability: {
+  //   type: String,
+  //   required: true,
+  // },
+  // mentalDisability: {
+  //   type: String,
+  //   required: true,
+  // },
+  // medicalIssues: {
+  //   type: String,
+  //   required: true,
+  // },
   gender: {
     type: String,
     required: true,
-    default: "male",
   },
-  imageUrl: {
-    type: String,
-    default: "",
+  images: {
+    type: Array,
   },
-  videoMessage: {
-    type: String,
-    default: "",
-  },
-  description: {
-    type: String,
-    required: true,
-  },
+  // videoMessage: {
+  //   type: String,
+  // },
+  // description: {
+  //   type: String,
+  //   required: true,
+  // },
 });
 
 const viewDetails = () => {
@@ -60,8 +100,10 @@ const viewDetails = () => {
       src="@/assets/img/missing.png"
       alt="missing_boy"
     />
-    <h1 class="text-[27px] font-semibold text-[var(--primary-color)]">
-      {{ fullName }}
+    <h1
+      class="text-[27px] text-center font-semibold text-[var(--primary-color)]"
+    >
+      {{ `${firstName} ${middleName} ${lastName}` }}
     </h1>
     <p class="w-[247px] text-[var(--primary-color)]">
       Last-Seen(Location): {{ lastSeenLocation }}
