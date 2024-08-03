@@ -106,7 +106,7 @@ const loginWithGoogle = async () => {
         <span class="flex items-center"
           ><Icon name="mdi:google" size="22px"
         /></span>
-        Login with Google
+        Continue with Google
       </button>
       <p class="text-center text-[var(--primary-color)] mt-4">
         Don't have an account?

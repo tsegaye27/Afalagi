@@ -68,7 +68,7 @@
         <span class="flex items-center"
           ><Icon name="mdi:google" size="22px"
         /></span>
-        Signup with Google
+        Continue with Google
       </button>
       <p class="text-center mt-4">
         Already have an account?
