@@ -29,7 +29,7 @@ const submitForm = async () => {
 const loginWithGoogle = async () => {
   try {
     const response = await $axios.get("/auth/google/login");
-    console.log("log in successful:", response.data);
+    console.log("login successful:", response.data);
   } catch (error) {
     console.error(
       "login failed:",

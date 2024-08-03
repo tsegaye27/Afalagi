@@ -3,9 +3,9 @@ import { useUserStore } from "#imports";
 
 const store = useUserStore();
 const firstName = ref("");
-const profilePicture = ref(null);
 const lastName = ref("");
 const { $axios } = useNuxtApp();
+const profilePicture = ref("");
 
 onMounted(async () => {
   try {
@@ -14,43 +14,35 @@ onMounted(async () => {
         Authorization: `Bearer ${store.token}`,
       },
     });
-    console.log("success", response.data.data);
+    console.log("✅✅success✅✅", response.data.data);
     firstName.value = response.data.data.firstName;
     lastName.value = response.data.data.lastName;
   } catch (error) {
     console.log(
-      "Failed❌",
+      "❌❌Failed❌❌",
       error.response ? error.response.data : error.message
     );
   }
 });
 
-// onMounted(async()=>{
-//   try{
-//     const response = await $axios.get("user/profile/pic",{
-//       headers: {
-//         Authorization: `Bearer ${store.token}`
-//       }
-//     })
-//     console.log("success", response.data);
-//     profilePicture.value = response.data.imagePath;
-
-//   } catch(error) {
-//     console.log(error.response ? error.response.data : error.message);
-//   }
-// })
-
-const logoutHandler = async () => {
+onMounted(async () => {
   try {
-    const response = await $axios.post("/auth/logout");
-    console.log("log out successful:", response.data);
-    navigateTo("/");
+    const response = await $axios.get("user/profile/pic", {
+      headers: {
+        Authorization: `Bearer ${store.token}`,
+      },
+    });
+    console.log("success", response.data);
+    profilePicture.value = response.data.imagePath;
   } catch (error) {
-    console.error(
-      "logout failed:",
-      error.response ? error.response.data : error.message
-    );
+    console.log(error.response ? error.response.data : error.message);
   }
+});
+
+const logoutHandler = () => {
+  store.setToken();
+  store.setRefreshToken();
+  navigateTo("/");
 };
 </script>
 
@@ -63,7 +55,7 @@ const logoutHandler = async () => {
     >
       <img
         class="w-[80px] h-[80px] rounded-[2.5rem] border-2 border-[#f4f4f4]"
-        src="@/assets/img/missing.png"
+        :src="profilePicture"
         alt="profile-picture"
       />
       <p class="text-xl text-white font-semibold">
@@ -94,26 +86,32 @@ const logoutHandler = async () => {
           My Posts
         </div>
       </nuxt-link>
-      <nuxt-link class="py-1 w-[60%]" to="/profile/messages">
-        <div
-          class="text-white flex justify-center gap-[0.2rem] py-[0.3rem] border border-white w-[100%] text-center rounded-md cursor-pointer hover:text-[var(--secondary-color)]"
+      <div
+        class="text-white py-[0.3rem] border border-white w-[60%] text-center rounded-md cursor-pointer hover:text-[var(--secondary-color)]"
+      >
+        <nuxt-link
+          class="flex justify-center gap-[0.2rem]"
+          to="/profile/messages"
         >
           <span class="flex justify-center items-baseline"
             ><Icon name="humbleicons:chat" size="20px"
           /></span>
           Messages
-        </div>
-      </nuxt-link>
-      <nuxt-link class="py-1 w-[60%]" to="/profile/settings">
-        <div
-          class="text-white flex justify-center gap-[0.2rem] py-[0.3rem] border border-white w-[100%] text-center rounded-md cursor-pointer hover:text-[var(--secondary-color)]"
+        </nuxt-link>
+      </div>
+      <div
+        class="text-white my-1 border border-white w-[60%] text-center rounded-md cursor-pointer hover:text-[var(--secondary-color)]"
+      >
+        <nuxt-link
+          class="flex py-[0.3rem] justify-center gap-[0.2rem]"
+          to="/profile/settings"
         >
           <span class="flex justify-center items-baseline"
             ><Icon name="humbleicons:cog" size="20px"
           /></span>
           Settings
-        </div>
-      </nuxt-link>
+        </nuxt-link>
+      </div>
     </ul>
     <button
       @click="logoutHandler"
@@ -130,12 +128,10 @@ const logoutHandler = async () => {
 <style scoped>
 .router-link-active {
   color: var(--secondary-color);
-  border-bottom: 2px solid var(--secondary-color);
   transition: all 0.5s;
 }
 .router-link-exact-active {
   color: var(--secondary-color);
-  border-bottom: 2px solid var(--secondary-color);
   transition: all 0.5s;
 }
 </style>

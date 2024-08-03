@@ -6,11 +6,7 @@ const missingPersons = ref([]);
 
 onMounted(async () => {
   try {
-    const response = await $axios.get("/post", {
-      headers: {
-        Authorization: `Bearer ${store.token}`,
-      },
-    });
+    const response = await $axios.get("/post");
     console.log(response.data.data);
     missingPersons.value = response.data.data;
   } catch (error) {
