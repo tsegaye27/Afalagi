@@ -26,11 +26,10 @@ const submitForm = async () => {
     );
   }
 };
-
-// const loginWithGoogle = () => {
-//   window.location.href = `${$axios.defaults.baseURL}/auth/google/login`;
-//   navigateTo("/");
-// };
+const loginWithGoogle = () => {
+  window.location.href = `${$axios.defaults.baseURL}/auth/google/login`;
+  navigateTo("/");
+};
 </script>
 <template>
   <div class="flex w-[100%] h-[100vh] justify-center items-center">
@@ -47,7 +46,7 @@ const submitForm = async () => {
       </p>
       <img
         class="object-fit w-[500px] h-full"
-        src="/assets/img/signup.png"
+        src="/assets/img/signup.webp"
         alt="two-people-hugging"
       />
     </div>

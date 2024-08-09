@@ -13,7 +13,7 @@
         >
           <img
             class="w-[250px] h-[340px]"
-            src="/assets/img/testimonial.png"
+            src="/assets/img/testimonial.webp"
             alt="testimonial_picture"
           />
           <div class="flex flex-col justify-start gap-[2rem] px-2 py-5">

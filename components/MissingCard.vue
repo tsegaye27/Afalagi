@@ -149,7 +149,7 @@ function formatDate(dateStr) {
     </span>
     <img
       class="w-full h-auto rounded-t-lg"
-      src="@/assets/img/missing.png"
+      src="@/assets/img/missing.webp"
       alt="missing_boy"
     />
     <h1

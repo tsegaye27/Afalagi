@@ -19,7 +19,7 @@
     <div class="right mt-[2rem]">
       <img
         class="w-[650px] h-[630px]"
-        src="/assets/img/home.png"
+        src="/assets/img/home.webp"
         alt="family_picture"
       />
     </div>

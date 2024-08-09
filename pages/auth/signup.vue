@@ -13,7 +13,7 @@
       </p>
       <img
         class="object-fit w-[500px] h-full"
-        src="/assets/img/signup.png"
+        src="/assets/img/signup.webp"
         alt="two-people-hugging"
       />
     </div>
