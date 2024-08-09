@@ -1,4 +1,7 @@
 <script setup>
+import { useUserStore } from "#imports";
+const store = useUserStore();
+const token = store.token;
 const props = defineProps({
   postId: {
     type: String,
@@ -89,6 +92,7 @@ const props = defineProps({
   //   required: true,
   // },
 });
+
 function calculateAge(dateOfBirth) {
   const dob = new Date(dateOfBirth);
   const today = new Date();
@@ -165,7 +169,7 @@ function formatDate(dateStr) {
       Last-Seen(Date): {{ formatDate(lastSeenDate) }}
     </p>
     <button @click="viewDetails" class="btn-posts mt-1 w-[349px]">
-      {{ status === "OPEN" ? "View Details" : "Edit Post" }}
+      {{ token && status !== "OPEN" ? "View Details" : "Edit Post" }}
     </button>
   </div>
 </template>

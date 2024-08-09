@@ -9,7 +9,7 @@
     <div
       class="w-full bg-white flex justify-evenly items-center h-[400px] px-[4rem]"
     >
-      <img src="/assets/img/success-story.png" alt="happy-family" />
+      <img src="/assets/img/success-story.webp" alt="happy-family" />
       <div class="flex flex-col h-full py-[4rem] gap-[1rem] items-start">
         <h1 class="text-[30px] font-[sora] text-[var(--secondary-color)]">
           Biruk Weldu
@@ -31,7 +31,7 @@
   <div
     class="w-full bg-white flex justify-evenly items-center h-[400px] px-[4rem]"
   >
-    <img src="/assets/img/success-story.png" alt="happy-family" />
+    <img src="/assets/img/success-story.webp" alt="happy-family" />
     <div class="flex flex-col h-full py-[4rem] gap-[1rem] items-start">
       <h1 class="text-[30px] font-[sora] text-[var(--secondary-color)]">
         Biruk Weldu
