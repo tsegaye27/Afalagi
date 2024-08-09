@@ -10,29 +10,32 @@ const profilePicture = ref(null);
 token &&
   onMounted(async () => {
     try {
-      const response = await $axios.get("/user/profile/me", {
+      const response = await $axios.get("user/profile/me", {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${store.token}`,
         },
       });
-      console.log("Profile Fetched Successfully", response.data);
+      console.log("✅✅success✅✅", response.data.data);
+      firstName.value = response.data.data.firstName;
+      lastName.value = response.data.data.lastName;
     } catch (error) {
-      console.error(
-        "failed to fetch profile",
+      console.log(
+        "❌❌Failed❌❌",
         error.response ? error.response.data : error.message
       );
     }
   });
+
 token &&
   onMounted(async () => {
     try {
-      const response = await $axios.get("/user/profile/pic", {
+      const response = await $axios.get("user/profile/pic", {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${store.token}`,
         },
       });
-      profilePicture.value = `http://localhost/${response.data.imagePath}`;
-      console.log(response.data);
+      console.log("success", response.data);
+      profilePicture.value = `http://localhost:3333/${response.data.imagePath}`;
     } catch (error) {
       console.log(error.response ? error.response.data : error.message);
     }
@@ -99,9 +102,14 @@ const language = ref("English");
           class="flex gap-[0.35rem] justify-center items-center"
           to="/profile/details"
         >
-          <span class="flex items-center"
+          <img
+            class="w-[50px] h-[50px] rounded-[0.6rem] border-1 border-[#f4f4f4]"
+            :src="profilePicture"
+            alt="profile-picture"
+          />
+          <!-- <span class="flex items-center"
             ><Icon name="heroicons-outline:user" size="22px"
-          /></span>
+          /></span> -->
         </NuxtLink>
       </li>
     </ul>
