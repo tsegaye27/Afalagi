@@ -6,11 +6,7 @@ const missingPersons = ref([]);
 
 onMounted(async () => {
   try {
-    const response = await $axios.get("/post", {
-      headers: {
-        Authorization: `Bearer ${store.token}`,
-      },
-    });
+    const response = await $axios.get("/post");
     console.log(response.data.data);
     missingPersons.value = response.data.data;
   } catch (error) {
@@ -57,7 +53,6 @@ const showMore = () => {
         :dateOfBirth="person.birthDate"
         :educationalLevel="person.educationalLevel"
         :images="person.images"
-        :status="person.status"
         :legalDocuments="person.legalDocuments"
         :videoMessage="person.videoMessage"
       />

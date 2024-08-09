@@ -2,9 +2,9 @@
 import { useUserStore } from "#imports";
 
 const store = useUserStore();
-
+const router = useRouter();
 const previousPage = () => {
-  navigateTo("/posts");
+  router.go(-1);
 };
 const { $axios } = useNuxtApp();
 const route = useRoute();

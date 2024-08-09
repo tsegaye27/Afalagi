@@ -7,6 +7,7 @@ const { $axios } = useNuxtApp();
 
 const email = ref("");
 const password = ref("");
+const router = useRouter();
 
 const submitForm = async () => {
   try {
@@ -25,17 +26,9 @@ const submitForm = async () => {
     );
   }
 };
-
-const loginWithGoogle = async () => {
-  try {
-    const response = await $axios.get("/auth/google/login");
-    console.log("log in successful:", response.data);
-  } catch (error) {
-    console.error(
-      "login failed:",
-      error.response ? error.response.data : error.message
-    );
-  }
+const loginWithGoogle = () => {
+  window.location.href = `${$axios.defaults.baseURL}/auth/google/login`;
+  navigateTo("/");
 };
 </script>
 <template>
@@ -53,7 +46,7 @@ const loginWithGoogle = async () => {
       </p>
       <img
         class="object-fit w-[500px] h-full"
-        src="/assets/img/signup.png"
+        src="/assets/img/signup.webp"
         alt="two-people-hugging"
       />
     </div>
@@ -106,7 +99,7 @@ const loginWithGoogle = async () => {
         <span class="flex items-center"
           ><Icon name="mdi:google" size="22px"
         /></span>
-        Login with Google
+        Continue with Google
       </button>
       <p class="text-center text-[var(--primary-color)] mt-4">
         Don't have an account?

@@ -13,7 +13,7 @@
       </p>
       <img
         class="object-fit w-[500px] h-full"
-        src="/assets/img/signup.png"
+        src="/assets/img/signup.webp"
         alt="two-people-hugging"
       />
     </div>
@@ -68,7 +68,7 @@
         <span class="flex items-center"
           ><Icon name="mdi:google" size="22px"
         /></span>
-        Signup with Google
+        Continue with Google
       </button>
       <p class="text-center mt-4">
         Already have an account?

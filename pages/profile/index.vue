@@ -4,6 +4,11 @@ import { useUserStore } from "@/stores/user";
 definePageMeta({
   layout: "",
 });
+
+onMounted(() => {
+  if (!store.token) navigateTo("/auth/signup");
+});
+
 const store = useUserStore();
 const { $axios } = useNuxtApp();
 
@@ -19,15 +24,13 @@ const birthDate = ref("");
 const number = ref("");
 const code = ref("");
 
-// Function to handle file input change
 const handleFileChange = (event) => {
   profilePicture.value = event.target.files[0];
 };
 
-const phoneNumber = computed(() => `${code.value}${number.value}`);
-
 const createProfile = async () => {
   const formData = new FormData();
+  const phoneNumber = `${code.value} ${number.value}`;
 
   formData.append("profilePicture", profilePicture.value);
   formData.append("firstName", firstName.value);
@@ -47,15 +50,7 @@ const createProfile = async () => {
     });
 
     console.log("✅ Profile Created Successfully!!!", response.data);
-    // firstName = "";
-    // middleName = "";
-    // lastName = "";
-    // gender = "";
-    // birthDate = "";
-    // number = "";
-    // code = "";
-    // country = "";
-    // profilePicture = null;
+
     navigateTo("/");
   } catch (error) {
     console.error(
@@ -67,16 +62,17 @@ const createProfile = async () => {
 </script>
 
 <template>
-  <div class="h-screen flex justify-center items-center">
-    <div class="flex gap-[1rem] flex-col items-center">
-      <h1
-        class="text-[var(--primary-color)] mt-5 text-center text-2xl font-semibold"
-      >
-        Let's create your profile
-      </h1>
+  <div class="h-screen bg-[#f3f3f3] flex justify-center items-center">
+    <div class="flex gap-[1rem] border rounded bg-white flex-col items-center">
       <form
-        class="w-[600px] p-[3rem] border rounded flex-col gap-[0.25rem] flex justify-center items-center"
+        @submit.prevent="createProfile"
+        class="w-[600px] p-[3rem] flex-col gap-[0.25rem] flex justify-center items-center"
       >
+        <h1
+          class="text-[var(--primary-color)] mb-[2rem] text-center text-2xl font-semibold"
+        >
+          Let's create your profile
+        </h1>
         <div class="flex flex-col gap-[.5rem]">
           <div class="flex justify-start items-baseline gap-[3.2rem]">
             <label class="text-[var(--primary-color)] font-semibold"
@@ -183,13 +179,12 @@ const createProfile = async () => {
             </div>
           </div>
         </div>
+        <button
+          class="flex mt-[2rem] justify-center px-[0.5rem] gap-[0.6rem] btn"
+        >
+          Create Profile
+        </button>
       </form>
-      <button
-        @click="createProfile"
-        class="flex justify-center px-[0.5rem] gap-[0.6rem] btn"
-      >
-        Create Profile
-      </button>
     </div>
   </div>
 </template>
