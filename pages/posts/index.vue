@@ -45,9 +45,7 @@ const showModal = ref(false);
         Filter
       </button>
     </div>
-    <div
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[2rem] m-[2rem]"
-    >
+    <div class="flex flex-wrap justify-start gap-[3rem] ml-[3rem] my-[2rem]">
       <MissingCard
         v-for="(person, index) in missingPersons"
         :key="index"
@@ -73,7 +71,6 @@ const showModal = ref(false);
         :dateOfBirth="person.birthDate"
         :educationalLevel="person.educationalLevel"
         :images="person.images"
-        :status="person.status"
         :legalDocuments="person.legalDocuments"
         :videoMessage="person.videoMessage"
       />

@@ -7,7 +7,7 @@ const { $axios } = useNuxtApp();
 
 const profilePicture = ref(null);
 
-store.token &&
+token &&
   onMounted(async () => {
     try {
       const response = await $axios.get("/user/profile/me", {
@@ -15,13 +15,26 @@ store.token &&
           Authorization: `Bearer ${token}`,
         },
       });
-      profilePicture.value = response.data.profilePicture;
       console.log("Profile Fetched Successfully", response.data);
     } catch (error) {
       console.error(
         "failed to fetch profile",
         error.response ? error.response.data : error.message
       );
+    }
+  });
+token &&
+  onMounted(async () => {
+    try {
+      const response = await $axios.get("/user/profile/pic", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      profilePicture.value = `http://localhost/${response.data.imagePath}`;
+      console.log(response.data);
+    } catch (error) {
+      console.log(error.response ? error.response.data : error.message);
     }
   });
 

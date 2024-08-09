@@ -53,7 +53,6 @@ const showMore = () => {
         :dateOfBirth="person.birthDate"
         :educationalLevel="person.educationalLevel"
         :images="person.images"
-        :status="person.status"
         :legalDocuments="person.legalDocuments"
         :videoMessage="person.videoMessage"
       />

@@ -305,7 +305,7 @@ const reportMissing = async () => {
             class="border border-[var(--primary-color)] rounded h-[30px] w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
             v-model="postData.hairColor"
           >
-            <option selected disabled>Select the Hair Color</option>
+            <option selected value="" disabled>Select the Hair Color</option>
             <option value="black">Black</option>
             <option value="brown">Brown</option>
             <option value="white">White</option>
@@ -322,6 +322,7 @@ const reportMissing = async () => {
           <textarea
             class="border border-[var(--primary-color)] w-[320px] rounded outline-none py-[0.5rem] text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
             v-model="postData.recognizableFeatures"
+            placeholder="thick eyebrows, scar on face"
           />
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
@@ -332,7 +333,10 @@ const reportMissing = async () => {
             v-model="postData.physicalDisability"
             class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
           >
-            <option selected value="none">None</option>
+            <option value="" selected disabled>
+              Select Physical Disability
+            </option>
+            <option value="none">None</option>
             <option value="mobility issue">Mobility Issue</option>
             <option value="vision impairment">Vision Impairment</option>
             <option value="hearing loss">Hearing Loss</option>
@@ -352,7 +356,8 @@ const reportMissing = async () => {
             v-model="postData.mentalDisability"
             class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
           >
-            <option selected value="none">None</option>
+            <option selected value="" disabled>Select Mental Disability</option>
+            <option value="none">None</option>
             <option value="intellectual disability">
               Intellectual Disability
             </option>
@@ -378,7 +383,8 @@ const reportMissing = async () => {
             v-model="postData.medicalIssues"
             class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
           >
-            <option selected value="none">None</option>
+            <option value="" selected disabled>Select Health Condition</option>
+            <option value="none">None</option>
             <option value="diabetes">Diabetes</option>
             <option value="astma">Astma</option>
             <option value="hypertension">Hypertension</option>
@@ -400,13 +406,14 @@ const reportMissing = async () => {
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
           <label class="text-[var(--primary-color)] text-[1rem] font-medium"
-            >Education Qualification:
+            >Education:
           </label>
           <select
             v-model="postData.educationalLevel"
             class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
           >
-            <option selected value="none">None</option>
+            <option value="" selected disabled>Select Educational Level</option>
+            <option value="none">None</option>
             <option value="primary school">Primary School</option>
             <option value="secondary school">Secondary School</option>
             <option value="high school">High School</option>
@@ -425,7 +432,10 @@ const reportMissing = async () => {
             v-model="postData.maritalStatus"
             class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
           >
-            <option selected value="single">Single</option>
+            <option value="" disabled selected>
+              Select your Marital Status
+            </option>
+            <option value="single">Single</option>
             <option value="married">Married</option>
             <option value="divorced">Divorced</option>
             <option value="widowed">Widowed</option>
@@ -440,7 +450,10 @@ const reportMissing = async () => {
             v-model="postData.posterRelation"
             class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
           >
-            <option selected value="parent">Parent</option>
+            <option value="" selected disabled>
+              Your relation with the person
+            </option>
+            <option value="parent">Parent</option>
             <option value="sibling">Sibling</option>
             <option value="relative">Relative</option>
             <option value="friend">Friend</option>

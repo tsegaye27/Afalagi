@@ -33,7 +33,7 @@ onMounted(async () => {
       },
     });
     console.log("success", response.data);
-    profilePicture.value = response.data.imagePath;
+    profilePicture.value = `http://localhost:3333/${response.data.imagePath}`;
   } catch (error) {
     console.log(error.response ? error.response.data : error.message);
   }

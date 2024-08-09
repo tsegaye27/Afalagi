@@ -23,7 +23,7 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <div class="w-[80%] overflow-y-auto h-[40rem]">
+  <div class="overflow-y-auto h-[40rem]">
     <h1
       class="text-center font-semibold text-[25px] text-[var(--secondary-color)] mt-[3rem]"
     >
