@@ -63,6 +63,16 @@ const handleVideoMessage = (event) => {
   postData.value.legalDocs = event.target.files[0];
 };
 
+const progressWidth = computed(() => {
+  switch (currentStep.value) {
+    case 1: return '33%';
+    case 2: return '66%';
+    case 3: return '100%';
+    default: return '0%';
+  }
+});
+
+
 const reportMissing = async () => {
   
   const formData = new FormData();
@@ -151,7 +161,11 @@ const goBack = () => {
 </script>
 
 <template>
-  <div class="report-form flex justify-center items-start my-[2rem]">
+  <div class="report-form flex justify-center items-center my-[2rem] flex-col">
+<div class="w-[750px] h-[10px] bg-gray-400 rounded my-[1rem] relative">
+  <div class="h-full bg-[var(--secondary-color)] rounded absolute top-0 left-0 progress-fill" :style="{ width: progressWidth }"></div>
+</div>
+
   
     <Toaster 
       v-if="toasterVisible"
@@ -549,7 +563,7 @@ const goBack = () => {
       </div>
       
       <!-- Navigation buttons -->
-      <div class="flex justify-between w-full px-[3rem] mt-[2rem]">
+      <div class="flex justify-end gap-[25rem] w-full  px-[3rem] mt-[2rem]">
         <button
           v-if="currentStep > 1"
           type="button"
@@ -562,7 +576,7 @@ const goBack = () => {
         <button
           v-if="currentStep < 3"
           type="button"
-          class="text-white bg-[var(--primary-color)] py-[0.5rem] px-[2rem] rounded-md"
+          class="text-white bg-[var(--secondary-color)] py-[0.5rem] px-[2rem] rounded-md float-right"
           @click="goNext"
         >
           Next
@@ -577,5 +591,20 @@ const goBack = () => {
         </button>
       </div>
       </form>
-    </div>
+      </div>
       </template>
+<style>
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  margin: 1rem 0;
+  position: relative;
+}
+
+.progress-fill {
+  transition: width 0.3s ease;
+}
+</style>
