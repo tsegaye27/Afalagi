@@ -93,21 +93,21 @@ const props = defineProps({
   // },
 });
 
-function calculateAge(dateOfBirth) {
-  const dob = new Date(dateOfBirth);
-  const today = new Date();
+// function calculateAge(dateOfBirth) {
+//   const dob = new Date(dateOfBirth);
+//   const today = new Date();
 
-  let age = today.getFullYear() - dob.getFullYear();
-  const monthDiff = today.getMonth() - dob.getMonth();
-  const dayDiff = today.getDate() - dob.getDate();
-  // If birth month and day haven't occurred yet this year, subtract one from the age
-  if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-    age--;
-  }
+//   let age = today.getFullYear() - dob.getFullYear();
+//   const monthDiff = today.getMonth() - dob.getMonth();
+//   const dayDiff = today.getDate() - dob.getDate();
+//   // If birth month and day haven't occurred yet this year, subtract one from the age
+//   if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+//     age--;
+//   }
 
-  return age;
-}
-const age = calculateAge(props.dateOfBirth);
+//   return age;
+// }
+// const age = calculateAge(props.dateOfBirth);
 
 const viewDetails = () => {
   navigateTo(`/posts/details/${props.postId}`);
@@ -161,7 +161,7 @@ function formatDate(dateStr) {
     >
       {{ `${firstName} ${middleName} ${lastName}` }}
     </h1>
-    <p class="text-[var(--primary-color)] pl-4 w-full">Age: {{ age }}</p>
+    <!-- <p class="text-[var(--primary-color)] pl-4 w-full">Age: {{ age }}</p> -->
     <p class="text-[var(--primary-color)] pl-4 w-full">
       Last-Seen(Location): {{ lastSeenLocation }}
     </p>

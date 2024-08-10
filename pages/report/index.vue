@@ -1,6 +1,25 @@
 <script setup>
 import { useUserStore } from "#imports";
 
+
+
+// State to control the toaster
+const toasterVisible = ref(false);
+const toasterMessage = ref('');
+const toasterType = ref('success'); // or 'error'
+const toasterDuration = ref(3000);
+
+function showToaster(message, type = 'success', duration = 3000) {
+  toasterMessage.value = message;
+  toasterType.value = type;
+  toasterDuration.value = duration;
+  toasterVisible.value = true;
+
+  setTimeout(() => {
+    toasterVisible.value = false;
+  }, duration);
+}
+
 const store = useUserStore();
 const { $axios } = useNuxtApp();
 const postData = ref({
@@ -106,7 +125,8 @@ const reportMissing = async () => {
       },
     });
     console.log("Success✅", response.data.data);
-    navigateTo("/profile/my-posts");
+    showToaster('Operation successful', 'success');
+    navigateTo('/profile/my-posts')
   } catch (error) {
     console.log(
       "Failure❌",
@@ -116,11 +136,19 @@ const reportMissing = async () => {
       lastSeenWearing.value,
       phoneNumber
     );
-  }
-};
+    showToaster(error.response ? error.response.data.message : error.message, 'error');
+  } // Replace with actual logic
+
+  };
 </script>
 <template>
   <div class="report-form flex justify-center items-start my-[2rem]">
+    <Toaster 
+      v-if="toasterVisible"
+      :message="toasterMessage"
+      :type="toasterType"
+      :duration="toasterDuration"
+    />
     <form
       @submit.prevent="reportMissing"
       class="flex flex-col gap-[3.5rem] px-[2rem] border border-slate-400 py-[2rem] w-[50%] rounded-md justify-start items-start"

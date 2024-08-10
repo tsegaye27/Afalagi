@@ -48,7 +48,6 @@ const submitForm = async () => {
 
 const loginWithGoogle = () => {
   window.location.href = `${$axios.defaults.baseURL}/auth/google/login`;
-  navigateTo("/");
 };
 </script>
 
