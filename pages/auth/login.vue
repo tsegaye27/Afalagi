@@ -1,5 +1,6 @@
 <script setup>
 import { useUserStore } from "@/stores/user";
+import { ref } from "vue"; // Import ref from Vue
 definePageMeta({ layout: "" });
 
 const store = useUserStore();
@@ -9,29 +10,58 @@ const email = ref("");
 const password = ref("");
 const router = useRouter();
 
+// Toaster state
+const showToaster = ref(false);
+const toasterMessage = ref("");
+const toasterType = ref(""); // success or error
+
+const showToast = (message, type) => {
+  toasterMessage.value = message;
+  toasterType.value = type;
+  showToaster.value = true;
+
+  setTimeout(() => {
+    showToaster.value = false;
+  }, 5000); // Hide after 5 seconds
+};
+
 const submitForm = async () => {
   try {
     const response = await $axios.post("/auth/local/signin", {
       email: email.value,
       password: password.value,
     });
-    console.log("log in successful:", response.data);
+    console.log("log in successful:");
     store.setToken(response.data.access_token);
     store.setRefreshToken(response.data.refresh_token);
+    showToast("Login successful!", "success");
     navigateTo("/");
   } catch (error) {
-    console.error(
-      "login failed:",
-      error.response ? error.response.data : error.message
-    );
+    const errorMessage =
+      error.response && error.response.data
+        ? error.response.data.message
+        : error.message;
+    console.error("login failed:", errorMessage);
+    showToast(`Login failed: ${errorMessage}`, "error");
   }
 };
+
 const loginWithGoogle = () => {
   window.location.href = `${$axios.defaults.baseURL}/auth/google/login`;
 };
 </script>
+
 <template>
   <div class="flex w-[100%] h-[100vh] justify-center items-center">
+    <!-- Toaster -->
+    <div
+      v-if="showToaster"
+      :class="toasterType === 'success' ? 'bg-green-500' : 'bg-red-500'"
+      class="fixed top-5 right-5 p-4 rounded text-white shadow-lg z-50"
+    >
+      {{ toasterMessage }}
+    </div>
+
     <div class="w-[38.19%] h-[100%]">
       <h1
         class="fixed font-bold text-[82px] text-white text-center mt-[2rem] w-[30%] h-[96px]"
@@ -53,7 +83,6 @@ const loginWithGoogle = () => {
       class="right w-[61.81%] h-[100vh] flex flex-col gap-[2rem] justify-center items-center"
     >
       <h1 class="text-[var(--primary-color)] font-semibold text-4xl">Login</h1>
-      <!-- <Toast /> -->
       <form
         @submit.prevent="submitForm"
         class="form-card flex flex-col w-[40%] rounded-md py-[3rem] border border-[var(--secondary-color)] justify-start gap-[1rem] items-center"

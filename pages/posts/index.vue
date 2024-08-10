@@ -3,15 +3,19 @@ import { useUserStore } from "#imports";
 const store = useUserStore();
 const { $axios } = useNuxtApp();
 const missingPersons = ref([]);
+const searchQuery = ref(""); // State to store the search query
 
-onMounted(async () => {
+// Fetch posts based on the search query
+const fetchPosts = async () => {
   try {
     const response = await $axios.get("/post", {
       headers: {
         Authorization: `Bearer ${store.token}`,
       },
+      params: {
+        name: searchQuery.value, // Pass the search query as a parameter
+      },
     });
-    console.log(response.data.data);
     missingPersons.value = response.data.data;
   } catch (error) {
     console.error(
@@ -19,14 +23,20 @@ onMounted(async () => {
       error.response ? error.response.data : error.message
     );
   }
-});
+};
+
+// Watch for changes in the search query and fetch posts accordingly
+watch(searchQuery, fetchPosts);
+
+// Initial fetch when the component mounts
+onMounted(fetchPosts);
+
 const showModal = ref(false);
 </script>
+
 <template>
   <div class="mt-[3rem]">
-    <div
-      class="flex mx-[2.5rem] mb-[1rem] gap-[7rem] justify-between items-center"
-    >
+    <div class="flex mx-[2.5rem] mb-[1rem] gap-[7rem] justify-between items-center">
       <div class="flex justify-between w-full items-center">
         <h1
           class="text-[40px] text-[var(--primary-color)] text-center w-full font-[sora] font-semibold"
@@ -37,7 +47,8 @@ const showModal = ref(false);
     </div>
     <hr />
     <div class="flex justify-center mt-[1rem] gap-[1rem]">
-      <SearchBar />
+      <!-- Pass the search query handler to the SearchBar component -->
+      <SearchBar @search="(query) => (searchQuery = query)" />
       <button
         @click="showModal = true"
         class="p-2 text-[var(--primary-color)] font-medium rounded-md border border-[#0972d3]"

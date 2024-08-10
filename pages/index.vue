@@ -1,4 +1,5 @@
-<script setup></script>
+<script setup>
+</script>
 <template>
   <div class="overflow-y-auto">
     <Hero />

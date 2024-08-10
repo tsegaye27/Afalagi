@@ -1,6 +1,25 @@
 <script setup>
 import { useUserStore } from "#imports";
 
+
+
+// State to control the toaster
+const toasterVisible = ref(false);
+const toasterMessage = ref('');
+const toasterType = ref('success'); // or 'error'
+const toasterDuration = ref(3000);
+
+function showToaster(message, type = 'success', duration = 3000) {
+  toasterMessage.value = message;
+  toasterType.value = type;
+  toasterDuration.value = duration;
+  toasterVisible.value = true;
+
+  setTimeout(() => {
+    toasterVisible.value = false;
+  }, duration);
+}
+
 const store = useUserStore();
 const { $axios } = useNuxtApp();
 const postData = ref({
@@ -64,15 +83,15 @@ const reportMissing = async () => {
   // formData.append("videoMessage", postData.value.videoMessage);
   formData.append("dateOfBirth", postData.value.dateOfBirth);
   // formData.append("height", height.value * 1);
-  formData.append("maritalStatus", convertToUppercaseWithUnderscore(postData.value.maritalStatus));
-  formData.append("medicalIssues", convertToUppercaseWithUnderscore(postData.value.medicalIssues));
+  formData.append("maritalStatus", postData.value.maritalStatus.toUpperCase());
+  formData.append("medicalIssues", postData.value.medicalIssues.toUpperCase());
   formData.append(
     "physicalDisability",
-    convertToUppercaseWithUnderscore(postData.value.physicalDisability)
+    postData.value.physicalDisability.toUpperCase()
   );
   formData.append(
     "mentalDisability",
-    convertToUppercaseWithUnderscore(postData.value.mentalDisability)
+    postData.value.mentalDisability.toUpperCase()
   );
   formData.append(
     "posterRelation",
@@ -80,7 +99,7 @@ const reportMissing = async () => {
   );
   formData.append(
     "educationalLevel",
-    convertToUppercaseWithUnderscore(postData.value.educationalLevel)
+    postData.value.educationalLevel.toUpperCase()
   );
   formData.append("hairColor", postData.value.hairColor.toUpperCase());
   formData.append("skinColor", postData.value.skinColor.toUpperCase());
@@ -94,6 +113,7 @@ const reportMissing = async () => {
   formData.append("phoneNumber", phoneNumber);
   formData.append("nationality", postData.value.nationality);
   formData.append("languageSpoken", postData.value.languageSpoken);
+  // formData.append("lastSeenWearing", lastSeenWearing.value);
   formData.append("lastSeenDate", postData.value.lastSeenDate);
   formData.append("lastSeenLocation", postData.value.lastSeenLocation);
   formData.append("lastSeenWearing", lastSeenWearing.value);
@@ -105,7 +125,8 @@ const reportMissing = async () => {
       },
     });
     console.log("Success✅", response.data.data);
-    navigateTo("/profile/my-posts");
+    showToaster('Operation successful', 'success');
+    navigateTo('/profile/my-posts')
   } catch (error) {
     console.log(
       "Failure❌",
@@ -115,20 +136,19 @@ const reportMissing = async () => {
       lastSeenWearing.value,
       phoneNumber
     );
-  }
-};
-function convertToUppercaseWithUnderscore(str) {
-  // Convert string to uppercase
-  const upperCaseStr = str.toUpperCase();
+    showToaster(error.response ? error.response.data.message : error.message, 'error');
+  } // Replace with actual logic
 
-  // Replace spaces with underscores
-  const finalStr = upperCaseStr.replace(/\s/g, '_');
-
-  return finalStr;
-}
+  };
 </script>
 <template>
   <div class="report-form flex justify-center items-start my-[2rem]">
+    <Toaster 
+      v-if="toasterVisible"
+      :message="toasterMessage"
+      :type="toasterType"
+      :duration="toasterDuration"
+    />
     <form
       @submit.prevent="reportMissing"
       class="flex flex-col gap-[3.5rem] px-[2rem] border border-slate-400 py-[2rem] w-[50%] rounded-md justify-start items-start"
