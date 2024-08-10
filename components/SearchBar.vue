@@ -1,22 +1,20 @@
 <script setup>
+import { ref, watch } from 'vue';
+
+// Define the emit function using defineEmits
+const emit = defineEmits(['search']);
+
 const input = ref("");
-const handleSearch = () => {
-  navigateTo("/posts");
+
+const emitSearch = () => {
+  emit("search", input.value);
 };
 
-watch(input, async (newValue) => {
-  try {
-    const res = await $axios.get("/post", {
-      params: {
-        name: `${newValue}`,
-      },
-    });
-    console.log(res, newValue);
-  } catch (error) {
-    console.log(error.response ? error.response.data : error.message);
-  }
+watch(input, (newValue) => {
+  emitSearch();
 });
 </script>
+
 <template>
   <div class="search h-[40px] flex">
     <input
@@ -27,11 +25,11 @@ watch(input, async (newValue) => {
     />
     <button
       class="p-2 h-[41px] bg-[var(--secondary-color)] rounded-[0_8px_8px_0] z-10 text-white"
-      @click="handleSearch"
+      @click="emitSearch"
     >
-      <span class="flex justify-center items-center"
-        ><Icon name="material-symbols:search" size="24px"
-      /></span>
+      <span class="flex justify-center items-center">
+        <Icon name="material-symbols:search" size="24px" />
+      </span>
     </button>
   </div>
 </template>
