@@ -1,8 +1,6 @@
 <script setup>
 import { useUserStore } from "#imports";
 
-
-
 // State to control the toaster
 const toasterVisible = ref(false);
 const toasterMessage = ref('');
@@ -23,31 +21,37 @@ function showToaster(message, type = 'success', duration = 3000) {
 const store = useUserStore();
 const { $axios } = useNuxtApp();
 const postData = ref({
-  firstName: "", //
-  middleName: "", //
-  lastName: "", //
-  images: "", //
-  legalDocs: "", //
-  description: "", //
-  lastSeenLocation: "", //
-  lastSeenDate: "", //
-  languageSpoken: "", //
-  nationality: "", //
-  hairColor: "", //
-  skinColor: "", //
-  recognizableFeatures: "", //
-  physicalDisability: "", //
-  mentalDisability: "", //
-  medicalIssues: "", //
+  firstName: "", 
+  middleName: "", 
+  lastName: "", 
+  images: "", 
+  legalDocs: "", 
+  description: "", 
+  lastSeenLocation: "", 
+  lastSeenDate: "", 
+  languageSpoken: "", 
+  nationality: "", 
+  hairColor: "", 
+  skinColor: "", 
+  recognizableFeatures: "", 
+  physicalDisability: "", 
+  mentalDisability: "", 
+  medicalIssues: "", 
   posterRelation: "",
-  gender: "", //
-  dateOfBirth: "", //
-  educationalLevel: "", //
-  videoMessage: "", //
+  gender: "", 
+  dateOfBirth: "", 
+  educationalLevel: "", 
+  videoMessage: "", 
   maritalStatus: "",
 });
+
 const code = ref("");
 const number = ref("");
+const phoneNumber = computed(() => `${code.value}${number.value}`);
+const lastSeenWearing = ref("");
+const height = ref("");
+
+const currentStep = ref(1); // Track the current step
 
 const handleLegalDocs = (event) => {
   postData.value.legalDocs = event.target.files[0];
@@ -59,11 +63,8 @@ const handleVideoMessage = (event) => {
   postData.value.legalDocs = event.target.files[0];
 };
 
-const phoneNumber = computed(() => `${code.value}${number.value}`);
-const lastSeenWearing = ref("");
-const height = ref("");
-
 const reportMissing = async () => {
+  
   const formData = new FormData();
 
   postData.value.maritalStatus = postData.value.maritalStatus.toUpperCase();
@@ -137,18 +138,28 @@ const reportMissing = async () => {
       phoneNumber
     );
     showToaster(error.response ? error.response.data.message : error.message, 'error');
-  } // Replace with actual logic
+  }
+};
 
-  };
+const goNext = () => {
+  if (currentStep.value < 3) currentStep.value += 1;
+};
+
+const goBack = () => {
+  if (currentStep.value > 1) currentStep.value -= 1;
+};
 </script>
+
 <template>
   <div class="report-form flex justify-center items-start my-[2rem]">
+  
     <Toaster 
       v-if="toasterVisible"
       :message="toasterMessage"
       :type="toasterType"
       :duration="toasterDuration"
     />
+
     <form
       @submit.prevent="reportMissing"
       class="flex flex-col gap-[3.5rem] px-[2rem] border border-slate-400 py-[2rem] w-[50%] rounded-md justify-start items-start"
@@ -159,7 +170,8 @@ const reportMissing = async () => {
         Missing person details
       </h1>
 
-      <div class="flex flex-col gap-[0.7rem]">
+      <!-- Step 1 -->
+      <div v-if="currentStep === 1" class="flex flex-col gap-[0.7rem]">
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
           <label class="text-[var(--primary-color)] text-[1rem] font-medium"
             >First name:
@@ -268,6 +280,10 @@ const reportMissing = async () => {
             </select>
           </div>
         </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div v-if="currentStep === 2" class="flex flex-col gap-[0.7rem]">
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
           <label class="text-[var(--primary-color)] text-[1rem] font-medium"
             >Last Seen Wearing:
@@ -354,6 +370,10 @@ const reportMissing = async () => {
             placeholder="thick eyebrows, scar on face"
           />
         </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div v-if="currentStep === 3" class="flex flex-col gap-[0.7rem]">
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
           <label class="text-[var(--primary-color)] text-[1rem] font-medium"
             >Physical Disability:
@@ -527,14 +547,35 @@ const reportMissing = async () => {
           />
         </div>
       </div>
-      <button
-        class="bg-[var(--secondary-color)] text-white text-[1rem] flex gap-[0.35rem] font-medium py-[0.5rem] justify-center w-[30%] rounded-md ml-[16rem]"
-      >
-        <span class="flex justify-center items-center">
-          <Icon name="heroicons-outline:clipboard-document-list" size="22px" />
-        </span>
-        Report
-      </button>
-    </form>
-  </div>
-</template>
+      
+      <!-- Navigation buttons -->
+      <div class="flex justify-between w-full px-[3rem] mt-[2rem]">
+        <button
+          v-if="currentStep > 1"
+          type="button"
+          class="text-white bg-[var(--primary-color)] py-[0.5rem] px-[2rem] rounded-md"
+          @click="goBack"
+        >
+          Back
+        </button>
+      
+        <button
+          v-if="currentStep < 3"
+          type="button"
+          class="text-white bg-[var(--primary-color)] py-[0.5rem] px-[2rem] rounded-md"
+          @click="goNext"
+        >
+          Next
+        </button>
+      
+        <button
+          v-if="currentStep === 3"
+          type="submit"
+          class="text-white bg-[var(--secondary-color)] py-[0.5rem] px-[2rem] rounded-md"
+        >
+          Report
+        </button>
+      </div>
+      </form>
+    </div>
+      </template>
