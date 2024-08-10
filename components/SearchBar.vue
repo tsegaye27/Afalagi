@@ -4,6 +4,8 @@ const handleSearch = () => {
   navigateTo("/posts");
 };
 
+const { $axios } = useNuxtApp();
+
 watch(input, async (newValue) => {
   try {
     const res = await $axios.get("/post", {

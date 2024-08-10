@@ -64,15 +64,15 @@ const reportMissing = async () => {
   // formData.append("videoMessage", postData.value.videoMessage);
   formData.append("dateOfBirth", postData.value.dateOfBirth);
   // formData.append("height", height.value * 1);
-  formData.append("maritalStatus", postData.value.maritalStatus.toUpperCase());
-  formData.append("medicalIssues", postData.value.medicalIssues.toUpperCase());
+  formData.append("maritalStatus", convertToUppercaseWithUnderscore(postData.value.maritalStatus));
+  formData.append("medicalIssues", convertToUppercaseWithUnderscore(postData.value.medicalIssues));
   formData.append(
     "physicalDisability",
-    postData.value.physicalDisability.toUpperCase()
+    convertToUppercaseWithUnderscore(postData.value.physicalDisability)
   );
   formData.append(
     "mentalDisability",
-    postData.value.mentalDisability.toUpperCase()
+    convertToUppercaseWithUnderscore(postData.value.mentalDisability)
   );
   formData.append(
     "posterRelation",
@@ -80,7 +80,7 @@ const reportMissing = async () => {
   );
   formData.append(
     "educationalLevel",
-    postData.value.educationalLevel.toUpperCase()
+    convertToUppercaseWithUnderscore(postData.value.educationalLevel)
   );
   formData.append("hairColor", postData.value.hairColor.toUpperCase());
   formData.append("skinColor", postData.value.skinColor.toUpperCase());
@@ -94,7 +94,6 @@ const reportMissing = async () => {
   formData.append("phoneNumber", phoneNumber);
   formData.append("nationality", postData.value.nationality);
   formData.append("languageSpoken", postData.value.languageSpoken);
-  // formData.append("lastSeenWearing", lastSeenWearing.value);
   formData.append("lastSeenDate", postData.value.lastSeenDate);
   formData.append("lastSeenLocation", postData.value.lastSeenLocation);
   formData.append("lastSeenWearing", lastSeenWearing.value);
@@ -118,6 +117,15 @@ const reportMissing = async () => {
     );
   }
 };
+function convertToUppercaseWithUnderscore(str) {
+  // Convert string to uppercase
+  const upperCaseStr = str.toUpperCase();
+
+  // Replace spaces with underscores
+  const finalStr = upperCaseStr.replace(/\s/g, '_');
+
+  return finalStr;
+}
 </script>
 <template>
   <div class="report-form flex justify-center items-start my-[2rem]">

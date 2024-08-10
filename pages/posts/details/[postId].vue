@@ -23,6 +23,31 @@ onMounted(async () => {
     console.error(error.response ? error.response.data : error.message);
   }
 });
+
+function formatDate(dateStr) {
+  const dateObj = new Date(dateStr);
+
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const month = monthNames[dateObj.getMonth()];
+  const day = String(dateObj.getDate()).padStart(2, "0");
+  const year = dateObj.getFullYear();
+
+  return `${month} ${day}, ${year}`;
+}
 </script>
 <template>
   <div>
@@ -65,7 +90,7 @@ onMounted(async () => {
                   date of Birth:
                 </li>
                 <span class="text-[var(--primary-color)] font-light">{{
-                  missingPerson.dateOfBirth
+                  formatDate(missingPerson.dateOfBirth)
                 }}</span>
               </div>
               <div class="flex justify-start gap-[6rem] wrap">
@@ -125,7 +150,7 @@ onMounted(async () => {
                   Last-seen Date:
                 </li>
                 <span class="text-[var(--primary-color)] font-light">{{
-                  missingPerson.lastSeenDate
+                  formatDate(missingPerson.lastSeenDate)
                 }}</span>
               </div>
               <div class="flex justify-start gap-[6rem] wrap">
