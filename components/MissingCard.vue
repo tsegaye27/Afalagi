@@ -169,7 +169,7 @@ function formatDate(dateStr) {
       Last-Seen(Date): {{ formatDate(lastSeenDate) }}
     </p>
     <button @click="viewDetails" class="btn-posts mt-1 w-[349px]">
-      {{ token && status !== "OPEN" ? "View Details" : "Edit Post" }}
+      View Details
     </button>
   </div>
 </template>
