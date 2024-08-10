@@ -105,14 +105,13 @@ const language = ref("English");
           to="/profile/details"
         >
           <img
-            v-if="profilePicture"
             class="w-[50px] h-[50px] rounded-[0.6rem] border-1 border-[#f4f4f4]"
             :src="profilePicture"
             alt="profile-picture"
           />
-          <span v-else class="flex items-center"
+          <!-- <span class="flex items-center"
             ><Icon name="heroicons-outline:user" size="22px"
-          /></span>
+          /></span> -->
         </NuxtLink>
       </li>
     </ul>
