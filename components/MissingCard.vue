@@ -97,9 +97,9 @@ const props = defineProps({
 //   const dob = new Date(dateOfBirth);
 //   const today = new Date();
 
-//   let age = today.getFullYear() - dob.getFullYear();
-//   const monthDiff = today.getMonth() - dob.getMonth();
-//   const dayDiff = today.getDate() - dob.getDate();
+//   let age = today.getFullYear() * 1 - dob.getFullYear() * 1;
+//   const monthDiff = today.getMonth() * 1 - dob.getMonth() * 1;
+//   const dayDiff = today.getDate() * 1 - dob.getDate() * 1;
 //   // If birth month and day haven't occurred yet this year, subtract one from the age
 //   if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
 //     age--;
