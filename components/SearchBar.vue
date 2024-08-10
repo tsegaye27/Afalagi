@@ -3,6 +3,19 @@ const input = ref("");
 const handleSearch = () => {
   navigateTo("/posts");
 };
+
+watch(input, async (newValue) => {
+  try {
+    const res = await $axios.get("/post", {
+      params: {
+        name: `${newValue}`,
+      },
+    });
+    console.log(res, newValue);
+  } catch (error) {
+    console.log(error.response ? error.response.data : error.message);
+  }
+});
 </script>
 <template>
   <div class="search h-[40px] flex">

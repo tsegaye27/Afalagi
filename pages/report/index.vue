@@ -106,6 +106,7 @@ const reportMissing = async () => {
       },
     });
     console.log("Success✅", response.data.data);
+    navigateTo("/profile/my-posts");
   } catch (error) {
     console.log(
       "Failure❌",
