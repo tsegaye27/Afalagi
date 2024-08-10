@@ -55,9 +55,10 @@ const sendResetLink = async () => {
     return
   }
   try {
-    const response = await axios.post('/auth/reset-password', { email: email.value })
+    const response = await axios.post('/auth/forgot-password', { email: email.value })
     successMessage.value = 'Reset link sent successfully!'
     errorMessage.value = ''
+    navigateTo('/auth/reset-password/' + response.data.token)
   } catch (error) {
     successMessage.value = ''
     errorMessage.value = 'Failed to send reset link. Please try again later.'

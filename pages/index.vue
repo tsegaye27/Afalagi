@@ -1,9 +1,4 @@
 <script setup>
-import { useUserStore } from "~/stores/user";
-
-const store=useUserStore();
-
-console.log(store ,store.refreshToken)
 </script>
 <template>
   <div class="overflow-y-auto">
