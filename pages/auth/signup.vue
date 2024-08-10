@@ -42,7 +42,6 @@
             required
             class="text-[var(--primary-color)] input outline-none p-2 w-4/5 my-2 border border-[var(--secondary-color)] rounded"
           />
-          <p v-if="errors.email" class="text-red-500 text-sm">{{ errors.email }}</p>
           <input
             type="password"
             v-model="password"
@@ -50,7 +49,6 @@
             required
             class="text-[var(--primary-color)] input outline-none p-2 w-4/5 my-2 border border-[var(--secondary-color)] rounded"
           />
-          <p v-if="errors.password" class="text-red-500 text-sm">{{ errors.password }}</p>
           <input
             type="password"
             v-model="passwordConfirm"
@@ -58,7 +56,6 @@
             required
             class="text-[var(--primary-color)] input outline-none p-2 w-4/5 my-2 border border-[var(--secondary-color)] rounded"
           />
-          <p v-if="errors.passwordConfirm" class="text-red-500 text-sm">{{ errors.passwordConfirm }}</p>
         </div>
         <div class="flex flex-col items-center gap-[1rem] justify-center">
           <button
@@ -102,27 +99,11 @@ const { $axios } = useNuxtApp();
 const passwordConfirm = ref("");
 const email = ref("");
 const password = ref("");
-const errors = ref({ email: "", password: "", passwordConfirm: "" });
 const toasts = ref([]);
 
-const validateForm = () => {
-  errors.value.email = "";
-  errors.value.password = "";
-  errors.value.passwordConfirm = "";
-
-  if (password.value.length <= 6) {
-    errors.value.password = "Password must be greater than 6 characters.";
-  }
-
-  if (passwordConfirm.value !== password.value) {
-    errors.value.passwordConfirm = "Passwords do not match.";
-  }
-
-  return !errors.value.password && !errors.value.passwordConfirm;
-};
-
 const submitForm = async () => {
-  if (!validateForm()) {
+  if (password.value.length <= 6) {
+    showToast('Password must be greater than 6 characters.');
     return;
   }
 
@@ -146,7 +127,7 @@ const submitForm = async () => {
       const messages = error.response.data.message || [error.response.data];
       messages.forEach(msg => showToast(`["${msg}"]`));
     } else {
-      showToast(`["${error.message}"]`);
+      showToast(`["${error.response ? error.response.data : error.message}"]`);
     }
   }
 };
