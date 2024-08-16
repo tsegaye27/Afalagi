@@ -93,6 +93,7 @@ const showModal = ref(false);
         :images="person.images"
         :legalDocuments="person.legalDocuments"
         :videoMessage="person.videoMessage"
+        :reporterName="`${person.user.Profile.firstName} ${person.user.Profile.lastName}`"
       />
     </div>
   </div>

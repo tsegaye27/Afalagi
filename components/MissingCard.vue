@@ -23,60 +23,21 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  reporterName: {
+    type: String,
+    required: true,
+  },
   dateOfBirth: {
     type: String,
     required: true,
   },
-  // lastSeenWearing: {
-  //   type: String,
-  // },
   lastSeenDate: {
     type: String,
     required: true,
   },
-  // height: {
-  //   type: String,
-  //   required: true,
-  // },
   status: {
     type: String,
   },
-  // languageSpoken: {
-  //   type: String,
-  //   required: true,
-  // },
-  // nationality: {
-  //   type: String,
-  //   required: true,
-  // },
-  // hairColor: {
-  //   type: String,
-  //   required: true,
-  // },
-  // skinColor: {
-  //   type: String,
-  //   required: true,
-  // },
-  // recognizableFeatures: {
-  //   type: String,
-  //   required: true,
-  // },
-  // maritalStatus: {
-  //   type: String,
-  //   required: true,
-  // },
-  // physicalDisability: {
-  //   type: String,
-  //   required: true,
-  // },
-  // mentalDisability: {
-  //   type: String,
-  //   required: true,
-  // },
-  // medicalIssues: {
-  //   type: String,
-  //   required: true,
-  // },
   gender: {
     type: String,
     required: true,
@@ -84,34 +45,14 @@ const props = defineProps({
   images: {
     type: Array,
   },
-  // videoMessage: {
-  //   type: String,
-  // },
-  // description: {
-  //   type: String,
-  //   required: true,
-  // },
 });
 
-// function calculateAge(dateOfBirth) {
-//   const dob = new Date(dateOfBirth);
-//   const today = new Date();
-
-//   let age = today.getFullYear() * 1 - dob.getFullYear() * 1;
-//   const monthDiff = today.getMonth() * 1 - dob.getMonth() * 1;
-//   const dayDiff = today.getDate() * 1 - dob.getDate() * 1;
-//   // If birth month and day haven't occurred yet this year, subtract one from the age
-//   if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-//     age--;
-//   }
-
-//   return age;
-// }
-// const age = calculateAge(props.dateOfBirth);
-
+// Function to navigate to post details
 const viewDetails = () => {
   navigateTo(`/posts/details/${props.postId}`);
 };
+
+// Function to format date
 function formatDate(dateStr) {
   const dateObj = new Date(dateStr);
 
@@ -137,13 +78,23 @@ function formatDate(dateStr) {
   return `${month} ${day}, ${year}`;
 }
 </script>
+
 <template>
   <div
     class="relative w-[370px] gap-1 flex flex-col bg-[#fafafa] rounded-lg border-2 border-[#d2d2d2] items-start"
   >
+    <!-- Reporter Name (New) -->
+    <div
+      v-if="reporterName"
+      class="p-4 text-[var(--primary-color)] font-semibold text-lg"
+    >
+      Reported by: {{ `${reporterName}` }}
+      <!-- This is new -->
+    </div>
+
     <span
       :class="[
-        'absolute top-2 right-2 px-3 py-1 rounded-full z-10 text-white font-bold',
+        'absolute top-0 right-0 px-3 py-1 rounded-sm z-10 text-white font-bold',
         status === 'OPEN' ? 'bg-green-500' : '',
         status === 'UNDER_REVIEW' ? 'bg-orange-300' : '',
         status === 'REJECTED' ? 'bg-red-500' : '',
@@ -161,13 +112,24 @@ function formatDate(dateStr) {
     >
       {{ `${firstName} ${middleName} ${lastName}` }}
     </h1>
-    <!-- <p class="text-[var(--primary-color)] pl-4 w-full">Age: {{ age }}</p> -->
     <p class="text-[var(--primary-color)] pl-4 w-full">
       Last-Seen(Location): {{ lastSeenLocation }}
     </p>
     <p class="text-[var(--primary-color)] pl-4 w-full">
       Last-Seen(Date): {{ formatDate(lastSeenDate) }}
     </p>
+
+    <!-- Comment Button -->
+    <button
+      v-if="reporterName"
+      @click="handleCommentClick"
+      class="absolute top-2 right-2 flex justify-center items-center p-2 rounded-full bg-[var(--secondary-color)] text-white hover:bg-[var(--secondary-color)]"
+    >
+      <!-- Use an icon component here; example icon used -->
+      <Icon name="mdi:comment" size="24px" />
+    </button>
+
+    <!-- View Details Button -->
     <button @click="viewDetails" class="btn-posts mt-1 w-full">
       View Details
     </button>
