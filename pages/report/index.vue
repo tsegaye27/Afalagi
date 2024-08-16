@@ -3,11 +3,11 @@ import { useUserStore } from "#imports";
 
 // State to control the toaster
 const toasterVisible = ref(false);
-const toasterMessage = ref('');
-const toasterType = ref('success'); // or 'error'
+const toasterMessage = ref("");
+const toasterType = ref("success"); // or 'error'
 const toasterDuration = ref(3000);
 
-function showToaster(message, type = 'success', duration = 3000) {
+function showToaster(message, type = "success", duration = 3000) {
   toasterMessage.value = message;
   toasterType.value = type;
   toasterDuration.value = duration;
@@ -21,27 +21,27 @@ function showToaster(message, type = 'success', duration = 3000) {
 const store = useUserStore();
 const { $axios } = useNuxtApp();
 const postData = ref({
-  firstName: "", 
-  middleName: "", 
-  lastName: "", 
-  images: "", 
-  legalDocs: "", 
-  description: "", 
-  lastSeenLocation: "", 
-  lastSeenDate: "", 
-  languageSpoken: "", 
-  nationality: "", 
-  hairColor: "", 
-  skinColor: "", 
-  recognizableFeatures: "", 
-  physicalDisability: "", 
-  mentalDisability: "", 
-  medicalIssues: "", 
+  firstName: "",
+  middleName: "",
+  lastName: "",
+  images: "",
+  legalDocs: "",
+  description: "",
+  lastSeenLocation: "",
+  lastSeenDate: "",
+  languageSpoken: "",
+  nationality: "",
+  hairColor: "",
+  skinColor: "",
+  recognizableFeatures: "",
+  physicalDisability: "",
+  mentalDisability: "",
+  medicalIssues: "",
   posterRelation: "",
-  gender: "", 
-  dateOfBirth: "", 
-  educationalLevel: "", 
-  videoMessage: "", 
+  gender: "",
+  dateOfBirth: "",
+  educationalLevel: "",
+  videoMessage: "",
   maritalStatus: "",
 });
 
@@ -65,16 +65,18 @@ const handleVideoMessage = (event) => {
 
 const progressWidth = computed(() => {
   switch (currentStep.value) {
-    case 1: return '33%';
-    case 2: return '66%';
-    case 3: return '100%';
-    default: return '0%';
+    case 1:
+      return "33%";
+    case 2:
+      return "66%";
+    case 3:
+      return "100%";
+    default:
+      return "0%";
   }
 });
 
-
 const reportMissing = async () => {
-  
   const formData = new FormData();
 
   postData.value.maritalStatus = postData.value.maritalStatus.toUpperCase();
@@ -136,8 +138,8 @@ const reportMissing = async () => {
       },
     });
     console.log("Success✅", response.data.data);
-    showToaster('Operation successful', 'success');
-    navigateTo('/profile/my-posts')
+    showToaster("Operation successful", "success");
+    navigateTo("/profile/my-posts");
   } catch (error) {
     console.log(
       "Failure❌",
@@ -147,7 +149,10 @@ const reportMissing = async () => {
       lastSeenWearing.value,
       phoneNumber
     );
-    showToaster(error.response ? error.response.data.message : error.message, 'error');
+    showToaster(
+      error.response ? error.response.data.message : error.message,
+      "error"
+    );
   }
 };
 
@@ -161,13 +166,15 @@ const goBack = () => {
 </script>
 
 <template>
-  <div class="report-form flex justify-center items-center my-[2rem] flex-col">
-<div class="w-[750px] h-[10px] bg-gray-400 rounded my-[1rem] relative">
-  <div class="h-full bg-[var(--secondary-color)] rounded absolute top-0 left-0 progress-fill" :style="{ width: progressWidth }"></div>
-</div>
+  <div class="report-form flex flex-col justify-center items-center my-[2rem]">
+    <div class="w-[750px] h-[10px] bg-gray-400 rounded my-[1rem] relative">
+      <div
+        class="h-full bg-[var(--secondary-color)] rounded absolute top-0 left-0 progress-fill"
+        :style="{ width: progressWidth }"
+      ></div>
+    </div>
 
-  
-    <Toaster 
+    <Toaster
       v-if="toasterVisible"
       :message="toasterMessage"
       :type="toasterType"
@@ -561,9 +568,9 @@ const goBack = () => {
           />
         </div>
       </div>
-      
+
       <!-- Navigation buttons -->
-      <div class="flex justify-end gap-[25rem] w-full  px-[3rem] mt-[2rem]">
+      <div class="flex justify-end gap-[25rem] w-full px-[3rem] mt-[2rem]">
         <button
           v-if="currentStep > 1"
           type="button"
@@ -572,7 +579,7 @@ const goBack = () => {
         >
           Back
         </button>
-      
+
         <button
           v-if="currentStep < 3"
           type="button"
@@ -581,7 +588,7 @@ const goBack = () => {
         >
           Next
         </button>
-      
+
         <button
           v-if="currentStep === 3"
           type="submit"
@@ -590,11 +597,10 @@ const goBack = () => {
           Report
         </button>
       </div>
-      </form>
-      </div>
-      </template>
+    </form>
+  </div>
+</template>
 <style>
-
 .progress-bar {
   width: 100%;
   height: 10px;
