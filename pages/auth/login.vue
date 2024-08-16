@@ -8,7 +8,6 @@ const { $axios } = useNuxtApp();
 
 const email = ref("");
 const password = ref("");
-const router = useRouter();
 
 // Toaster state
 const showToaster = ref(false);
@@ -34,6 +33,9 @@ const submitForm = async () => {
     console.log("log in successful:");
     store.setToken(response.data.access_token);
     store.setRefreshToken(response.data.refresh_token);
+    if (!response.data.verified) {
+      showToast("Please Create your profile", "success");
+    }
     showToast("Login successful!", "success");
     navigateTo("/");
   } catch (error) {

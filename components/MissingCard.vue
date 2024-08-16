@@ -139,7 +139,7 @@ function formatDate(dateStr) {
 </script>
 <template>
   <div
-    class="relative w-[350px] gap-1 flex flex-col bg-[#fafafa] rounded-lg border-2 border-[#d2d2d2] items-start"
+    class="relative w-[370px] gap-1 flex flex-col bg-[#fafafa] rounded-lg border-2 border-[#d2d2d2] items-start"
   >
     <span
       :class="[
@@ -157,7 +157,7 @@ function formatDate(dateStr) {
       alt="missing_boy"
     />
     <h1
-      class="text-[27px] text-center font-semibold text-[var(--primary-color)] mt-4 w-full"
+      class="text-[27px] whitespace-nowrap text-center font-semibold text-[var(--primary-color)] mt-4 w-full"
     >
       {{ `${firstName} ${middleName} ${lastName}` }}
     </h1>
@@ -168,7 +168,7 @@ function formatDate(dateStr) {
     <p class="text-[var(--primary-color)] pl-4 w-full">
       Last-Seen(Date): {{ formatDate(lastSeenDate) }}
     </p>
-    <button @click="viewDetails" class="btn-posts mt-1 w-[349px]">
+    <button @click="viewDetails" class="btn-posts mt-1 w-full">
       View Details
     </button>
   </div>

@@ -9,10 +9,20 @@
     <ProfileNav class="col-start-2 col-end-3 row-start-1 row-end-2 px-[2rem]" />
 
     <!-- Main Content -->
-    <div
-      class="col-start-2 col-end-3 row-start-2 overflow-auto row-end-3 px-[2rem]"
-    >
-      <slot />
+    <div class="col-start-2 col-end-3 row-start-2 overflow-auto row-end-3">
+      <Spinner v-if="isLoading" />
+      <!-- Show spinner if loading -->
+      <div v-else>
+        <slot />
+        <!-- Show slot content when not loading -->
+      </div>
     </div>
   </div>
 </template>
+
+<script setup>
+import { useUserStore } from "@/stores/user";
+
+const store = useUserStore();
+const isLoading = store.isLoading; // Get the isLoading state from the store
+</script>
