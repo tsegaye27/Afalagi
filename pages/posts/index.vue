@@ -1,9 +1,18 @@
 <script setup>
 import { useUserStore } from "#imports";
+import { ref, computed, watch, onMounted } from "vue";
 const store = useUserStore();
 const { $axios } = useNuxtApp();
 const missingPersons = ref([]);
-const searchQuery = ref(""); // State to store the search query
+const searchQuery = ref("");
+
+// Define state for filters
+const genderFilter = ref("");
+const nationalityFilter = ref("");
+const skinColorFilter = ref("");
+const maritalStatusFilter= ref("");
+const hairColorFilter=ref("");
+const physicalDisabilityFilter=ref('');
 
 // Fetch posts based on the search query
 const fetchPosts = async () => {
@@ -31,6 +40,20 @@ watch(searchQuery, fetchPosts);
 // Initial fetch when the component mounts
 onMounted(fetchPosts);
 
+// Computed property to filter missing persons based on the selected filters
+const filteredMissingPersons = computed(() => {
+  return missingPersons.value.filter((person) => {
+    const matchesGender = !genderFilter.value || person.gender === genderFilter.value;
+    const matchesNationality = !nationalityFilter.value || person.nationality === nationalityFilter.value;
+    const matchesSkinColor = !skinColorFilter.value || person.skinColor === skinColorFilter.value;
+    const matchesmaritalStatus = !maritalStatusFilter.value || person.maritalStatus === maritalStatusFilter.value;
+    const matcheshairColorFilter = !hairColorFilter.value || person.hairColor === hairColorFilter.value;
+    const matchesphysicalDisabilityFilter = !physicalDisabilityFilter.value || person.physicalDisability.includes(physicalDisabilityFilter.value);
+    
+    return matchesGender && matchesNationality && matchesSkinColor && matchesmaritalStatus && matcheshairColorFilter && matchesphysicalDisabilityFilter;
+  });
+});
+
 const showModal = ref(false);
 </script>
 
@@ -48,7 +71,7 @@ const showModal = ref(false);
     <hr />
     <div class="flex justify-center mt-[1rem] gap-[1rem]">
       <!-- Pass the search query handler to the SearchBar component -->
-      <SearchBar @search="(query) => (searchQuery = query)" />
+      <SearchBar @search="(query) => (searchQuery.value = query)" />
       <button
         @click="showModal = true"
         class="p-2 text-[var(--primary-color)] font-medium rounded-md border border-[#0972d3]"
@@ -56,9 +79,75 @@ const showModal = ref(false);
         Filter
       </button>
     </div>
+    
+    <!-- Filter Bar -->
+    <div class="flex justify-center mt-[1rem] gap-[1rem]">
+      <select v-model="genderFilter" class="p-2 border rounded-md">
+        <option value="">All Genders</option>
+        <option value="MALE">Male</option>
+        <option value="FEMALE">Female</option>
+      </select>
+      <select v-model="nationalityFilter" class="p-2 border rounded-md">
+        <option value="">All Nationalities</option>
+        <option value="ethiopian">Ethiopian</option>
+        <option value="other">Other</option>
+      </select>
+      <select v-model="skinColorFilter" class="p-2 border rounded-md">
+        <option value="">ALL Skin Color</option>
+            <option value="DARK">Dark</option>
+            <option value="BROWN">Brown</option>
+            <option value="WHITE">White</option>
+            <option value="LIGHT-SKIN">light-skin</option>
+            <option value="OTHER">Other</option>
+      </select>
+      <select
+            v-model="maritalStatusFilter"
+          >
+            <option value="">
+              Select your Marital Status
+            </option>
+            <option value="SINGLE">Single</option>
+            <option value="MARRIED">Married</option>
+            <option value="DIVORVED">Divorced</option>
+            <option value="WIDOWED">Widowed</option>
+            <option value="OTHER">Other</option>
+          </select>
+          <select
+            v-model="hairColorFilter"
+          >
+            <option selected value="" >Select the Hair Color</option>
+            <option value="BLACK">Black</option>
+            <option value="BROWN">Brown</option>
+            <option value="WHITE">White</option>
+            <option value="BLONDE">Blonde</option>
+            <option value="GRAY">Grey</option>
+            <option value="ORANGE">Orange</option>
+            <option value="OTHER">Other</option>
+          </select>
+
+          <select
+            v-model="physicalDisabilityFilter"
+            class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
+          >
+            <option value="">
+              Physical Disability
+            </option>
+            <option selected value="NONE">None</option>
+            <option value="mobility issue">Mobility Issue</option>
+            <option value="vision impairment">Vision Impairment</option>
+            <option value="hearing loss">Hearing Loss</option>
+            <option value="neurological condition">
+              Neurological Condition
+            </option>
+            <option value="non verbal">Non Verbal</option>
+            <option value="limb difference">Limb Difference</option>
+            <option value="other">Other</option>
+          </select>
+    </div>
+
     <div class="flex flex-wrap justify-start gap-[3rem] ml-[3rem] my-[2rem]">
       <MissingCard
-        v-for="(person, index) in missingPersons"
+        v-for="(person, index) in filteredMissingPersons"
         :key="index"
         :postId="person.id"
         :lastSeenWearing="person.lastSeenWearing"

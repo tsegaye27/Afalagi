@@ -33,7 +33,7 @@ token &&
     try {
       const response = await $axios.get("user/profile/pic", {
         headers: {
-          Authorization: `Bearer ${store.token}`,
+          Authorization: `Bearer ${store.refreshToken}`,
         },
       });
       console.log("success", response.data);
