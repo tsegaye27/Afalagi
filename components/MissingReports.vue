@@ -55,8 +55,8 @@ const showMore = () => {
         :images="person.images"
         :legalDocuments="person.legalDocuments"
         :videoMessage="person.videoMessage"
-        :reporterName="`${person.user.Profile.firstName} ${person.user.Profile.lastName}`"
-      />
+        :reporterName="`${person.user.Profile?.firstName} ${person.user.Profile?.lastName}`"
+        />
       <button
         @click="showMore"
         class="text-[#f4f4f4] p-[0.7rem] rounded-full bg-[var(--secondary-color)] font-semibold w-[2.8rem] h-full flex items-center justify-center"

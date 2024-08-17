@@ -48,7 +48,7 @@ const filteredMissingPersons = computed(() => {
     const matchesSkinColor = !skinColorFilter.value || person.skinColor === skinColorFilter.value;
     const matchesmaritalStatus = !maritalStatusFilter.value || person.maritalStatus === maritalStatusFilter.value;
     const matcheshairColorFilter = !hairColorFilter.value || person.hairColor === hairColorFilter.value;
-    const matchesphysicalDisabilityFilter = !physicalDisabilityFilter.value || person.physicalDisability.includes(physicalDisabilityFilter.value);
+    const matchesphysicalDisabilityFilter = !physicalDisabilityFilter.value.toLocaleUpperCase() || person.physicalDisability.includes(physicalDisabilityFilter.value.toLocaleUpperCase());
     
     return matchesGender && matchesNationality && matchesSkinColor && matchesmaritalStatus && matcheshairColorFilter && matchesphysicalDisabilityFilter;
   });
@@ -135,14 +135,14 @@ const showModal = ref(false);
               Physical Disability
             </option>
             <option selected value="NONE">None</option>
-            <option value="mobility issue">Mobility Issue</option>
-            <option value="vision impairment">Vision Impairment</option>
-            <option value="hearing loss">Hearing Loss</option>
-            <option value="neurological condition">
+            <option value="mobility_issue">Mobility Issue</option>
+            <option value="vision_impairment">Vision Impairment</option>
+            <option value="hearing_loss">Hearing Loss</option>
+            <option value="neurological_condition">
               Neurological Condition
             </option>
             <option value="non verbal">Non Verbal</option>
-            <option value="limb difference">Limb Difference</option>
+            <option value="limb_difference">Limb Difference</option>
             <option value="other">Other</option>
           </select>
     </div>
@@ -182,8 +182,8 @@ const showModal = ref(false);
         :images="person.images"
         :legalDocuments="person.legalDocuments"
         :videoMessage="person.videoMessage"
-        :reporterName="`${person.user.Profile.firstName} ${person.user.Profile.lastName}`"
-      />
+        :reporterName="`${person.user.Profile?.firstName} ${person.user.Profile?.lastName}`"
+        />
     </div>
   </div>
 </template>
