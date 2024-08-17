@@ -19,7 +19,6 @@ const user = ref({
 const { $axios } = useNuxtApp();
 
 onMounted(async () => {
-  if (!store.token) navigateTo("/auth/login");
   try {
     const response = await $axios.get("/user/profile/me", {
       headers: {
@@ -43,12 +42,66 @@ function formatDateToInput(dateString) {
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 }
+
+const showToaster = ref(false);
+const toasterMessage = ref("");
+const toasterType = ref(""); // success or error
+
+const showToast = (message, type) => {
+  toasterMessage.value = message;
+  toasterType.value = type;
+  showToaster.value = true;
+
+  setTimeout(() => {
+    showToaster.value = false;
+  }, 5000); // Hide after 5 seconds
+};
+
+const updateProfile = async () => {
+  store.setLoading(true);
+  try {
+    const response = await $axios.patch(
+      "/user/profile",
+      {
+        firstName: user.value.firstName,
+        middleName: user.value.middleName,
+        lastName: user.value.lastName,
+        country: user.value.country,
+        gender: user.value.gender,
+        birthDate: user.value.birthDate,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${store.token}`,
+        },
+      }
+    );
+    showToast(response.data.message, "success");
+    console.log("success", response);
+  } catch (error) {
+    console.log(
+      store.token,
+      error.response ? error.response.data : error.message
+    );
+  } finally {
+    store.setLoading(false);
+  }
+};
 </script>
 
 <template>
   <div class="w-full flex flex-row-reverse justify-center items-center pt-3">
+    <div
+      v-if="showToaster"
+      :class="toasterType === 'success' ? 'bg-green-500' : 'bg-red-500'"
+      class="fixed top-5 right-5 p-4 rounded text-white shadow-lg z-50"
+    >
+      {{ toasterMessage }}
+    </div>
+
     <div class="flex gap-[1rem] flex-col justify-center items-center">
       <form
+        @submit.prevent="updateProfile"
         class="w-[32rem] p-[3rem] border rounded flex-col gap-[0.25rem] flex justify-center items-center"
       >
         <h1 class="text-[#878787] mb-[2rem] text-center text-2xl font-semibold">

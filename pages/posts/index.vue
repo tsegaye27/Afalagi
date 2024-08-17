@@ -59,7 +59,9 @@ const showModal = ref(false);
 
 <template>
   <div class="mt-[3rem]">
-    <div class="flex mx-[2.5rem] mb-[1rem] gap-[7rem] justify-between items-center">
+    <div
+      class="flex mx-[2.5rem] mb-[1rem] gap-[7rem] justify-between items-center"
+    >
       <div class="flex justify-between w-full items-center">
         <h1
           class="text-[40px] text-[var(--primary-color)] text-center w-full font-[sora] font-semibold"
@@ -146,6 +148,13 @@ const showModal = ref(false);
     </div>
 
     <div class="flex flex-wrap justify-start gap-[3rem] ml-[3rem] my-[2rem]">
+      <div
+        v-if="missingPersons.length === 0"
+        class="w-full h-[598px] text-center text-gray-500"
+      >
+        <p>No posts found</p>
+        <!-- This is the message for no posts -->
+      </div>
       <MissingCard
         v-for="(person, index) in filteredMissingPersons"
         :key="index"
@@ -173,6 +182,7 @@ const showModal = ref(false);
         :images="person.images"
         :legalDocuments="person.legalDocuments"
         :videoMessage="person.videoMessage"
+        :reporterName="`${person.user.Profile.firstName} ${person.user.Profile.lastName}`"
       />
     </div>
   </div>

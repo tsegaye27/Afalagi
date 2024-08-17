@@ -8,6 +8,7 @@ const { $axios } = useNuxtApp();
 const profilePicture = ref("");
 
 onMounted(async () => {
+  if (!store.token) navigateTo("/auth/login");
   try {
     const response = await $axios.get("user/profile/me", {
       headers: {

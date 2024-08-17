@@ -3,9 +3,11 @@ import { useUserStore } from "#imports";
 definePageMeta({ layout: "profile" });
 const myPosts = ref([]);
 const store = useUserStore();
+const isLoading = store.isLoading;
 const { $axios } = useNuxtApp();
 
 onMounted(async () => {
+  store.setLoading(true);
   try {
     const res = await $axios.get("/post/me", {
       headers: {
@@ -14,16 +16,19 @@ onMounted(async () => {
     });
     console.log("✅✅Success✅✅", res.data.data);
     myPosts.value = res.data.data;
+    store.setLoading(false);
   } catch (err) {
     console.log(
       "❌❌Failed❌❌",
       err.response ? err.response.data : err.message
     );
+    store.setLoading(false);
   }
 });
 </script>
 <template>
-  <div class="overflow-y-auto h-[40rem]">
+  <Spinner v-if="isLoading" />
+  <div v-else class="overflow-y-auto h-[40rem]">
     <h1
       class="text-center font-semibold text-[25px] text-[var(--secondary-color)] mt-[3rem]"
     >
