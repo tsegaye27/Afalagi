@@ -105,8 +105,8 @@ const shortName = computed(() => {
       {{ status }}
     </span>
     <img
-      class="w-full h-[280px] object-center rounded-t-lg"
-      src="@/assets/img/missing.webp"
+      class="w-full h-[280px] object-center"
+      :src="`http://localhost:3333/uploads/post/${images[0]}`"
       alt="missing_boy"
     />
     <h1

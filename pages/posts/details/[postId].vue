@@ -3,6 +3,7 @@ import { useUserStore } from "#imports";
 
 const store = useUserStore();
 const router = useRouter();
+const imagePath = ref("");
 const previousPage = () => {
   router.go(-1);
 };
@@ -19,6 +20,8 @@ onMounted(async () => {
     });
     missingPerson.value = response.data.data;
     console.log("missingPerson", missingPerson.value);
+    imagePath.value = `http://localhost:3333/uploads/post/${response.data.data.images[0]}`;
+    console.log(imagePath.value);
   } catch (error) {
     console.error(error.response ? error.response.data : error.message);
   }
@@ -57,7 +60,9 @@ function formatDate(dateStr) {
         class="flex btn-round justify-center items-center mr-[1rem]"
       >
         <</button
-      ><span class="text-[var(--primary-color)] font-light text-2xl">Back</span>
+      ><span class="text-[var(--primary-color)] font-regular text-2xl"
+        >Back</span
+      >
     </div>
 
     <hr />
@@ -67,7 +72,7 @@ function formatDate(dateStr) {
           <div class="person-image">
             <img
               class="w-[400px] h-[500px]"
-              :src="missingPerson.images"
+              :src="imagePath"
               alt="missing_person"
             />
           </div>
@@ -79,7 +84,7 @@ function formatDate(dateStr) {
                 >
                   Full Name:
                 </li>
-                <span class="text-[var(--primary-color)] font-light">{{
+                <span class="text-[var(--primary-color)] font-regular">{{
                   `${missingPerson.firstName} ${missingPerson.middleName} ${missingPerson.lastName}`
                 }}</span>
               </div>
@@ -87,9 +92,9 @@ function formatDate(dateStr) {
                 <li
                   class="font-medium w-[265px] text-[var(--primary-color)] text-lg"
                 >
-                  date of Birth:
+                  Date of Birth:
                 </li>
-                <span class="text-[var(--primary-color)] font-light">{{
+                <span class="text-[var(--primary-color)] font-regular">{{
                   formatDate(missingPerson.dateOfBirth)
                 }}</span>
               </div>
@@ -99,8 +104,8 @@ function formatDate(dateStr) {
                 >
                   Gender:
                 </li>
-                <span class="text-[var(--primary-color)] font-light">{{
-                  missingPerson.gender
+                <span class="text-[var(--primary-color)] font-regular">{{
+                  missingPerson.gender?.toLowerCase()
                 }}</span>
               </div>
               <div class="flex justify-start gap-[6rem] wrap">
@@ -109,8 +114,8 @@ function formatDate(dateStr) {
                 >
                   Hair-Color:
                 </li>
-                <span class="text-[var(--primary-color)] font-light">{{
-                  missingPerson.hairColor
+                <span class="text-[var(--primary-color)] font-regular">{{
+                  missingPerson.hairColor?.toLowerCase()
                 }}</span>
               </div>
               <div class="flex justify-start gap-[6rem] wrap">
@@ -119,17 +124,17 @@ function formatDate(dateStr) {
                 >
                   Skin-Color:
                 </li>
-                <span class="text-[var(--primary-color)] font-light">{{
-                  missingPerson.skinColor
+                <span class="text-[var(--primary-color)] font-regular">{{
+                  missingPerson.skinColor?.toLowerCase()
                 }}</span>
               </div>
-              <div class="flex justify-start gap-[6rem] wrap">
+              <div class="flex justify-start gap-[5.5rem] wrap">
                 <li
                   class="font-medium w-[180px] text-[var(--primary-color)] text-lg"
                 >
                   Last-seen Wearing:
                 </li>
-                <span class="text-[var(--primary-color)] font-light">{{
+                <span class="text-[var(--primary-color)] font-regular">{{
                   missingPerson.lastSeenWearing
                 }}</span>
               </div>
@@ -139,7 +144,7 @@ function formatDate(dateStr) {
                 >
                   Last-seen Location:
                 </li>
-                <span class="text-[var(--primary-color)] font-light">{{
+                <span class="text-[var(--primary-color)] font-regular">{{
                   missingPerson.lastSeenLocation
                 }}</span>
               </div>
@@ -149,7 +154,7 @@ function formatDate(dateStr) {
                 >
                   Last-seen Date:
                 </li>
-                <span class="text-[var(--primary-color)] font-light">{{
+                <span class="text-[var(--primary-color)] font-regular">{{
                   formatDate(missingPerson.lastSeenDate)
                 }}</span>
               </div>
@@ -159,7 +164,7 @@ function formatDate(dateStr) {
                 >
                   Description:
                 </li>
-                <span class="text-[var(--primary-color)] font-light">{{
+                <span class="text-[var(--primary-color)] font-regular">{{
                   missingPerson.description
                 }}</span>
               </div>
@@ -169,8 +174,8 @@ function formatDate(dateStr) {
                 >
                   Education:
                 </li>
-                <span class="text-[var(--primary-color)] font-light">{{
-                  missingPerson.educationalLevel
+                <span class="text-[var(--primary-color)] font-regular">{{
+                  missingPerson.educationalLevel?.toLowerCase()
                 }}</span>
               </div>
               <div class="flex justify-start gap-[6rem] wrap">
@@ -179,7 +184,7 @@ function formatDate(dateStr) {
                 >
                   Language Spoken:
                 </li>
-                <span class="text-[var(--primary-color)] font-light">{{
+                <span class="text-[var(--primary-color)] font-regular">{{
                   missingPerson.languageSpoken
                 }}</span>
               </div>
@@ -189,17 +194,20 @@ function formatDate(dateStr) {
                 >
                   Marital Status:
                 </li>
-                <span class="text-[var(--primary-color)] font-light">{{
-                  missingPerson.maritalStatus
+                <span class="text-[var(--primary-color)] font-regular">{{
+                  missingPerson.maritalStatus?.toLowerCase()
                 }}</span>
               </div>
-              <div class="flex justify-start gap-[6rem] wrap">
+              <div
+                v-if="missingPerson.height"
+                class="flex justify-start gap-[6rem] wrap"
+              >
                 <li
                   class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
                 >
                   Height:
                 </li>
-                <span class="text-[var(--primary-color)] font-light">{{
+                <span class="text-[var(--primary-color)] font-regular">{{
                   missingPerson.height
                 }}</span>
               </div>
@@ -215,14 +223,14 @@ function formatDate(dateStr) {
           <h1
             class="text-[30px] text-[var(--primary-color)] font-medium font-[sora]"
           >
-            Message from his mother
+            Message from his {{ missingPerson.posterRelation?.toLowerCase() }}
           </h1>
           <video class="w-[600px] h-[400px] rounded-md" controls src=""></video>
           <button
             class="p-3 bg-[var(--secondary-color)] rounded-lg text-medium text-white"
             @click="navigateTo('/profile/messages')"
           >
-            Chat with the reporter
+            Chat with the {{ missingPerson.posterRelation?.toLowerCase() }}
           </button>
         </div>
       </div>

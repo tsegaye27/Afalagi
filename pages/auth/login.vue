@@ -97,6 +97,7 @@ const loginWithGoogle = () => {
             required
             class="input outline-none p-2 w-4/5 my-2 text-[var(--primary-color)] border border-[var(--secondary-color)] rounded"
           />
+
           <input
             type="password"
             v-model="password"
