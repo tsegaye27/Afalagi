@@ -50,12 +50,12 @@ const filteredMissingPersons = computed(() => {
       person.nationality === nationalityFilter.value;
     const matchesSkinColor =
       !skinColorFilter.value || person.skinColor === skinColorFilter.value;
-    const matchesmaritalStatus =
+    const matchesMaritalStatus =
       !maritalStatusFilter.value ||
       person.maritalStatus === maritalStatusFilter.value;
-    const matcheshairColorFilter =
+    const matchesHairColorFilter =
       !hairColorFilter.value || person.hairColor === hairColorFilter.value;
-    const matchesphysicalDisabilityFilter =
+    const matchesPhysicalDisabilityFilter =
       !physicalDisabilityFilter.value.toLocaleUpperCase() ||
       person.physicalDisability.includes(
         physicalDisabilityFilter.value.toLocaleUpperCase()
@@ -65,13 +65,12 @@ const filteredMissingPersons = computed(() => {
       matchesGender &&
       matchesNationality &&
       matchesSkinColor &&
-      matchesmaritalStatus &&
-      matcheshairColorFilter &&
-      matchesphysicalDisabilityFilter
+      matchesMaritalStatus &&
+      matchesHairColorFilter &&
+      matchesPhysicalDisabilityFilter
     );
   });
 });
-
 const showModal = ref(false);
 </script>
 
@@ -91,7 +90,7 @@ const showModal = ref(false);
     <hr />
     <div class="flex justify-center mt-[1rem] gap-[1rem]">
       <!-- Pass the search query handler to the SearchBar component -->
-      <SearchBar @search="(query) => (searchQuery.value = query)" />
+      <SearchBar @search="(query) => (searchQuery = query)" />
       <button
         @click="showModal = true"
         class="p-2 text-[var(--primary-color)] font-medium rounded-md border border-[#0972d3]"
@@ -106,7 +105,7 @@ const showModal = ref(false);
         v-model="genderFilter"
         class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem]"
       >
-        <option value="">Gender</option>
+        <option selected disabled value="">Gender</option>
         <option value="MALE">Male</option>
         <option value="FEMALE">Female</option>
       </select>
