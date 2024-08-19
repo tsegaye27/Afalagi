@@ -29,7 +29,6 @@ const props = defineProps({
   },
   dateOfBirth: {
     type: String,
-    required: true,
   },
   lastSeenDate: {
     type: String,
@@ -77,16 +76,19 @@ function formatDate(dateStr) {
 
   return `${month} ${day}, ${year}`;
 }
+const shortName = computed(() => {
+  return `${props.firstName} ${props.middleName.charAt(0)}. ${props.lastName}`;
+});
 </script>
 
 <template>
   <div
-    class="relative w-[370px] gap-1 flex flex-col bg-[#fafafa] rounded-lg border-2 border-[#d2d2d2] items-start"
+    class="relative w-[300px] gap-1 flex flex-col bg-[#fafafa] rounded-lg border-2 border-[#d2d2d2] items-start"
   >
     <!-- Reporter Name (New) -->
     <div
       v-if="reporterName"
-      class="p-4 text-[var(--primary-color)] font-semibold text-lg"
+      class="p-4 text-[var(--primary-color)] font-semibold text-md"
     >
       Reported by: {{ `${reporterName}` }}
       <!-- This is new -->
@@ -103,14 +105,15 @@ function formatDate(dateStr) {
       {{ status }}
     </span>
     <img
-      class="w-full h-auto rounded-t-lg"
+      class="w-full h-[280px] object-center rounded-t-lg"
       src="@/assets/img/missing.webp"
       alt="missing_boy"
     />
     <h1
+      :title="`${firstName} ${middleName} ${lastName}`"
       class="text-[27px] whitespace-nowrap text-center font-semibold text-[var(--primary-color)] mt-4 w-full"
     >
-      {{ `${firstName} ${middleName} ${lastName}` }}
+      {{ shortName }}
     </h1>
     <p class="text-[var(--primary-color)] pl-4 w-full">
       Last-Seen(Location): {{ lastSeenLocation }}

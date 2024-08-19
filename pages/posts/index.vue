@@ -1,12 +1,10 @@
 <script setup>
 import { useUserStore } from "#imports";
-import { ref, computed, watch, onMounted } from "vue";
 const store = useUserStore();
 const { $axios } = useNuxtApp();
 const missingPersons = ref([]);
 const searchQuery = ref("");
 
-// Define state for filters
 const genderFilter = ref("");
 const nationalityFilter = ref("");
 const skinColorFilter = ref("");
@@ -14,7 +12,6 @@ const maritalStatusFilter = ref("");
 const hairColorFilter = ref("");
 const physicalDisabilityFilter = ref("");
 
-// Fetch posts based on the search query
 const fetchPosts = async () => {
   try {
     const response = await $axios.get("/post", {
@@ -22,7 +19,7 @@ const fetchPosts = async () => {
         Authorization: `Bearer ${store.token}`,
       },
       params: {
-        name: searchQuery.value, // Pass the search query as a parameter
+        name: searchQuery.value,
       },
     });
     missingPersons.value = response.data.data;
@@ -34,13 +31,10 @@ const fetchPosts = async () => {
   }
 };
 
-// Watch for changes in the search query and fetch posts accordingly
 watch(searchQuery, fetchPosts);
 
-// Initial fetch when the component mounts
 onMounted(fetchPosts);
 
-// Computed property to filter missing persons based on the selected filters
 const filteredMissingPersons = computed(() => {
   return missingPersons.value.filter((person) => {
     const matchesGender =
@@ -71,7 +65,6 @@ const filteredMissingPersons = computed(() => {
     );
   });
 });
-const showModal = ref(false);
 </script>
 
 <template>
@@ -89,17 +82,9 @@ const showModal = ref(false);
     </div>
     <hr />
     <div class="flex justify-center mt-[1rem] gap-[1rem]">
-      <!-- Pass the search query handler to the SearchBar component -->
       <SearchBar @search="(query) => (searchQuery = query)" />
-      <button
-        @click="showModal = true"
-        class="p-2 text-[var(--primary-color)] font-medium rounded-md border border-[#0972d3]"
-      >
-        Filter
-      </button>
     </div>
 
-    <!-- Filter Bar -->
     <div class="flex justify-center mt-[1rem] gap-[1rem]">
       <select
         v-model="genderFilter"
@@ -177,7 +162,6 @@ const showModal = ref(false);
         class="w-full h-[598px] text-center text-gray-500"
       >
         <p>No posts found</p>
-        <!-- This is the message for no posts -->
       </div>
       <MissingCard
         v-for="(person, index) in filteredMissingPersons"
