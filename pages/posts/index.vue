@@ -10,9 +10,9 @@ const searchQuery = ref("");
 const genderFilter = ref("");
 const nationalityFilter = ref("");
 const skinColorFilter = ref("");
-const maritalStatusFilter= ref("");
-const hairColorFilter=ref("");
-const physicalDisabilityFilter=ref('');
+const maritalStatusFilter = ref("");
+const hairColorFilter = ref("");
+const physicalDisabilityFilter = ref("");
 
 // Fetch posts based on the search query
 const fetchPosts = async () => {
@@ -43,14 +43,32 @@ onMounted(fetchPosts);
 // Computed property to filter missing persons based on the selected filters
 const filteredMissingPersons = computed(() => {
   return missingPersons.value.filter((person) => {
-    const matchesGender = !genderFilter.value || person.gender === genderFilter.value;
-    const matchesNationality = !nationalityFilter.value || person.nationality === nationalityFilter.value;
-    const matchesSkinColor = !skinColorFilter.value || person.skinColor === skinColorFilter.value;
-    const matchesmaritalStatus = !maritalStatusFilter.value || person.maritalStatus === maritalStatusFilter.value;
-    const matcheshairColorFilter = !hairColorFilter.value || person.hairColor === hairColorFilter.value;
-    const matchesphysicalDisabilityFilter = !physicalDisabilityFilter.value.toLocaleUpperCase() || person.physicalDisability.includes(physicalDisabilityFilter.value.toLocaleUpperCase());
-    
-    return matchesGender && matchesNationality && matchesSkinColor && matchesmaritalStatus && matcheshairColorFilter && matchesphysicalDisabilityFilter;
+    const matchesGender =
+      !genderFilter.value || person.gender === genderFilter.value;
+    const matchesNationality =
+      !nationalityFilter.value ||
+      person.nationality === nationalityFilter.value;
+    const matchesSkinColor =
+      !skinColorFilter.value || person.skinColor === skinColorFilter.value;
+    const matchesmaritalStatus =
+      !maritalStatusFilter.value ||
+      person.maritalStatus === maritalStatusFilter.value;
+    const matcheshairColorFilter =
+      !hairColorFilter.value || person.hairColor === hairColorFilter.value;
+    const matchesphysicalDisabilityFilter =
+      !physicalDisabilityFilter.value.toLocaleUpperCase() ||
+      person.physicalDisability.includes(
+        physicalDisabilityFilter.value.toLocaleUpperCase()
+      );
+
+    return (
+      matchesGender &&
+      matchesNationality &&
+      matchesSkinColor &&
+      matchesmaritalStatus &&
+      matcheshairColorFilter &&
+      matchesphysicalDisabilityFilter
+    );
   });
 });
 
@@ -81,75 +99,82 @@ const showModal = ref(false);
         Filter
       </button>
     </div>
-    
+
     <!-- Filter Bar -->
     <div class="flex justify-center mt-[1rem] gap-[1rem]">
-      <select v-model="genderFilter" class="p-2 border rounded-md">
-        <option value="">All Genders</option>
+      <select
+        v-model="genderFilter"
+        class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem]"
+      >
+        <option value="">Gender</option>
         <option value="MALE">Male</option>
         <option value="FEMALE">Female</option>
       </select>
-      <select v-model="nationalityFilter" class="p-2 border rounded-md">
-        <option value="">All Nationalities</option>
+      <select
+        v-model="nationalityFilter"
+        class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem]"
+      >
+        <option selected disabled value="">Nationality</option>
         <option value="ethiopian">Ethiopian</option>
         <option value="other">Other</option>
       </select>
-      <select v-model="skinColorFilter" class="p-2 border rounded-md">
-        <option value="">ALL Skin Color</option>
-            <option value="DARK">Dark</option>
-            <option value="BROWN">Brown</option>
-            <option value="WHITE">White</option>
-            <option value="LIGHT-SKIN">light-skin</option>
-            <option value="OTHER">Other</option>
+      <select
+        v-model="skinColorFilter"
+        class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem]"
+      >
+        <option selected disabled value="">Skin Color</option>
+        <option value="DARK">Dark</option>
+        <option value="BROWN">Brown</option>
+        <option value="WHITE">White</option>
+        <option value="LIGHT_SKIN">light-skin</option>
+        <option value="OTHER">Other</option>
       </select>
       <select
-            v-model="maritalStatusFilter"
-          >
-            <option value="">
-              Select your Marital Status
-            </option>
-            <option value="SINGLE">Single</option>
-            <option value="MARRIED">Married</option>
-            <option value="DIVORVED">Divorced</option>
-            <option value="WIDOWED">Widowed</option>
-            <option value="OTHER">Other</option>
-          </select>
-          <select
-            v-model="hairColorFilter"
-          >
-            <option selected value="" >Select the Hair Color</option>
-            <option value="BLACK">Black</option>
-            <option value="BROWN">Brown</option>
-            <option value="WHITE">White</option>
-            <option value="BLONDE">Blonde</option>
-            <option value="GRAY">Grey</option>
-            <option value="ORANGE">Orange</option>
-            <option value="OTHER">Other</option>
-          </select>
+        v-model="maritalStatusFilter"
+        class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem]"
+      >
+        <option selected disabled value="">Marital Status</option>
+        <option value="SINGLE">Single</option>
+        <option value="MARRIED">Married</option>
+        <option value="DIVORCED">Divorced</option>
+        <option value="WIDOWED">Widowed</option>
+        <option value="OTHER">Other</option>
+      </select>
+      <select
+        v-model="hairColorFilter"
+        class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem]"
+      >
+        <option selected disabled value="">Hair Color</option>
+        <option value="BLACK">Black</option>
+        <option value="BROWN">Brown</option>
+        <option value="WHITE">White</option>
+        <option value="BLONDE">Blonde</option>
+        <option value="GRAY">Grey</option>
+        <option value="ORANGE">Orange</option>
+        <option value="OTHER">Other</option>
+      </select>
 
-          <select
-            v-model="physicalDisabilityFilter"
-            class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
-          >
-            <option value="">
-              Physical Disability
-            </option>
-            <option selected value="NONE">None</option>
-            <option value="mobility_issue">Mobility Issue</option>
-            <option value="vision_impairment">Vision Impairment</option>
-            <option value="hearing_loss">Hearing Loss</option>
-            <option value="neurological_condition">
-              Neurological Condition
-            </option>
-            <option value="non verbal">Non Verbal</option>
-            <option value="limb_difference">Limb Difference</option>
-            <option value="other">Other</option>
-          </select>
+      <select
+        v-model="physicalDisabilityFilter"
+        class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem]"
+      >
+        <option selected disabled value="">Physical Disability</option>
+        <option value="NONE">None</option>
+        <option value="mobility_issue">Mobility Issue</option>
+        <option value="vision_impairment">Vision Impairment</option>
+        <option value="hearing_loss">Hearing Loss</option>
+        <option value="neurological_condition">Neurological Condition</option>
+        <option value="non_verbal">Non Verbal</option>
+        <option value="limb_difference">Limb Difference</option>
+        <option value="other">Other</option>
+      </select>
     </div>
 
     <div class="flex flex-wrap justify-start gap-[3rem] ml-[3rem] my-[2rem]">
       <div
-        v-if="missingPersons.length === 0"
+        v-if="
+          missingPersons.length === 0 || filteredMissingPersons.length === 0
+        "
         class="w-full h-[598px] text-center text-gray-500"
       >
         <p>No posts found</p>
@@ -183,7 +208,7 @@ const showModal = ref(false);
         :legalDocuments="person.legalDocuments"
         :videoMessage="person.videoMessage"
         :reporterName="`${person.user.Profile?.firstName} ${person.user.Profile?.lastName}`"
-        />
+      />
     </div>
   </div>
 </template>
