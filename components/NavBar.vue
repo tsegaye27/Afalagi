@@ -109,9 +109,6 @@ const language = ref("English");
             :src="profilePicture"
             alt="profile-picture"
           />
-          <!-- <span class="flex items-center"
-            ><Icon name="heroicons-outline:user" size="22px"
-          /></span> -->
         </NuxtLink>
       </li>
     </ul>
