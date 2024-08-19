@@ -407,14 +407,14 @@ const goBack = () => {
               Select Physical Disability
             </option>
             <option value="none">None</option>
-            <option value="mobility issue">Mobility Issue</option>
-            <option value="vision impairment">Vision Impairment</option>
-            <option value="hearing loss">Hearing Loss</option>
-            <option value="neurological condition">
+            <option value="mobility_issue">Mobility Issue</option>
+            <option value="vision_impairment">Vision Impairment</option>
+            <option value="hearing_loss">Hearing Loss</option>
+            <option value="neurological_condition">
               Neurological Condition
             </option>
-            <option value="non verbal">Non Verbal</option>
-            <option value="limb difference">Limb Difference</option>
+            <option value="non_verbal">Non Verbal</option>
+            <option value="limb_difference">Limb Difference</option>
             <option value="other">Other</option>
           </select>
         </div>
@@ -428,16 +428,16 @@ const goBack = () => {
           >
             <option selected value="" disabled>Select Mental Disability</option>
             <option value="none">None</option>
-            <option value="intellectual disability">
+            <option value="intellectual_disability">
               Intellectual Disability
             </option>
-            <option value="autism spectrum disorder">
+            <option value="autism_spectrum_disorder">
               Autism Spectrum Disorder
             </option>
             <option value="adhd">ADHD</option>
             <option value="schizophrenia">Schizophrenia</option>
-            <option value="bipolar disorder">Bipolar Disorder</option>
-            <option value="anxiety disorder">Anxiety Disorder</option>
+            <option value="bipolar_disorder">Bipolar Disorder</option>
+            <option value="anxiety_disorder">Anxiety Disorder</option>
             <option value="depression">Depression</option>
             <option value="ocd">OCD</option>
             <option value="ptsd">PTSD</option>
@@ -458,16 +458,16 @@ const goBack = () => {
             <option value="diabetes">Diabetes</option>
             <option value="astma">Astma</option>
             <option value="hypertension">Hypertension</option>
-            <option value="heart disease">Heart Disease</option>
-            <option value="autoImmune disorder">Auto Immune Disorder</option>
+            <option value="heart_disease">Heart Disease</option>
+            <option value="autoImmune_disorder">Auto Immune Disorder</option>
             <option value="epilepsy">Epilepsy</option>
             <option value="multiple sclerosis">Multiple Sclerosis</option>
             <option value="lupus">Lupus</option>
-            <option value="crohns disease">Crohns Disease</option>
+            <option value="crohns_disease">Crohns Disease</option>
             <option value="migraine">Migraine</option>
             <option value="fibromyalgia">Fibromyalgia</option>
             <option value="psoriasis">Psoriasis</option>
-            <option value="irritable bowel syndrome">
+            <option value="irritable_bowel_syndrome">
               Irritable Bowel Syndrome
             </option>
             <option value="parkinsons">Parkinsons Disease</option>

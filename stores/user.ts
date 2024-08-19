@@ -1,4 +1,6 @@
 import { defineStore } from "pinia";
+import { ref } from "vue"; // Assuming you're using Vue 3 with Pinia
+import { useCookie } from "#app"; // If using Nuxt.js
 
 export const useUserStore = defineStore("user", () => {
   const email = ref();
@@ -13,8 +15,8 @@ export const useUserStore = defineStore("user", () => {
   const setLoading = (loading: boolean) => (isLoading.value = loading);
 
   const logout = () => {
-    setToken();
-    setRefreshToken();
+    setToken("");
+    setRefreshToken("");
   };
 
   return {
