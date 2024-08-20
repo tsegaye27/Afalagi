@@ -6,6 +6,8 @@
     <MissingReports />
     <hr class="text-lg" />
     <Visions />
+    <Partners />S
+    <hr />
     <Testimonials class="mb-[3rem]" />
     <hr />
     <Contact />
