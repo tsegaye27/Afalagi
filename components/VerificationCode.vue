@@ -1,6 +1,5 @@
 <script setup>
 import { useUserStore } from "@/stores/user";
-import { ref } from "vue";
 
 const store = useUserStore();
 const { $axios } = useNuxtApp();
@@ -12,6 +11,23 @@ const focusNext = (index) => {
     if (nextInput) {
       nextInput.focus();
     }
+  }
+};
+
+const focusPrev = (index) => {
+  if (index > 0) {
+    const prevInput = document.getElementById(`input-${index - 1}`);
+    if (prevInput) {
+      prevInput.focus();
+    }
+  }
+};
+
+const handleKeydown = (event, index) => {
+  if (event.key === "ArrowRight") {
+    focusNext(index);
+  } else if (event.key === "ArrowLeft") {
+    focusPrev(index);
   }
 };
 
@@ -52,6 +68,7 @@ const verify = async () => {
       :maxlength="1"
       class="w-[50px] h-[50px] text-center text-[var(--primary-color)] text-[1.75rem] border-2 border-[var(--secondary-color)] outline-none rounded-lg"
       @input="focusNext(index)"
+      @keydown="handleKeydown($event, index)"
     />
   </div>
   <button
