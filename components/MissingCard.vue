@@ -29,6 +29,7 @@ const props = defineProps({
   },
   dateOfBirth: {
     type: String,
+    required: true,
   },
   lastSeenDate: {
     type: String,
@@ -79,6 +80,12 @@ function formatDate(dateStr) {
 const shortName = computed(() => {
   return `${props.firstName} ${props.middleName.charAt(0)}. ${props.lastName}`;
 });
+
+const setStatus = (status) => {
+  if (status === "OPEN") return "Approved";
+  if (status === "UNDER_REVIEW") return "Pending";
+  if (status === "REJECTED") return "Rejected";
+};
 </script>
 
 <template>
@@ -102,7 +109,7 @@ const shortName = computed(() => {
         status === 'REJECTED' ? 'bg-red-500' : '',
       ]"
     >
-      {{ status }}
+      {{ setStatus(status) }}
     </span>
     <img
       class="w-full h-[280px] object-center"

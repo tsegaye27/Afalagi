@@ -12,7 +12,6 @@ definePageMeta({ layout: "" });
         we've sent a code to your email address please enter it below
       </h1>
       <VerificationCode />
-      <p class="text-[var(--secondary-color)]">Resend the code(30s)</p>
     </div>
   </div>
 </template>
