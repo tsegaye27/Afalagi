@@ -1,5 +1,7 @@
 <template>
-  <div class="our-partners-container">
+  <div
+    class="our-partners-container h-[400px] flex flex-col justify-start mt-[2rem] gap-[5rem]"
+  >
     <h2
       class="text-[38px] font-[sora] font-semibold text-[var(--secondary-color)] align-center py-[2rem]"
     >

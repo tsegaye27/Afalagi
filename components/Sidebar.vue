@@ -8,6 +8,7 @@ const { $axios } = useNuxtApp();
 const profilePicture = ref("");
 
 onMounted(async () => {
+  store.setLoading(true);
   if (!store.token) navigateTo("/auth/login");
   try {
     const response = await $axios.get("user/profile/me", {
@@ -18,15 +19,18 @@ onMounted(async () => {
     console.log("✅✅success✅✅", response.data.data);
     firstName.value = response.data.data.firstName;
     lastName.value = response.data.data.lastName;
+    store.setLoading(false);
   } catch (error) {
     console.log(
       "❌❌Failed❌❌",
       error.response ? error.response.data : error.message
     );
+    store.setLoading(false);
   }
 });
 
 onMounted(async () => {
+  store.setLoading(true);
   try {
     const response = await $axios.get("user/profile/pic", {
       headers: {
@@ -35,8 +39,10 @@ onMounted(async () => {
     });
     console.log("success", response.data);
     profilePicture.value = `http://localhost:3333/${response.data.imagePath}`;
+    store.setLoading(false);
   } catch (error) {
     console.log(error.response ? error.response.data : error.message);
+    store.setLoading(false);
   }
 });
 
@@ -51,6 +57,9 @@ const logoutHandler = () => {
   <div
     class="flex flex-col justify-center gap-[1rem] items-center border-r-2 border-[slate-100] bg-[var(--primary-color)]"
   >
+    <div v-if="store.isLoading">
+      <Spinner />
+    </div>
     <div
       class="w-[200px] h-[200px] flex flex-col gap-[2rem] justify-center items-center"
     >

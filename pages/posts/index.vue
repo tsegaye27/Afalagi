@@ -13,6 +13,7 @@ const hairColorFilter = ref("");
 const physicalDisabilityFilter = ref("");
 
 const fetchPosts = async () => {
+  store.setLoading(true);
   try {
     const response = await $axios.get("/post", {
       headers: {
@@ -23,11 +24,13 @@ const fetchPosts = async () => {
       },
     });
     missingPersons.value = response.data.data;
+    store.setLoading(false);
   } catch (error) {
     console.error(
       "failed to load",
       error.response ? error.response.data : error.message
     );
+    store.setLoading(false);
   }
 };
 
@@ -69,6 +72,9 @@ const filteredMissingPersons = computed(() => {
 
 <template>
   <div class="mt-[3rem]">
+    <div v-if="store.isLoading">
+      <Spinner />
+    </div>
     <div
       class="flex mx-[2.5rem] mb-[1rem] gap-[7rem] justify-between items-center"
     >

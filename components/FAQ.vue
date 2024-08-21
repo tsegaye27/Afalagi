@@ -1,8 +1,10 @@
 <template>
-  <section class="flex justify-center items-center w-full h-full py-10">
+  <section
+    class="flex justify-center items-center bg-slate-100 w-full h-full py-10"
+  >
     <div class="w-full max-w-[800px]">
       <h2
-        class="text-3xl font-semibold text-center mb-8 text-[var(--primary-color)]"
+        class="text-3xl font-semibold text-center mb-8 text-[var(--secondary-color)]"
       >
         Frequently Asked Questions
       </h2>

@@ -11,6 +11,7 @@ const profilePicture = ref("");
 
 token &&
   onMounted(async () => {
+    store.setLoading(true);
     try {
       const response = await $axios.get("user/profile/me", {
         headers: {
@@ -20,34 +21,42 @@ token &&
       console.log("✅✅success✅✅", response.data.data);
       firstName.value = response.data.data.firstName;
       lastName.value = response.data.data.lastName;
+      store.setLoading(false);
     } catch (error) {
       console.log(
         "❌❌Failed❌❌",
         error.response ? error.response.data : error.message
       );
+      store.setLoading(false);
     }
   });
 
 token &&
   onMounted(async () => {
-  try {
-    const response = await $axios.get("user/profile/pic", {
-      headers: {
-        Authorization: `Bearer ${store.token}`,
-      },
-    });
-    console.log("success", response.data);
-    profilePicture.value = `http://localhost:3333/${response.data.imagePath}`;
-  } catch (error) {
-    console.log(error.response ? error.response.data : error.message);
-  }
-});
+    store.setLoading(true);
+    try {
+      const response = await $axios.get("user/profile/pic", {
+        headers: {
+          Authorization: `Bearer ${store.token}`,
+        },
+      });
+      console.log("success", response.data);
+      profilePicture.value = `http://localhost:3333/${response.data.imagePath}`;
+      store.setLoading(false);
+    } catch (error) {
+      console.log(error.response ? error.response.data : error.message);
+      store.setLoading(false);
+    }
+  });
 
 const isLoggedIn = token ? true : false;
 const language = ref("English");
 </script>
 <template>
   <nav class="flex shadow-md px-[2rem] h-[7rem] justify-between pr-[3rem]">
+    <div v-if="store.isLoading">
+      <Spinner />
+    </div>
     <div>
       <NuxtLink to="/">
         <img
@@ -98,14 +107,14 @@ const language = ref("English");
       </li>
       <li
         v-else
-        class="rounded-full  border border-[var(--secondary-color)] hover:text-[var(--secondary-color)]"
+        class="rounded-full border border-[var(--secondary-color)] hover:text-[var(--secondary-color)]"
       >
         <NuxtLink
           class="flex gap-[0.35rem] justify-center items-center"
           to="/profile/details"
         >
           <img
-            class="w-[55px] h-[55px] rounded-full border-1 border-[#f4f4f4] "
+            class="w-[55px] h-[55px] rounded-full border-1 border-[#f4f4f4]"
             :src="profilePicture"
             alt="profile-picture"
           />

@@ -5,15 +5,22 @@ const { $axios } = useNuxtApp();
 const missingPersons = ref([]);
 
 onMounted(async () => {
+  store.setLoading(true);
   try {
-    const response = await $axios.get("/post");
+    const response = await $axios.get("/post", {
+      params: {
+        limit: 4,
+      },
+    });
     console.log(response.data.data);
     missingPersons.value = response.data.data;
+    store.setLoading(false);
   } catch (error) {
     console.error(
       "failed to load",
       error.response ? error.response.data : error.message
     );
+    store.setLoading(false);
   }
 });
 const showMore = () => {
@@ -22,6 +29,9 @@ const showMore = () => {
 </script>
 <template>
   <div class="py-[3rem] bg-slate-50">
+    <div v-if="store.isLoading">
+      <Spinner />
+    </div>
     <h1
       class="text-center my-[2rem] text-[38px] font-semibold text-[var(--secondary-color)]"
     >
@@ -56,7 +66,7 @@ const showMore = () => {
         :legalDocuments="person.legalDocuments"
         :videoMessage="person.videoMessage"
         :reporterName="`${person.user.Profile?.firstName} ${person.user.Profile?.lastName}`"
-        />
+      />
       <button
         @click="showMore"
         class="text-[#f4f4f4] p-[0.7rem] rounded-full bg-[var(--secondary-color)] font-semibold w-[2.8rem] h-full flex items-center justify-center"

@@ -25,6 +25,7 @@ const showToast = (message, type) => {
 };
 
 const submitForm = async () => {
+  store.setLoading(true);
   try {
     const response = await $axios.post("/auth/local/signin", {
       email: email.value,
@@ -38,6 +39,7 @@ const submitForm = async () => {
     }
     showToast("Login successful!", "success");
     navigateTo("/");
+    store.setLoading(false);
   } catch (error) {
     const errorMessage =
       error.response && error.response.data
@@ -45,6 +47,7 @@ const submitForm = async () => {
         : error.message;
     console.error("login failed:", errorMessage);
     showToast(`Login failed: ${errorMessage}`, "error");
+    store.setLoading(false);
   }
 };
 
@@ -62,6 +65,9 @@ const loginWithGoogle = () => {
       class="fixed top-5 right-5 p-4 rounded text-white shadow-lg z-50"
     >
       {{ toasterMessage }}
+    </div>
+    <div v-if="store.isLoading">
+      <Spinner />
     </div>
 
     <div class="w-[38.19%] h-[100%]">

@@ -6,12 +6,10 @@
     <MissingReports />
     <hr class="text-lg" />
     <Visions />
-    <Partners />S
-    <hr />
+    <Partners />
+    <hr class="border-[var(--secondary-color)]" />
     <Testimonials class="mb-[3rem]" />
-    <hr />
-    <Contact />
-    <hr />
     <FAQ />
+    <Contact />
   </div>
 </template>

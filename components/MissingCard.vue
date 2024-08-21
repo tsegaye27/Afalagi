@@ -112,9 +112,9 @@ const setStatus = (status) => {
       {{ setStatus(status) }}
     </span>
     <img
-      class="w-full h-[280px] object-center"
+      class="w-full h-[280px] object-center border-y-[0.15rem] border-[var(--secondary-color)]"
       :src="`http://localhost:3333/uploads/post/${images[0]}`"
-      alt="missing_boy"
+      :alt="shortName"
     />
     <h1
       :title="`${firstName} ${middleName} ${lastName}`"
