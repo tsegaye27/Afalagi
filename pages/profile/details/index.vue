@@ -35,6 +35,7 @@ onMounted(async () => {
     );
   }
 });
+
 function formatDateToInput(dateString) {
   const date = new Date(dateString);
   const year = date.getFullYear();
@@ -42,6 +43,11 @@ function formatDateToInput(dateString) {
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 }
+
+// NEW: Refs for handling profile picture upload
+const profilePictureFile = ref(null);
+const previewImage = ref("");
+const showImagePreview = ref(false);
 
 const showToaster = ref(false);
 const toasterMessage = ref("");
@@ -55,6 +61,53 @@ const showToast = (message, type) => {
   setTimeout(() => {
     showToaster.value = false;
   }, 5000); // Hide after 5 seconds
+};
+
+// NEW: Function to update profile picture separately
+const updateProfilePicture = async () => {
+  if (!profilePictureFile.value) return; // Skip if no file is selected
+  store.setLoading(true);
+  try {
+    const formData = new FormData();
+    formData.append("profilePicture", profilePictureFile.value);
+
+    const response = await $axios.patch("/user/profile/pic", formData, {
+      headers: {
+        Authorization: `Bearer ${store.token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    showToast("Profile picture updated successfully", "success");
+    console.log("Profile picture updated successfully", response);
+    store.setProfileUpdated(true);
+    store.setLoading(false);
+    showImagePreview.value = false; // Close preview after successful update
+  } catch (error) {
+    console.error(
+      "Failed to update profile picture",
+      error.response ? error.response.data : error.message
+    );
+    showToast("Failed to update profile picture", "error");
+    store.setLoading(false);
+  }
+};
+
+// NEW: Function to handle file input change event
+const handleProfilePictureChange = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    profilePictureFile.value = file;
+    previewImage.value = URL.createObjectURL(file); // Preview image
+    showImagePreview.value = true; // Show image preview
+  }
+};
+
+// NEW: Function to cancel profile picture selection
+const cancelProfilePictureSelection = () => {
+  profilePictureFile.value = null;
+  previewImage.value = "";
+  showImagePreview.value = false;
 };
 
 const updateProfile = async () => {
@@ -109,6 +162,55 @@ const updateProfile = async () => {
           Personal Information
         </h1>
         <div class="flex flex-col gap-[1.5rem]">
+          <!-- NEW: Profile picture upload field with circular preview -->
+          <div class="flex flex-col w-full justify-center items-center gap-4">
+            <!-- Image preview -->
+            <div
+              v-if="showImagePreview"
+              class="relative flex flex-col items-center"
+            >
+              <img
+                :src="previewImage"
+                alt="Profile Picture Preview"
+                class="w-32 h-32 rounded-full border-2 border-[var(--primary-color)] object-cover"
+              />
+              <!-- Buttons for confirm and cancel -->
+              <div class="flex justify-center gap-2 mt-2">
+                <button
+                  type="button"
+                  @click="updateProfilePicture"
+                  class="bg-[var(--primary-color)] text-white flex items-center px-3 py-1 rounded"
+                >
+                  <Icon name="mdi:check" size="22px" />
+                </button>
+                <button
+                  type="button"
+                  @click="cancelProfilePictureSelection"
+                  class="bg-[var(--secondary-color)] text-white flex items-center px-3 py-1 rounded"
+                >
+                  <Icon name="system-uicons:cross" size="22px" />
+                </button>
+              </div>
+            </div>
+            <!-- Profile picture input field -->
+            <div v-else>
+              <label
+                for="profilePictureInput"
+                class="w-32 h-32 rounded-full border-2 border-[var(--primary-color)] flex justify-center items-center cursor-pointer"
+              >
+                <span class="text-[var(--primary-color)] font-semibold"
+                  >Change Image</span
+                >
+              </label>
+              <input
+                type="file"
+                accept="image/jpeg, image/png, image/gif, image/webp"
+                id="profilePictureInput"
+                @change="handleProfilePictureChange"
+                class="hidden"
+              />
+            </div>
+          </div>
           <div class="flex justify-between items-baseline gap-[0.7rem]">
             <label class="text-[var(--primary-color)] font-semibold"
               >First Name:
