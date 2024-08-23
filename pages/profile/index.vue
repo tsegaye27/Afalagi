@@ -6,6 +6,7 @@ definePageMeta({
 });
 
 onMounted(() => {
+  store.setLoading(true);
   if (!store.token) navigateTo("/auth/signup");
 });
 

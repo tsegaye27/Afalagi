@@ -78,12 +78,13 @@ const updateProfile = async () => {
     );
     showToast(response.data.message, "success");
     console.log("success", response);
+    store.setProfileUpdated(true);
+    store.setLoading(false);
   } catch (error) {
     console.log(
       store.token,
       error.response ? error.response.data : error.message
     );
-  } finally {
     store.setLoading(false);
   }
 };
@@ -177,25 +178,6 @@ const updateProfile = async () => {
               :value="formatDateToInput(user.birthDate)"
             />
           </div>
-          <!-- <div class="flex justify-start items-baseline gap-[4.5rem]">
-            <label class="text-[var(--primary-color)] font-semibold"
-              >Phone:
-            </label>
-            <div class="flex gap-[1rem]">
-              <select
-                class="outline-none p-1 bg-whitesmoke rounded border border-[var(--primary-color)]"
-              >
-                <option>🇪🇹</option>
-                <option>🇬🇧</option>
-              </select>
-              <input
-                class="p-1 rounded w-[200px] pl-2 border text-[#606060] border-[var(--primary-color)] outline-none"
-                type="text"
-                v-model="phoneNumber"
-                placeholder="912-34-5678"
-              />
-            </div>
-          </div> -->
         </div>
         <button class="mt-[2rem] flex justify-center gap-[0.6rem] btn">
           <span class="flex justify-center items-center"

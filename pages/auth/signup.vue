@@ -8,6 +8,9 @@
     >
       {{ toast.message }}
     </div>
+    <div v-if="store.isLoading">
+      <Spinner />
+    </div>
     <!-- Signup Content -->
     <div class="w-[38.19%] h-[100%]">
       <h1
@@ -89,7 +92,7 @@
 <style></style>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 import { useUserStore } from "@/stores/user";
 definePageMeta({ layout: "" });
 
@@ -102,8 +105,9 @@ const password = ref("");
 const toasts = ref([]);
 
 const submitForm = async () => {
+  store.setLoading(true);
   if (password.value.length <= 6) {
-    showToast('Password must be greater than 6 characters.');
+    showToast("Password must be greater than 6 characters.");
     return;
   }
 
@@ -118,6 +122,7 @@ const submitForm = async () => {
     store.setToken(response.data.access_token);
     store.setRefreshToken(response.data.refresh_token);
     navigateTo("/auth/verification");
+    store.setLoading(false);
   } catch (error) {
     console.error(
       "Signup failed:",
@@ -125,17 +130,20 @@ const submitForm = async () => {
     );
     if (error.response && error.response.data) {
       const messages = error.response.data.message || [error.response.data];
-      messages.forEach(msg => showToast(`["${msg}"]`));
+      messages.forEach((msg) => showToast(`["${msg}"]`));
     } else {
       showToast(`["${error.response ? error.response.data : error.message}"]`);
     }
+    store.setLoading(false);
   }
 };
 
 const loginWithGoogle = async () => {
+  store.setLoading(true);
   console.log("login with google");
   try {
     await $axios.get("/auth/google/login");
+    store.setLoading(false);
   } catch (error) {
     console.error(
       "login failed:",
@@ -143,10 +151,11 @@ const loginWithGoogle = async () => {
     );
     if (error.response && error.response.data) {
       const messages = error.response.data.message || [error.response.data];
-      messages.forEach(msg => showToast(`["${msg}"]`));
+      messages.forEach((msg) => showToast(`["${msg}"]`));
     } else {
       showToast(`["${error.message}"]`);
     }
+    store.setLoading(false);
   }
 };
 

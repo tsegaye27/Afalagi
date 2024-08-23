@@ -51,7 +51,7 @@ const phoneNumber = computed(() => `${code.value}${number.value}`);
 const lastSeenWearing = ref("");
 const height = ref("");
 
-const currentStep = ref(1); // Track the current step
+const currentStep = ref(1);
 
 const handleLegalDocs = (event) => {
   postData.value.legalDocs = event.target.files[0];
@@ -60,7 +60,7 @@ const handleImages = (event) => {
   postData.value.images = event.target.files[0];
 };
 const handleVideoMessage = (event) => {
-  postData.value.legalDocs = event.target.files[0];
+  postData.value.videoMessage = event.target.files[0];
 };
 
 const progressWidth = computed(() => {
@@ -77,6 +77,7 @@ const progressWidth = computed(() => {
 });
 
 const reportMissing = async () => {
+  store.setLoading(true);
   const formData = new FormData();
 
   postData.value.maritalStatus = postData.value.maritalStatus.toUpperCase();
@@ -130,6 +131,7 @@ const reportMissing = async () => {
   formData.append("lastSeenDate", postData.value.lastSeenDate);
   formData.append("lastSeenLocation", postData.value.lastSeenLocation);
   formData.append("lastSeenWearing", lastSeenWearing.value);
+
   try {
     const response = await $axios.post("/post", formData, {
       headers: {
@@ -140,6 +142,7 @@ const reportMissing = async () => {
     console.log("Success✅", response.data.data);
     showToaster("Operation successful", "success");
     navigateTo("/profile/my-posts");
+    store.setLoading(false);
   } catch (error) {
     console.log(
       "Failure❌",
@@ -153,6 +156,7 @@ const reportMissing = async () => {
       error.response ? error.response.data.message : error.message,
       "error"
     );
+    store.setLoading(false);
   }
 };
 
@@ -359,7 +363,7 @@ const goBack = () => {
             <option value="dark">Dark</option>
             <option value="brown">Brown</option>
             <option value="white">White</option>
-            <option value="light-skin">light-skin</option>
+            <option value="lightskin">light-skin</option>
             <option value="other">Other</option>
           </select>
         </div>
@@ -456,21 +460,25 @@ const goBack = () => {
             <option value="" selected disabled>Select Health Condition</option>
             <option value="none">None</option>
             <option value="diabetes">Diabetes</option>
-            <option value="astma">Astma</option>
+            <option value="asthma">Asthma</option>
             <option value="hypertension">Hypertension</option>
             <option value="heart_disease">Heart Disease</option>
             <option value="autoImmune_disorder">Auto Immune Disorder</option>
             <option value="epilepsy">Epilepsy</option>
-            <option value="multiple sclerosis">Multiple Sclerosis</option>
+            <option value="multiple_sclerosis">Multiple Sclerosis</option>
             <option value="lupus">Lupus</option>
             <option value="crohns_disease">Crohns Disease</option>
+            <option value="chronic_kidney_disease">
+              Chronic Kidney Disease
+            </option>
             <option value="migraine">Migraine</option>
             <option value="fibromyalgia">Fibromyalgia</option>
             <option value="psoriasis">Psoriasis</option>
             <option value="irritable_bowel_syndrome">
               Irritable Bowel Syndrome
             </option>
-            <option value="parkinsons">Parkinsons Disease</option>
+            <option value="parkinsons_disease">Parkinsons Disease</option>
+            <option value="cancer">Cancer</option>
             <option value="other">Other</option>
           </select>
         </div>
@@ -484,9 +492,9 @@ const goBack = () => {
           >
             <option value="" selected disabled>Select Educational Level</option>
             <option value="none">None</option>
-            <option value="primary school">Primary School</option>
-            <option value="secondary school">Secondary School</option>
-            <option value="high school">High School</option>
+            <option value="primary">Primary School</option>
+            <option value="secondary">Secondary School</option>
+            <option value="highschool">High School</option>
             <option value="associate">Associate</option>
             <option value="bachelor">Bachelor</option>
             <option value="master">Master</option>
@@ -509,6 +517,7 @@ const goBack = () => {
             <option value="married">Married</option>
             <option value="divorced">Divorced</option>
             <option value="widowed">Widowed</option>
+            <option value="engaged">Engaged</option>
             <option value="other">Other</option>
           </select>
         </div>
@@ -524,6 +533,7 @@ const goBack = () => {
               Your relation with the person
             </option>
             <option value="parent">Parent</option>
+            <option value="partner">Partner</option>
             <option value="sibling">Sibling</option>
             <option value="relative">Relative</option>
             <option value="friend">Friend</option>
