@@ -24,6 +24,7 @@ onMounted(async () => {
   }
 });
 const showMore = () => {
+  store.setLoading(true);
   navigateTo("/posts");
 };
 </script>
@@ -37,7 +38,9 @@ const showMore = () => {
     >
       Missing Reported
     </h1>
-    <div class="flex justify-center items-center gap-[3rem] mx-[1rem]">
+    <div
+      class="flex justify-center flex-wrap items-center gap-[3rem] mx-[1rem]"
+    >
       <MissingCard
         v-for="(person, index) in missingPersons"
         :key="index"

@@ -12,6 +12,7 @@ const route = useRoute();
 const postId = route.params.postId;
 const missingPerson = ref([]);
 onMounted(async () => {
+  store.setLoading(true);
   try {
     const response = await $axios.get(`/post/${postId}`, {
       headers: {
@@ -22,8 +23,10 @@ onMounted(async () => {
     console.log("missingPerson", missingPerson.value);
     imagePath.value = `http://localhost:3333/uploads/post/${response.data.data.images[0]}`;
     console.log(imagePath.value);
+    store.setLoading(false);
   } catch (error) {
     console.error(error.response ? error.response.data : error.message);
+    store.setLoading(false);
   }
 });
 
@@ -51,9 +54,15 @@ function formatDate(dateStr) {
 
   return `${month} ${day}, ${year}`;
 }
+
+const chatReporter = () => {
+  store.setLoading(true);
+  navigateTo("/profile/messages");
+};
 </script>
 <template>
   <div>
+    <div v-if="store.isLoading"><Spinner /></div>
     <div class="flex items-center m-8">
       <button
         @click="previousPage"
@@ -228,7 +237,7 @@ function formatDate(dateStr) {
           <video class="w-[600px] h-[400px] rounded-md" controls src=""></video>
           <button
             class="p-3 bg-[var(--secondary-color)] rounded-lg text-medium text-white"
-            @click="navigateTo('/profile/messages')"
+            @click="chatReporter"
           >
             Chat with the {{ missingPerson.posterRelation?.toLowerCase() }}
           </button>
