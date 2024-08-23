@@ -31,7 +31,7 @@
 }
 
 .btn-posts {
-  @apply p-2 bg-[var(--secondary-color)] rounded-[0_0_6px_6px] text-white;
+  @apply p-2 bg-[var(--secondary-color)]  text-white hover:bg-[#1896c8];
 }
 
 .btn-round {
