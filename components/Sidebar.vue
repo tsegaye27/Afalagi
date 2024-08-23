@@ -1,54 +1,64 @@
 <script setup>
 import { useUserStore } from "#imports";
+import { ref, watch, onMounted } from "vue";
+import { useNuxtApp } from "#app";
 
 const store = useUserStore();
 const firstName = ref("");
 const lastName = ref("");
-const { $axios } = useNuxtApp();
 const profilePicture = ref("");
+const { $axios } = useNuxtApp();
 
-onMounted(async () => {
+const fetchProfileData = async () => {
+  if (!store.token) {
+    navigateTo("/auth/login");
+    return;
+  }
+
   store.setLoading(true);
-  if (!store.token) navigateTo("/auth/login");
   try {
-    const response = await $axios.get("user/profile/me", {
-      headers: {
-        Authorization: `Bearer ${store.token}`,
-      },
-    });
-    console.log("✅✅success✅✅", response.data.data);
-    firstName.value = response.data.data.firstName;
-    lastName.value = response.data.data.lastName;
-    store.setLoading(false);
+    const [profileResponse, pictureResponse] = await Promise.all([
+      $axios.get("user/profile/me", {
+        headers: { Authorization: `Bearer ${store.token}` },
+      }),
+      $axios.get("user/profile/pic", {
+        headers: { Authorization: `Bearer ${store.token}` },
+      }),
+    ]);
+
+    const profileData = profileResponse.data.data;
+    const pictureData = pictureResponse.data.imagePath;
+
+    firstName.value = profileData.firstName;
+    lastName.value = profileData.lastName;
+    profilePicture.value = `http://localhost:3333/${pictureData}`;
   } catch (error) {
-    console.log(
-      "❌❌Failed❌❌",
+    console.error(
+      "❌ Error fetching profile data:",
       error.response ? error.response.data : error.message
     );
+  } finally {
     store.setLoading(false);
   }
-});
+};
 
-onMounted(async () => {
-  store.setLoading(true);
-  try {
-    const response = await $axios.get("user/profile/pic", {
-      headers: {
-        Authorization: `Bearer ${store.token}`,
-      },
-    });
-    console.log("success", response.data);
-    profilePicture.value = `http://localhost:3333/${response.data.imagePath}`;
-    store.setLoading(false);
-  } catch (error) {
-    console.log(error.response ? error.response.data : error.message);
-    store.setLoading(false);
+// Watch for changes to isProfileUpdated and refetch data
+watch(
+  () => store.isProfileUpdated,
+  async (newVal) => {
+    if (newVal) {
+      await fetchProfileData();
+      store.setProfileUpdated(false); // Reset the flag after refetching
+    }
   }
-});
+);
+
+onMounted(fetchProfileData);
 
 const logoutHandler = () => {
   store.setToken();
   store.setRefreshToken();
+  store.setLoading(true);
   navigateTo("/");
 };
 </script>
@@ -66,7 +76,7 @@ const logoutHandler = () => {
       <img
         class="w-[80px] h-[80px] rounded-[2.5rem] border-2 border-[#f4f4f4]"
         :src="profilePicture"
-        alt="profile-picture"
+        :alt="`${firstName} ${lastName}`"
       />
       <p class="text-xl text-white font-semibold">
         {{ `${firstName} ${lastName}` }}

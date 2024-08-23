@@ -1,10 +1,15 @@
 <template>
   <div class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div v-if="store.isLoading">
+      <Spinner />
+    </div>
     <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
       <h1 class="text-2xl font-bold mb-6 text-center">Reset Password</h1>
       <form @submit.prevent="sendResetLink">
         <div class="mb-4">
-          <label for="email" class="block text-gray-700 font-bold mb-2">Email</label>
+          <label for="email" class="block text-gray-700 font-bold mb-2"
+            >Email</label
+          >
           <input
             type="email"
             v-model="email"
@@ -14,7 +19,9 @@
             placeholder="Enter your email"
             required
           />
-          <p v-if="emailError" class="text-red-500 text-xs italic mt-2">{{ emailError }}</p>
+          <p v-if="emailError" class="text-red-500 text-xs italic mt-2">
+            {{ emailError }}
+          </p>
         </div>
         <div class="flex items-center justify-between">
           <button
@@ -25,43 +32,54 @@
           </button>
         </div>
       </form>
-      <p v-if="successMessage" class="text-green-500 text-xs italic mt-2">{{ successMessage }}</p>
-      <p v-if="errorMessage" class="text-red-500 text-xs italic mt-2">{{ errorMessage }}</p>
+      <p v-if="successMessage" class="text-green-500 text-xs italic mt-2">
+        {{ successMessage }}
+      </p>
+      <p v-if="errorMessage" class="text-red-500 text-xs italic mt-2">
+        {{ errorMessage }}
+      </p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import axios from 'axios'
+import axios from "axios";
+import { useUserStore } from "#imports";
 
-const email = ref('')
-const emailError = ref('')
-const successMessage = ref('')
-const errorMessage = ref('')
+const store = useUserStore();
+const email = ref("");
+const emailError = ref("");
+const successMessage = ref("");
+const errorMessage = ref("");
 
 const validateEmail = () => {
-  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\.,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,})$/i
+  const re =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\.,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,})$/i;
   if (!re.test(email.value)) {
-    emailError.value = 'Please enter a valid email address'
-    return false
+    emailError.value = "Please enter a valid email address";
+    return false;
   }
-  emailError.value = ''
-  return true
-}
+  emailError.value = "";
+  return true;
+};
 
 const sendResetLink = async () => {
+  store.setLoading(true);
   if (!validateEmail()) {
-    return
+    return;
   }
   try {
-    const response = await axios.post('/auth/forgot-password', { email: email.value })
-    successMessage.value = 'Reset link sent successfully!'
-    errorMessage.value = ''
-    navigateTo('/auth/reset-password/' + response.data.token)
+    const response = await axios.post("/auth/forgot-password", {
+      email: email.value,
+    });
+    successMessage.value = "Reset link sent successfully!";
+    errorMessage.value = "";
+    navigateTo("/auth/reset-password/" + response.data.token);
+    store.setLoading(false);
   } catch (error) {
-    successMessage.value = ''
-    errorMessage.value = 'Failed to send reset link. Please try again later.'
+    successMessage.value = "";
+    errorMessage.value = "Failed to send reset link. Please try again later.";
+    store.setLoading(false);
   }
-}
+};
 </script>

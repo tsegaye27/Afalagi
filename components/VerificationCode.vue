@@ -32,6 +32,7 @@ const handleKeydown = (event, index) => {
 };
 
 const verify = async () => {
+  store.setLoading(true);
   const verificationCode = inputs.value.join("") * 1;
   try {
     const response = await $axios.post(
@@ -48,17 +49,22 @@ const verify = async () => {
     );
     console.log("verification success", response.data);
     navigateTo("/profile");
+    store.setLoading(false);
   } catch (error) {
     console.error(
       "verification failed",
       error.response ? error.response.data : error.message
     );
+    store.setLoading(false);
   }
 };
 </script>
 
 <template>
   <div class="flex w-[100%] justify-center gap-[1rem] items-center">
+    <div v-if="store.isLoading">
+      <Spinner />
+    </div>
     <input
       v-for="(input, index) in inputs"
       :key="index"
