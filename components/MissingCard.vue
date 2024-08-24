@@ -55,7 +55,7 @@ const props = defineProps({
 const emit = defineEmits(["personFound"]);
 const personFound = () => {
   console.log("emitting from missingCard");
-  emit("personFound");
+  emit("personFound", props.postId);
 };
 
 const viewDetails = () => {
