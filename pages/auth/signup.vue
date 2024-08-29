@@ -108,6 +108,7 @@ const submitForm = async () => {
   store.setLoading(true);
   if (password.value.length <= 6) {
     showToast("Password must be greater than 6 characters.");
+    store.setLoading(false);
     return;
   }
 
@@ -122,18 +123,16 @@ const submitForm = async () => {
     store.setToken(response.data.access_token);
     store.setRefreshToken(response.data.refresh_token);
     navigateTo("/auth/verification");
-    store.setLoading(false);
   } catch (error) {
     console.error(
       "Signup failed:",
       error.response ? error.response.data : error.message
     );
-    if (error.response && error.response.data) {
-      const messages = error.response.data.message || [error.response.data];
-      messages.forEach((msg) => showToast(`["${msg}"]`));
-    } else {
-      showToast(`["${error.response ? error.response.data : error.message}"]`);
-    }
+    const messages = Array.isArray(error.response?.data?.message)
+      ? error.response.data.message
+      : [error.response?.data?.message || error.response?.data];
+    messages.forEach((msg) => showToast(msg));
+  } finally {
     store.setLoading(false);
   }
 };
