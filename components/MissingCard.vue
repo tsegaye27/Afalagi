@@ -52,15 +52,14 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["personFound"]);
-const personFound = () => {
-  console.log("emitting from missingCard");
-  emit("personFound", props.postId);
-};
-
 const viewDetails = () => {
   store.setLoading(true);
   navigateTo(`/posts/details/${props.postId}`);
+};
+
+const navigateToCloseCase = () => {
+  store.setLoading(true);
+  navigateTo(`/profile/my-posts/${props.postId}`);
 };
 
 function formatDate(dateStr) {
@@ -95,6 +94,7 @@ const setStatus = (status) => {
   if (status === "OPEN") return "Approved";
   if (status === "UNDER_REVIEW") return "Pending";
   if (status === "REJECTED") return "Rejected";
+  if (status === "CLOSED") return "Closed";
 };
 </script>
 
@@ -119,6 +119,7 @@ const setStatus = (status) => {
           status === 'OPEN' ? 'bg-green-500' : '',
           status === 'UNDER_REVIEW' ? 'bg-orange-300' : '',
           status === 'REJECTED' ? 'bg-red-500' : '',
+          status === 'CLOSED' ? 'bg-blue-500' : '',
         ]"
       >
         {{ setStatus(status) }}
@@ -158,8 +159,8 @@ const setStatus = (status) => {
       View Details
     </button>
     <button
-      v-if="closeCase"
-      @click="personFound"
+      v-if="closeCase && (status === 'OPEN' || status === 'UNDER_REVIEW')"
+      @click="navigateToCloseCase"
       class="bg-[var(--primary-color)] p-2 text-white w-full rounded-[0px_0px_5px_5px] hover:bg-[#035178]"
     >
       Found Your {{ posterRelation?.toLowerCase() }}
