@@ -63,7 +63,7 @@ const showMore = () => {
         :firstName="person.firstName"
         :middleName="person.middleName"
         :lastName="person.lastName"
-        :dateOfBirth="person.birthDate"
+        :dateOfBirth="person.dateOfBirth"
         :educationalLevel="person.educationalLevel"
         :images="person.images"
         :legalDocuments="person.legalDocuments"
