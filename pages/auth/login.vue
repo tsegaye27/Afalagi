@@ -1,6 +1,6 @@
 <script setup>
 import { useUserStore } from "@/stores/user";
-import { ref } from "vue"; // Import ref from Vue
+
 definePageMeta({ layout: "" });
 
 const store = useUserStore();
@@ -31,22 +31,31 @@ const submitForm = async () => {
       email: email.value,
       password: password.value,
     });
-    console.log("log in successful:");
+
+    // Set tokens in Pinia store
     store.setToken(response.data.access_token);
     store.setRefreshToken(response.data.refresh_token);
+
+    // Set tokens in cookies
+    const accessTokenCookie = useCookie("access_token");
+    const refreshTokenCookie = useCookie("refresh_token");
+    const profileCookie = useCookie("profile");
+    const verifiedCookie = useCookie("verified");
+    accessTokenCookie.value = response.data.access_token;
+    refreshTokenCookie.value = response.data.refresh_token;
+    profileCookie.value = response.data.profile;
+    verifiedCookie.value = response.data.verified;
+
+    // Redirect after setting cookies
     if (!response.data.verified) {
       showToast("Please Create your profile", "success");
+      navigateTo("/profile"); // Example redirection
+    } else {
+      navigateTo("/");
     }
-    showToast("Login successful!", "success");
-    navigateTo("/");
-    store.setLoading(false);
   } catch (error) {
-    const errorMessage =
-      error.response && error.response.data
-        ? error.response.data.message
-        : error.message;
-    console.error("login failed:", errorMessage);
-    showToast(`Login failed: ${errorMessage}`, "error");
+    showToast("Login failed", "error");
+  } finally {
     store.setLoading(false);
   }
 };

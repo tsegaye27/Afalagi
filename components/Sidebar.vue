@@ -10,6 +10,15 @@ const profilePicture = ref("");
 const { $axios } = useNuxtApp();
 
 const fetchProfileData = async () => {
+  const accessTokenCookie = useCookie("access_token");
+  const refreshTokenCookie = useCookie("refresh_token");
+
+  if (accessTokenCookie.value) {
+    store.setToken(accessTokenCookie.value);
+  }
+  if (refreshTokenCookie.value) {
+    store.setRefreshToken(refreshTokenCookie.value);
+  }
   if (!store.token) {
     navigateTo("/auth/login");
     return;
@@ -48,7 +57,7 @@ watch(
   async (newVal) => {
     if (newVal) {
       await fetchProfileData();
-      store.setProfileUpdated(false); // Reset the flag after refetching
+      store.setProfileUpdated(false);
     }
   }
 );
@@ -59,6 +68,15 @@ const logoutHandler = () => {
   store.setToken();
   store.setRefreshToken();
   store.setLoading(true);
+  const accessTokenCookie = useCookie("access_token");
+  const refreshTokenCookie = useCookie("refresh_token");
+  const profileCookie = useCookie("profile");
+  const verifiedCookie = useCookie("verified");
+
+  accessTokenCookie.value = null;
+  refreshTokenCookie.value = null;
+  profileCookie.value = null;
+  verifiedCookie.value = null;
   navigateTo("/");
 };
 </script>

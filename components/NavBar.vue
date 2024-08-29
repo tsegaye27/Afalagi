@@ -2,54 +2,102 @@
 import { useUserStore } from "#imports";
 
 const store = useUserStore();
-const token = store.token;
 const firstName = ref("");
 const lastName = ref("");
 const { $axios } = useNuxtApp();
 
 const profilePicture = ref("");
 
-token &&
-  onMounted(async () => {
-    store.setLoading(true);
-    try {
-      const response = await $axios.get("user/profile/me", {
+const accessTokenCookie = useCookie("access_token");
+const refreshTokenCookie = useCookie("refresh_token");
+const profileCookie = useCookie("profile");
+const verifiedCookie = useCookie("verified");
+
+// onMounted(async () => {
+//   store.setLoading(true);
+//   if (accessTokenCookie.value && profileCookie.value && verifiedCookie.value) {
+//     store.setToken(accessTokenCookie.value);
+//     store.setRefreshToken(refreshTokenCookie.value);
+//   }
+//   if (!store.token) return;
+//   try {
+//     const response = await $axios.get("user/profile/me", {
+//       headers: {
+//         Authorization: `Bearer ${store.token}`,
+//       },
+//     });
+//     console.log("✅✅success✅✅", response.data.data);
+//     firstName.value = response.data.data.firstName;
+//     lastName.value = response.data.data.lastName;
+//     store.setLoading(false);
+//   } catch (error) {
+//     console.log(
+//       "❌❌Failed❌❌",
+//       error.response ? error.response.data : error.message
+//     );
+//     store.setLoading(false);
+//   }
+// });
+
+// onMounted(async () => {
+//   store.setLoading(true);
+//   if (accessTokenCookie.value && profileCookie.value && verifiedCookie.value) {
+//     store.setToken(accessTokenCookie.value);
+//     store.setRefreshToken(refreshTokenCookie.value);
+//   }
+//   if (!store.token) return;
+//   try {
+//     const response = await $axios.get("user/profile/pic", {
+//       headers: {
+//         Authorization: `Bearer ${store.token}`,
+//       },
+//     });
+//     console.log("success", response.data);
+//     profilePicture.value = `http://localhost:3333/${response.data.imagePath}`;
+//     store.setLoading(false);
+//   } catch (error) {
+//     console.log(error.response ? error.response.data : error.message);
+//     store.setLoading(false);
+//   }
+// });
+onMounted(async () => {
+  store.setLoading(true);
+  if (accessTokenCookie.value && profileCookie.value && verifiedCookie.value) {
+    store.setToken(accessTokenCookie.value);
+    store.setRefreshToken(refreshTokenCookie.value);
+  }
+  if (!store.token) {
+    store.setLoading(false);
+    return;
+  }
+  try {
+    const [profileResponse, picResponse] = await Promise.all([
+      $axios.get("user/profile/me", {
         headers: {
           Authorization: `Bearer ${store.token}`,
         },
-      });
-      console.log("✅✅success✅✅", response.data.data);
-      firstName.value = response.data.data.firstName;
-      lastName.value = response.data.data.lastName;
-      store.setLoading(false);
-    } catch (error) {
-      console.log(
-        "❌❌Failed❌❌",
-        error.response ? error.response.data : error.message
-      );
-      store.setLoading(false);
-    }
-  });
-
-token &&
-  onMounted(async () => {
-    store.setLoading(true);
-    try {
-      const response = await $axios.get("user/profile/pic", {
+      }),
+      $axios.get("user/profile/pic", {
         headers: {
           Authorization: `Bearer ${store.token}`,
         },
-      });
-      console.log("success", response.data);
-      profilePicture.value = `http://localhost:3333/${response.data.imagePath}`;
-      store.setLoading(false);
-    } catch (error) {
-      console.log(error.response ? error.response.data : error.message);
-      store.setLoading(false);
-    }
-  });
+      }),
+    ]);
 
-const isLoggedIn = token ? true : false;
+    firstName.value = profileResponse.data.data.firstName;
+    lastName.value = profileResponse.data.data.lastName;
+    profilePicture.value = `http://localhost:3333/${picResponse.data.imagePath}`;
+  } catch (error) {
+    console.log(
+      "❌❌Failed❌❌",
+      error.response ? error.response.data : error.message
+    );
+  } finally {
+    store.setLoading(false);
+  }
+});
+
+const isLoggedIn = computed(() => !!store.token); // Reactive check
 const language = ref("English");
 </script>
 <template>
