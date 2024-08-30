@@ -64,7 +64,20 @@ watch(
 
 onMounted(fetchProfileData);
 
-const logoutHandler = () => {
+const logoutHandler = async () => {
+  try {
+    const res = await $axios.post("/auth/logout", {
+      headers: {
+        Bearer: `${store.token}`,
+      },
+    });
+    console.log("logging out...", res);
+  } catch (error) {
+    console.log(
+      error.response ? error.response.message : error.message,
+      store.token
+    );
+  }
   store.setToken();
   store.setRefreshToken();
   store.setLoading(true);

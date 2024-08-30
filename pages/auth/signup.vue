@@ -137,25 +137,8 @@ const submitForm = async () => {
   }
 };
 
-const loginWithGoogle = async () => {
-  store.setLoading(true);
-  console.log("login with google");
-  try {
-    await $axios.get("/auth/google/login");
-    store.setLoading(false);
-  } catch (error) {
-    console.error(
-      "login failed:",
-      error.response ? error.response.data : error.message
-    );
-    if (error.response && error.response.data) {
-      const messages = error.response.data.message || [error.response.data];
-      messages.forEach((msg) => showToast(`["${msg}"]`));
-    } else {
-      showToast(`["${error.message}"]`);
-    }
-    store.setLoading(false);
-  }
+const loginWithGoogle = () => {
+  window.location.href = `${$axios.defaults.baseURL}/auth/google/login`;
 };
 
 const showToast = (message) => {
