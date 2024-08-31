@@ -18,7 +18,7 @@
     </div>
     <div class="right mt-[2rem]">
       <img
-        class="w-[650px] h-[630px]"
+        class="w-[650px] h-[630px] home rounded-[400px_0_0_0] filter opacity-[0.7]"
         src="/assets/img/home.webp"
         alt="family_picture"
       />
@@ -27,3 +27,8 @@
 </template>
 
 <script setup></script>
+<style scoped>
+.home {
+  box-shadow: inset 0px 4px 10px 0px rgba(0, 0, 0, 0.3);
+}
+</style>
