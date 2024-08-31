@@ -24,7 +24,6 @@ const props = defineProps({
   },
   reporterName: {
     type: String,
-    required: true,
   },
   dateOfBirth: {
     type: String,

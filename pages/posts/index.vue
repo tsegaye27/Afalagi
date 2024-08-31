@@ -1,4 +1,4 @@
-<script setup>
+<!-- <script setup>
 import { useUserStore } from "#imports";
 const store = useUserStore();
 const { $axios } = useNuxtApp();
@@ -35,6 +35,105 @@ const fetchPosts = async () => {
 };
 
 watch(searchQuery, fetchPosts);
+
+onMounted(fetchPosts);
+
+const filteredMissingPersons = computed(() => {
+  return missingPersons.value.filter((person) => {
+    const matchesGender =
+      !genderFilter.value || person.gender === genderFilter.value;
+    const matchesNationality =
+      !nationalityFilter.value ||
+      person.nationality === nationalityFilter.value;
+    const matchesSkinColor =
+      !skinColorFilter.value || person.skinColor === skinColorFilter.value;
+    const matchesMaritalStatus =
+      !maritalStatusFilter.value ||
+      person.maritalStatus === maritalStatusFilter.value;
+    const matchesHairColorFilter =
+      !hairColorFilter.value || person.hairColor === hairColorFilter.value;
+    const matchesPhysicalDisabilityFilter =
+      !physicalDisabilityFilter.value.toLocaleUpperCase() ||
+      person.physicalDisability.includes(
+        physicalDisabilityFilter.value.toLocaleUpperCase()
+      );
+
+    return (
+      matchesGender &&
+      matchesNationality &&
+      matchesSkinColor &&
+      matchesMaritalStatus &&
+      matchesHairColorFilter &&
+      matchesPhysicalDisabilityFilter
+    );
+  });
+});
+</script> -->
+<script setup>
+import { useUserStore } from "#imports";
+import { onMounted, ref, watch, computed } from "vue";
+import { useNuxtApp } from "#app";
+
+const store = useUserStore();
+const { $axios } = useNuxtApp();
+const missingPersons = ref([]);
+const searchQuery = ref("");
+
+const genderFilter = ref("");
+const nationalityFilter = ref("");
+const skinColorFilter = ref("");
+const maritalStatusFilter = ref("");
+const hairColorFilter = ref("");
+const physicalDisabilityFilter = ref("");
+
+const currentPage = ref(1); // Track the current page
+const hasMore = ref(true); // Whether more posts are available
+const isFetching = ref(false); // Loading state for fetching more posts
+
+const fetchPosts = async () => {
+  if (isFetching.value || !hasMore.value) return; // Prevent multiple fetches
+
+  store.setLoading(true);
+  isFetching.value = true; // Set fetching to true when starting the fetch
+
+  try {
+    const response = await $axios.get("/post", {
+      headers: {
+        Authorization: `Bearer ${store.token}`,
+      },
+      params: {
+        name: searchQuery.value,
+        page: currentPage.value, // Include page parameter for pagination
+        per_page: 4, // Number of items per page (backend is limited to 4)
+      },
+    });
+
+    if (response.data.data.length < 4) {
+      hasMore.value = false; // No more data to fetch
+    }
+
+    missingPersons.value.push(...response.data.data); // Append new data to the list
+    currentPage.value++; // Increment the page number for the next fetch
+
+    store.setLoading(false);
+    isFetching.value = false; // Reset fetching state
+  } catch (error) {
+    console.error(
+      "Failed to load posts",
+      error.response ? error.response.data : error.message
+    );
+    store.setLoading(false);
+    isFetching.value = false; // Reset fetching state
+  }
+};
+
+// Trigger fetch when search query changes
+watch(searchQuery, () => {
+  currentPage.value = 1; // Reset to the first page
+  hasMore.value = true; // Reset hasMore flag
+  missingPersons.value = []; // Clear previous results
+  fetchPosts(); // Fetch posts based on new search query
+});
 
 onMounted(fetchPosts);
 

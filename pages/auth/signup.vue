@@ -104,6 +104,10 @@ const email = ref("");
 const password = ref("");
 const toasts = ref([]);
 
+onMounted(() => {
+  store.setLoading(false);
+});
+
 const submitForm = async () => {
   store.setLoading(true);
   if (password.value.length <= 6) {
