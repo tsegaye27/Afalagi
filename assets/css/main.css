@@ -18,6 +18,10 @@
   @apply text-[var(--secondary-color)] transition-all duration-500 cursor-pointer;
 }
 
+.footer-menu {
+  @apply text-white;
+}
+
 .nav-menu {
   @apply text-[var(--primary-color)] text-[19px] font-medium px-2 py-1 flex items-baseline rounded font-[sora];
 }
