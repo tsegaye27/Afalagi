@@ -15,14 +15,15 @@ const postsPerPage = 6; // Define how many posts you want per page
 
 // Computed properties to separate posts by status
 const underReviewAndOpenPosts = computed(() =>
-  myPosts.value.filter(
-    (post) => post.status === "UNDER_REVIEW" || post.status === "OPEN"
-  )
+  myPosts.value.filter((post) => post.status === "OPEN")
 );
 
 const closedAndRejectedPosts = computed(() =>
   myPosts.value.filter(
-    (post) => post.status === "CLOSED" || post.status === "REJECTED"
+    (post) =>
+      post.status === "CLOSED" ||
+      post.status === "REJECTED" ||
+      post.status === "UNDER_REVIEW"
   )
 );
 

@@ -158,7 +158,7 @@ const setStatus = (status) => {
       View Details
     </button>
     <button
-      v-if="closeCase && (status === 'OPEN' || status === 'UNDER_REVIEW')"
+      v-if="closeCase && status === 'OPEN'"
       @click="navigateToCloseCase"
       class="bg-[var(--primary-color)] p-2 text-white w-full rounded-[0px_0px_5px_5px] hover:bg-[#035178]"
     >

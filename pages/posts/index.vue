@@ -104,7 +104,7 @@ const fetchPosts = async () => {
       params: {
         name: searchQuery.value,
         page: currentPage.value, // Include page parameter for pagination
-        per_page: 4, // Number of items per page (backend is limited to 4)
+        per_page: 8, // Number of items per page (backend is limited to 4)
       },
     });
 
@@ -196,6 +196,7 @@ const filteredMissingPersons = computed(() => {
         class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem]"
       >
         <option selected disabled value="">Gender</option>
+        <option value="" selected>All</option>
         <option value="MALE">Male</option>
         <option value="FEMALE">Female</option>
       </select>
