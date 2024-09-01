@@ -62,7 +62,12 @@ const verifiedCookie = useCookie("verified");
 // });
 onMounted(async () => {
   store.setLoading(true);
-  if (accessTokenCookie.value && profileCookie.value && verifiedCookie.value) {
+  if (
+    accessTokenCookie.value &&
+    profileCookie.value &&
+    verifiedCookie.value &&
+    refreshTokenCookie.value
+  ) {
     store.setToken(accessTokenCookie.value);
     store.setRefreshToken(refreshTokenCookie.value);
   }

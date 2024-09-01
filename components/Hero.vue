@@ -18,7 +18,7 @@
     </div>
     <div class="right mt-[2rem]">
       <img
-        class="w-[650px] h-[630px] home rounded-[400px_0_0_0] filter opacity-[0.7]"
+        class="w-[650px] h-[630px] home rounded-[400px_0_0_0]"
         src="/assets/img/home.webp"
         alt="family_picture"
       />
