@@ -60,12 +60,8 @@ function formatDate(dateStr) {
   const month = monthNames[dateObj.getMonth()];
   const day = String(dateObj.getDate()).padStart(2, "0");
   const year = dateObj.getFullYear();
-  const hours = dateObj.getHours();
-  const minutes = String(dateObj.getMinutes()).padStart(2, "0");
-  const ampm = hours >= 12 ? "PM" : "AM";
-  const formattedHour = hours % 12 || 12;
 
-  return `${month} ${day}, ${year} ${formattedHour}:${minutes} ${ampm}`;
+  return `${month} ${day}, ${year}`;
 }
 
 const chatReporter = () => {
@@ -128,10 +124,11 @@ const submitReply = async (commentId) => {
 
     comments.value.push(response.data.data);
     console.log("Reply added successfully:", response.data.data);
-    replyText.value[commentId] = ""; // Clear reply input after submission
+    replyText.value[commentId] = "";
   } catch (error) {
     console.error(error.response ? error.response.data : error.message);
   }
+  parentId.value = null; // Reset parentId after reply submission
 };
 
 function getInitials(firstName, lastName) {
@@ -144,6 +141,33 @@ function getInitials(firstName, lastName) {
 const visibleComments = computed(() => {
   return showAllComments.value ? comments.value : comments.value.slice(0, 4);
 });
+
+// Function to compute time passed since a given date
+function timeAgo(date) {
+  const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+  let interval = Math.floor(seconds / 31536000);
+
+  if (interval > 1) {
+    return `${interval} years ago`;
+  }
+  interval = Math.floor(seconds / 2592000);
+  if (interval > 1) {
+    return `${interval} months ago`;
+  }
+  interval = Math.floor(seconds / 86400);
+  if (interval >= 1) {
+    return `${interval} ${interval === 1 ? "day ago" : "days ago"}`;
+  }
+  interval = Math.floor(seconds / 3600);
+  if (interval >= 1) {
+    return `${interval} ${interval === 1 ? "hour ago" : "hours ago"}`;
+  }
+  interval = Math.floor(seconds / 60);
+  if (interval >= 1) {
+    return `${interval} min ago`;
+  }
+  return `${Math.floor(seconds)} sec ago`;
+}
 </script>
 
 <template>
@@ -334,7 +358,7 @@ const visibleComments = computed(() => {
         <h2
           class="text-[20px] text-[var(--primary-color)] font-medium mb-[1rem]"
         >
-          Comments
+          Comments({{ comments.length }})
         </h2>
         <div v-if="!visibleComments.length" class="text-[var(--primary-color)]">
           No comments yet. Be the first to comment!
@@ -342,11 +366,11 @@ const visibleComments = computed(() => {
         <div
           v-for="comment in visibleComments"
           :key="comment.id"
-          class="comment mb-[1rem]"
+          class="comment my-[1rem] border border-[#d2d2d2] w-[35rem] p-[1rem] rounded"
         >
           <div class="flex items-center gap-[1rem]">
             <div
-              class="w-10 h-10 rounded-full bg-[var(--primary-color)] text-white flex items-center justify-center text-lg font-bold"
+              class="w-11 h-10 rounded-full bg-green-500 text-white flex items-center justify-center text-md font-bold"
             >
               {{
                 getInitials(
@@ -355,20 +379,23 @@ const visibleComments = computed(() => {
                 )
               }}
             </div>
-            <div class="flex flex-col">
-              <p class="text-[var(--primary-color)] font-medium">
+            <div class="flex flex-col w-full">
+              <p class="text-[var(--secondary-color)] font-medium">
                 {{ comment.user?.Profile.firstName }}
                 {{ comment.user?.Profile.lastName }}
               </p>
-              <p class="text-[var(--primary-color)] mt-[0.5rem]">
+              <p class="text-[var(--primary-color)]">
                 {{ comment.commentText }}
               </p>
-              <div class="flex items-center gap-2">
-                <p class="text-[var(--primary-color)]">
-                  {{ formatDate(comment.createdAt) }}
+              <div class="flex items-center justify-between">
+                <p class="text-[#868686]">
+                  {{ timeAgo(comment.createdAt) }}
                 </p>
-                <button @click="parentId = comment.id" class="text-blue-500">
-                  Reply
+                <button
+                  @click="parentId = comment.id"
+                  class="flex items-center text-blue-500"
+                >
+                  <Icon name="material-symbols:reply" size="24px" />
                 </button>
               </div>
 
@@ -390,6 +417,7 @@ const visibleComments = computed(() => {
             </div>
           </div>
         </div>
+
         <!-- Toggle Button -->
         <button
           v-if="comments.length > 4"
@@ -401,7 +429,7 @@ const visibleComments = computed(() => {
       </div>
 
       <!-- Add Comment -->
-      <div class="add-comment mx-[5rem] my-[2rem]">
+      <div class="add-comment mx-[5rem] flex flex-col gap-4 my-[2rem]">
         <textarea
           v-model="newComment"
           class="w-2/3 p-2 border outline-none text-[var(--primary-color)] rounded"
@@ -410,7 +438,7 @@ const visibleComments = computed(() => {
         ></textarea>
         <button
           @click="submitComment"
-          class="mt-2 px-4 py-2 bg-[var(--secondary-color)] text-white rounded"
+          class="px-4 py-2 w-[8rem] bg-[var(--secondary-color)] text-white rounded"
         >
           Submit
         </button>
