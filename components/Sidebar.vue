@@ -9,16 +9,24 @@ const lastName = ref("");
 const profilePicture = ref("");
 const { $axios } = useNuxtApp();
 
-const fetchProfileData = async () => {
-  const accessTokenCookie = useCookie("access_token");
-  const refreshTokenCookie = useCookie("refresh_token");
+const accessTokenCookie = useCookie("access_token");
+const refreshTokenCookie = useCookie("refresh_token");
+const profileCookie = useCookie("profile");
+const verifiedCookie = useCookie("verified");
 
-  if (accessTokenCookie.value) {
+const setCookiesToStore = () => {
+  if (accessTokenCookie.value && refreshTokenCookie.value) {
     store.setToken(accessTokenCookie.value);
-  }
-  if (refreshTokenCookie.value) {
     store.setRefreshToken(refreshTokenCookie.value);
   }
+};
+
+watchEffect(() => {
+  setCookiesToStore();
+});
+
+const fetchProfileData = async () => {
+  setCookiesToStore();
   if (!store.token) {
     navigateTo("/auth/login");
     return;
@@ -66,31 +74,32 @@ onMounted(fetchProfileData);
 
 const logoutHandler = async () => {
   try {
-    const res = await $axios.post("/auth/logout", {
-      headers: {
-        Bearer: `${store.token}`,
-      },
-    });
+    const res = await $axios.post(
+      "/auth/logout",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${store.token}`, // Set the token correctly
+        },
+      }
+    );
     console.log("logging out...", res);
+    store.setLoading(true);
+    store.setToken();
+    store.setRefreshToken();
+    accessTokenCookie.value = null;
+    refreshTokenCookie.value = null;
+    profileCookie.value = null;
+    verifiedCookie.value = null;
   } catch (error) {
     console.log(
-      error.response ? error.response.message : error.message,
+      error.response ? error.response.data.message : error.message,
       store.token
     );
+  } finally {
+    store.setLoading(false);
+    navigateTo("/");
   }
-  store.setToken();
-  store.setRefreshToken();
-  store.setLoading(true);
-  const accessTokenCookie = useCookie("access_token");
-  const refreshTokenCookie = useCookie("refresh_token");
-  const profileCookie = useCookie("profile");
-  const verifiedCookie = useCookie("verified");
-
-  accessTokenCookie.value = null;
-  refreshTokenCookie.value = null;
-  profileCookie.value = null;
-  verifiedCookie.value = null;
-  navigateTo("/");
 };
 </script>
 

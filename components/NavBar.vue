@@ -1,80 +1,37 @@
 <script setup>
 import { useUserStore } from "#imports";
+import { ref, onMounted, computed, watchEffect } from "vue"; // Import necessary functions
 
 const store = useUserStore();
 const firstName = ref("");
 const lastName = ref("");
-const { $axios } = useNuxtApp();
-
 const profilePicture = ref("");
+const { $axios } = useNuxtApp();
 
 const accessTokenCookie = useCookie("access_token");
 const refreshTokenCookie = useCookie("refresh_token");
-const profileCookie = useCookie("profile");
-const verifiedCookie = useCookie("verified");
 
-// onMounted(async () => {
-//   store.setLoading(true);
-//   if (accessTokenCookie.value && profileCookie.value && verifiedCookie.value) {
-//     store.setToken(accessTokenCookie.value);
-//     store.setRefreshToken(refreshTokenCookie.value);
-//   }
-//   if (!store.token) return;
-//   try {
-//     const response = await $axios.get("user/profile/me", {
-//       headers: {
-//         Authorization: `Bearer ${store.token}`,
-//       },
-//     });
-//     console.log("✅✅success✅✅", response.data.data);
-//     firstName.value = response.data.data.firstName;
-//     lastName.value = response.data.data.lastName;
-//     store.setLoading(false);
-//   } catch (error) {
-//     console.log(
-//       "❌❌Failed❌❌",
-//       error.response ? error.response.data : error.message
-//     );
-//     store.setLoading(false);
-//   }
-// });
-
-// onMounted(async () => {
-//   store.setLoading(true);
-//   if (accessTokenCookie.value && profileCookie.value && verifiedCookie.value) {
-//     store.setToken(accessTokenCookie.value);
-//     store.setRefreshToken(refreshTokenCookie.value);
-//   }
-//   if (!store.token) return;
-//   try {
-//     const response = await $axios.get("user/profile/pic", {
-//       headers: {
-//         Authorization: `Bearer ${store.token}`,
-//       },
-//     });
-//     console.log("success", response.data);
-//     profilePicture.value = `http://localhost:3333/${response.data.imagePath}`;
-//     store.setLoading(false);
-//   } catch (error) {
-//     console.log(error.response ? error.response.data : error.message);
-//     store.setLoading(false);
-//   }
-// });
-onMounted(async () => {
-  store.setLoading(true);
-  if (
-    accessTokenCookie.value &&
-    profileCookie.value &&
-    verifiedCookie.value &&
-    refreshTokenCookie.value
-  ) {
+const setCookiesToStore = () => {
+  if (accessTokenCookie.value && refreshTokenCookie.value) {
     store.setToken(accessTokenCookie.value);
     store.setRefreshToken(refreshTokenCookie.value);
   }
+};
+
+watchEffect(() => {
+  setCookiesToStore();
+});
+
+onMounted(async () => {
+  store.setLoading(true);
+
+  setCookiesToStore();
+
   if (!store.token) {
     store.setLoading(false);
     return;
   }
+
   try {
     const [profileResponse, picResponse] = await Promise.all([
       $axios.get("user/profile/me", {
@@ -105,11 +62,9 @@ onMounted(async () => {
 const isLoggedIn = computed(() => !!store.token); // Reactive check
 const language = ref("English");
 </script>
+
 <template>
   <nav class="flex shadow-md px-[2rem] h-[7rem] justify-between pr-[3rem]">
-    <div v-if="store.isLoading">
-      <Spinner />
-    </div>
     <div>
       <NuxtLink to="/">
         <img

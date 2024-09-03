@@ -73,11 +73,11 @@
         </div>
       </form>
       <button
-        class="m-4 px-4 py-2 bg-[var(--primary-color)] flex gap-[0.8rem] justify-center w-[250px] text-white rounded-lg"
+        class="m-4 px-4 py-2 bg-[#000] flex gap-[0.8rem] justify-center w-[250px] text-white rounded-full"
         @click="loginWithGoogle"
       >
         <span class="flex items-center"
-          ><Icon name="mdi:google" size="22px"
+          ><Icon name="logos:google-icon" size="22px"
         /></span>
         Continue with Google
       </button>
