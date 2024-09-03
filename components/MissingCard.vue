@@ -51,6 +51,21 @@ const props = defineProps({
   },
 });
 
+const sharePost = () => {
+  // if (navigator.share) {
+  //   navigator
+  //     .share({
+  //       title: `${props.firstName} ${props.middleName} ${props.lastName}`,
+  //       text: `Check out this missing person report: ${props.firstName} ${props.middleName} ${props.lastName}. Last seen at ${props.lastSeenLocation}.`,
+  //       url: window.location.href,
+  //     })
+  //     .then(() => console.log("Post shared successfully"))
+  //     .catch((error) => console.error("Error sharing post:", error));
+  // } else {
+  //   console.log("Share API not supported on this browser.");
+  // }
+};
+
 const viewDetails = () => {
   store.setLoading(true);
   navigateTo(`/posts/details/${props.postId}`);
@@ -148,9 +163,18 @@ const setStatus = (status) => {
         class="absolute top-2 right-2 flex justify-center items-center p-2 rounded-full bg-[var(--secondary-color)] text-white hover:bg-[var(--secondary-color)]"
       >
         <!-- Use an icon component here; example icon used -->
-        <Icon name="mdi:comment" size="24px" />
+        <Icon name="mdi:comment" size="20px" />
       </button>
     </div>
+    <button
+      v-if="!closeCase"
+      @click="sharePost"
+      title="Share this post"
+      class="absolute top-72 right-2 flex justify-center items-center p-2 rounded-full bg-white text-[var(--secondary-color)] hover:text-[var(--primary-color)]"
+    >
+      <!-- Use an icon component here; example icon used -->
+      <Icon name="heroicons-outline:share" size="20px" />
+    </button>
 
     <button
       @click="viewDetails"

@@ -1,16 +1,22 @@
 <script setup>
 import { useUserStore } from "#imports";
+import { ref, onMounted } from "vue";
 
 const store = useUserStore();
 const router = useRouter();
+const { $axios } = useNuxtApp();
+const route = useRoute();
+
 const imagePath = ref("");
+const missingPerson = ref({});
+const comments = ref([]);
+const newComment = ref("");
+const postId = route.params.postId;
+
 const previousPage = () => {
   router.go(-1);
 };
-const { $axios } = useNuxtApp();
-const route = useRoute();
-const postId = route.params.postId;
-const missingPerson = ref([]);
+
 onMounted(async () => {
   store.setLoading(true);
   try {
@@ -20,10 +26,10 @@ onMounted(async () => {
       },
     });
     missingPerson.value = response.data.data;
-    console.log("missingPerson", missingPerson.value);
+    comments.value = response.data.data.comments;
     imagePath.value = `http://localhost:3333/uploads/post/${response.data.data.images[0]}`;
-    console.log(imagePath.value);
     store.setLoading(false);
+    console.log("Post details fetched successfully:", response.data.data);
   } catch (error) {
     console.error(error.response ? error.response.data : error.message);
     store.setLoading(false);
@@ -59,7 +65,43 @@ const chatReporter = () => {
   store.setLoading(true);
   navigateTo("/profile/messages");
 };
+
+const submitComment = async () => {
+  if (!store.token) {
+    navigateTo("/auth/login");
+    return;
+  }
+  if (!newComment.value.trim()) return;
+
+  try {
+    const response = await $axios.post(
+      `/comment/post`,
+      {
+        postId,
+        commentText: newComment.value,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${store.token}`,
+        },
+      }
+    );
+
+    comments.value.push(response.data.data);
+    console.log("Comment added successfully:", response.data.data);
+    newComment.value = ""; // Clear input after submission
+  } catch (error) {
+    console.error(error.response ? error.response.data : error.message);
+  }
+};
+
+function getInitials(firstName, lastName) {
+  const firstInitial = firstName ? firstName.charAt(0).toUpperCase() : "";
+  const lastInitial = lastName ? lastName.charAt(0).toUpperCase() : "";
+  return `${firstInitial}${lastInitial}`;
+}
 </script>
+
 <template>
   <div>
     <div v-if="store.isLoading"><Spinner /></div>
@@ -240,6 +282,66 @@ const chatReporter = () => {
             @click="chatReporter"
           >
             Chat with the {{ missingPerson.posterRelation?.toLowerCase() }}
+          </button>
+        </div>
+      </div>
+      <!-- Comments Section -->
+      <div class="comments-section mx-[5rem] my-[2rem]">
+        <h2
+          class="text-[20px] text-[var(--primary-color)] font-medium mb-[1rem]"
+        >
+          Comments
+        </h2>
+        <div
+          v-if="!comments || comments.length === 0"
+          class="text-[var(--primary-color)]"
+        >
+          No comments yet. Be the first to comment!
+        </div>
+        <div
+          v-for="comment in comments"
+          :key="comment.id"
+          class="comment mb-[1rem]"
+        >
+          <div class="flex items-center gap-[1rem]">
+            <div
+              class="w-10 h-10 rounded-full bg-[var(--primary-color)] text-white flex items-center justify-center text-lg font-bold"
+            >
+              {{
+                getInitials(
+                  comment.user?.Profile.firstName,
+                  comment.user?.Profile.lastName
+                )
+              }}
+            </div>
+            <div>
+              <p class="text-[var(--primary-color)] font-medium">
+                {{ comment.user?.Profile.firstName }}
+                {{ comment.user?.Profile.lastName }}
+              </p>
+              <p class="text-[var(--primary-color)]">
+                {{ formatDate(comment.createdAt) }}
+              </p>
+            </div>
+          </div>
+          <p class="text-[var(--primary-color)] mt-[0.5rem]">
+            {{ comment.commentText }}
+          </p>
+        </div>
+
+        <!-- Add New Comment Form -->
+        <div class="add-comment my-[2rem]">
+          <textarea
+            v-model="newComment"
+            class="w-full p-2 border outline-none text-[var(--primary-color)] rounded"
+            rows="3"
+            placeholder="Write your comment..."
+          ></textarea>
+          <button
+            @click="submitComment"
+            class="mt-[1rem] p-2 bg-[var(--secondary-color)] rounded text-white"
+          >
+            Submit
           </button>
         </div>
       </div>
