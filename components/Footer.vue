@@ -22,7 +22,7 @@
       <li class="text-white text-[18px]">info@afalagi.com</li>
       <li class="text-white text-[18px]">+251 912345678</li>
     </ul>
-    <div class="mx-[5rem] pt-[4.5rem]">
+    <div class="mx-[5rem] pt-[2.5rem]">
       <div class="flex justify-center gap-[3rem] pb-2">
         <span class="flex items-center">
           <Icon name="logos:facebook" size="26px" />

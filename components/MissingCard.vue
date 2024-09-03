@@ -98,12 +98,13 @@ const setStatus = (status) => {
 </script>
 
 <template>
+  <div v-if="store.isLoading">
+    <MissingCardLoader />
+  </div>
   <div
+    v-else
     class="relative w-[300px] flex flex-col bg-[#fafafa] rounded-lg border-2 border-[#d2d2d2] items-start"
   >
-    <div v-if="store.isLoading">
-      <Spinner />
-    </div>
     <div class="gap-1 w-full flex flex-col">
       <div
         v-if="reporterName"
