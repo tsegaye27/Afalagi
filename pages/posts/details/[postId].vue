@@ -1,6 +1,6 @@
 <script setup>
 import { useUserStore } from "#imports";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 
 const store = useUserStore();
 const router = useRouter();
@@ -12,6 +12,9 @@ const missingPerson = ref({});
 const comments = ref([]);
 const newComment = ref("");
 const postId = route.params.postId;
+const showAllComments = ref(false); // To toggle showing all comments
+const parentId = ref(null); // For handling replies
+const replyText = ref({}); // To handle multiple reply textareas
 
 const previousPage = () => {
   router.go(-1);
@@ -57,8 +60,12 @@ function formatDate(dateStr) {
   const month = monthNames[dateObj.getMonth()];
   const day = String(dateObj.getDate()).padStart(2, "0");
   const year = dateObj.getFullYear();
+  const hours = dateObj.getHours();
+  const minutes = String(dateObj.getMinutes()).padStart(2, "0");
+  const ampm = hours >= 12 ? "PM" : "AM";
+  const formattedHour = hours % 12 || 12;
 
-  return `${month} ${day}, ${year}`;
+  return `${month} ${day}, ${year} ${formattedHour}:${minutes} ${ampm}`;
 }
 
 const chatReporter = () => {
@@ -79,6 +86,7 @@ const submitComment = async () => {
       {
         postId,
         commentText: newComment.value,
+        parentId: parentId.value, // Handle parentId for replies
       },
       {
         headers: {
@@ -90,6 +98,37 @@ const submitComment = async () => {
     comments.value.push(response.data.data);
     console.log("Comment added successfully:", response.data.data);
     newComment.value = ""; // Clear input after submission
+    parentId.value = null; // Reset parentId after reply submission
+  } catch (error) {
+    console.error(error.response ? error.response.data : error.message);
+  }
+};
+
+const submitReply = async (commentId) => {
+  if (!store.token) {
+    navigateTo("/auth/login");
+    return;
+  }
+  if (!replyText.value[commentId]?.trim()) return;
+
+  try {
+    const response = await $axios.post(
+      `/comment/post`,
+      {
+        postId,
+        commentText: replyText.value[commentId],
+        parentId: commentId, // Set parentId to the comment being replied to
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${store.token}`,
+        },
+      }
+    );
+
+    comments.value.push(response.data.data);
+    console.log("Reply added successfully:", response.data.data);
+    replyText.value[commentId] = ""; // Clear reply input after submission
   } catch (error) {
     console.error(error.response ? error.response.data : error.message);
   }
@@ -100,6 +139,11 @@ function getInitials(firstName, lastName) {
   const lastInitial = lastName ? lastName.charAt(0).toUpperCase() : "";
   return `${firstInitial}${lastInitial}`;
 }
+
+// Show limited or all comments based on the toggle
+const visibleComments = computed(() => {
+  return showAllComments.value ? comments.value : comments.value.slice(0, 4);
+});
 </script>
 
 <template>
@@ -292,14 +336,11 @@ function getInitials(firstName, lastName) {
         >
           Comments
         </h2>
-        <div
-          v-if="!comments || comments.length === 0"
-          class="text-[var(--primary-color)]"
-        >
+        <div v-if="!visibleComments.length" class="text-[var(--primary-color)]">
           No comments yet. Be the first to comment!
         </div>
         <div
-          v-for="comment in comments"
+          v-for="comment in visibleComments"
           :key="comment.id"
           class="comment mb-[1rem]"
         >
@@ -314,36 +355,65 @@ function getInitials(firstName, lastName) {
                 )
               }}
             </div>
-            <div>
+            <div class="flex flex-col">
               <p class="text-[var(--primary-color)] font-medium">
                 {{ comment.user?.Profile.firstName }}
                 {{ comment.user?.Profile.lastName }}
               </p>
-              <p class="text-[var(--primary-color)]">
-                {{ formatDate(comment.createdAt) }}
+              <p class="text-[var(--primary-color)] mt-[0.5rem]">
+                {{ comment.commentText }}
               </p>
+              <div class="flex items-center gap-2">
+                <p class="text-[var(--primary-color)]">
+                  {{ formatDate(comment.createdAt) }}
+                </p>
+                <button @click="parentId = comment.id" class="text-blue-500">
+                  Reply
+                </button>
+              </div>
+
+              <!-- Reply Textarea and Button -->
+              <div v-if="parentId === comment.id" class="mt-[1rem]">
+                <textarea
+                  v-model="replyText[comment.id]"
+                  class="w-full p-2 border outline-none text-[var(--primary-color)] rounded"
+                  rows="2"
+                  placeholder="Write your reply..."
+                ></textarea>
+                <button
+                  @click="submitReply(comment.id)"
+                  class="mt-2 px-4 py-2 bg-[var(--secondary-color)] text-white rounded"
+                >
+                  Submit Reply
+                </button>
+              </div>
             </div>
           </div>
-          <p class="text-[var(--primary-color)] mt-[0.5rem]">
-            {{ comment.commentText }}
-          </p>
         </div>
+        <!-- Toggle Button -->
+        <button
+          v-if="comments.length > 4"
+          @click="showAllComments = !showAllComments"
+          class="text-[var(--primary-color)] mt-4"
+        >
+          {{ showAllComments ? "View Less" : "View More" }}
+        </button>
+      </div>
 
-        <!-- Add New Comment Form -->
-        <div class="add-comment my-[2rem]">
-          <textarea
-            v-model="newComment"
-            class="w-full p-2 border outline-none text-[var(--primary-color)] rounded"
-            rows="3"
-            placeholder="Write your comment..."
-          ></textarea>
-          <button
-            @click="submitComment"
-            class="mt-[1rem] p-2 bg-[var(--secondary-color)] rounded text-white"
-          >
-            Submit
-          </button>
-        </div>
+      <!-- Add Comment -->
+      <div class="add-comment mx-[5rem] my-[2rem]">
+        <textarea
+          v-model="newComment"
+          class="w-2/3 p-2 border outline-none text-[var(--primary-color)] rounded"
+          rows="3"
+          placeholder="Write your comment..."
+        ></textarea>
+        <button
+          @click="submitComment"
+          class="mt-2 px-4 py-2 bg-[var(--secondary-color)] text-white rounded"
+        >
+          Submit
+        </button>
       </div>
     </div>
   </div>
