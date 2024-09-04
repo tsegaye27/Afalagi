@@ -10,6 +10,21 @@ onMounted(() => {
   if (!store.token) navigateTo("/auth/signup");
 });
 
+//Toster
+const showToaster = ref(false);
+const toasterMessage = ref("");
+const toasterType = ref(""); // success or error
+
+const showToast = (message, type) => {
+  toasterMessage.value = message;
+  toasterType.value = type;
+  showToaster.value = true;
+
+  setTimeout(() => {
+    showToaster.value = false;
+  }, 5000); // Hide after 5 seconds
+};
+
 const store = useUserStore();
 const { $axios } = useNuxtApp();
 
@@ -51,9 +66,10 @@ const createProfile = async () => {
     });
 
     console.log("✅ Profile Created Successfully!!!", response.data);
-
+    showToast("Profile Created Successfully!!!", "success");
     navigateTo("/");
   } catch (error) {
+    showToast("Failed to Create Profile", "error");
     console.error(
       "Failed to Create Profile",
       error.response ? error.response.data : error.message

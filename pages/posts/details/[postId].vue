@@ -39,6 +39,20 @@ onMounted(async () => {
   }
 });
 
+const fetchComments = async () => {
+  try {
+    const response = await $axios.get(`/post/${postId}`, {
+      headers: {
+        Authorization: `Bearer ${store.token}`,
+      },
+    });
+    comments.value = response.data.data.comments;
+    console.log("Comments fetched successfully:", response.data.data.comments);
+  } catch (error) {
+    console.error(error.response ? error.response.data : error.message);
+  }
+};
+
 function formatDate(dateStr) {
   const dateObj = new Date(dateStr);
 
@@ -95,6 +109,7 @@ const submitComment = async () => {
     console.log("Comment added successfully:", response.data.data);
     newComment.value = ""; // Clear input after submission
     parentId.value = null; // Reset parentId after reply submission
+    fetchComments();
   } catch (error) {
     console.error(error.response ? error.response.data : error.message);
   }
@@ -125,9 +140,11 @@ const submitReply = async (commentId) => {
     comments.value.push(response.data.data);
     console.log("Reply added successfully:", response.data.data);
     replyText.value[commentId] = "";
+    fetchComments();
   } catch (error) {
     console.error(error.response ? error.response.data : error.message);
   }
+
   parentId.value = null; // Reset parentId after reply submission
 };
 
@@ -176,9 +193,9 @@ function timeAgo(date) {
     <div class="flex items-center m-8">
       <button
         @click="previousPage"
-        class="flex btn-round justify-center items-center mr-[1rem]"
+        class="flex text-[var(--primary-color)] justify-center items-center mr-[1rem]"
       >
-        <</button
+        <Icon name="heroicons-outline:arrow-left" size="24px" /></button
       ><span class="text-[var(--primary-color)] font-regular text-2xl"
         >Back</span
       >
@@ -187,7 +204,7 @@ function timeAgo(date) {
     <hr />
     <div class="flex flex-col">
       <div>
-        <div class="flex mx-[5rem] my-[2rem] justify-between gap-[5rem]">
+        <div class="flex mx-[5rem] my-[2rem] justify-between gap-[4rem]">
           <div class="person-image">
             <img
               class="w-[400px] h-[500px]"
@@ -195,9 +212,9 @@ function timeAgo(date) {
               alt="missing_person"
             />
           </div>
-          <div class="w-[800px] justify-start flex mt-[2rem]">
+          <div class="w-[900px] justify-start flex mt-[1rem]">
             <ul class="flex flex-col gap-4">
-              <div class="flex justify-start gap-[6rem]">
+              <div class="flex justify-start gap-[6rem] w-full">
                 <li
                   class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
                 >
@@ -231,6 +248,16 @@ function timeAgo(date) {
                 <li
                   class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
                 >
+                  Nationality:
+                </li>
+                <span class="text-[var(--primary-color)] font-regular">{{
+                  missingPerson.nationality?.toLowerCase()
+                }}</span>
+              </div>
+              <div class="flex justify-start gap-[6rem] wrap">
+                <li
+                  class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
+                >
                   Hair-Color:
                 </li>
                 <span class="text-[var(--primary-color)] font-regular">{{
@@ -245,6 +272,16 @@ function timeAgo(date) {
                 </li>
                 <span class="text-[var(--primary-color)] font-regular">{{
                   missingPerson.skinColor?.toLowerCase()
+                }}</span>
+              </div>
+              <div class="flex justify-start gap-[6rem] wrap">
+                <li
+                  class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
+                >
+                  Height:
+                </li>
+                <span class="text-[var(--primary-color)] font-regular">{{
+                  missingPerson.height ? missingPerson.height : "Not Specified"
                 }}</span>
               </div>
               <div class="flex justify-start gap-[5.5rem] wrap">
@@ -289,6 +326,16 @@ function timeAgo(date) {
               </div>
               <div class="flex justify-start gap-[6rem] wrap">
                 <li
+                  class="font-medium w-[170px] whitespace-nowrap text-[var(--primary-color)] text-lg"
+                >
+                  Recognizable Features:
+                </li>
+                <span class="text-[var(--primary-color)] font-regular">{{
+                  missingPerson.recognizableFeatures
+                }}</span>
+              </div>
+              <div class="flex justify-start gap-[6rem] wrap">
+                <li
                   class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
                 >
                   Education:
@@ -315,6 +362,36 @@ function timeAgo(date) {
                 </li>
                 <span class="text-[var(--primary-color)] font-regular">{{
                   missingPerson.maritalStatus?.toLowerCase()
+                }}</span>
+              </div>
+              <div class="flex justify-start gap-[6rem] wrap">
+                <li
+                  class="font-medium w-[170px] whitespace-nowrap text-[var(--primary-color)] text-lg"
+                >
+                  Physical Disability:
+                </li>
+                <span class="text-[var(--primary-color)] font-regular">{{
+                  missingPerson.physicalDisability
+                }}</span>
+              </div>
+              <div class="flex justify-start gap-[6rem] wrap">
+                <li
+                  class="font-medium w-[170px] whitespace-nowrap text-[var(--primary-color)] text-lg"
+                >
+                  Mental Disability:
+                </li>
+                <span class="text-[var(--primary-color)] font-regular">{{
+                  missingPerson.mentalDisability
+                }}</span>
+              </div>
+              <div class="flex justify-start gap-[6rem] wrap">
+                <li
+                  class="font-medium w-[170px] whitespace-nowrap text-[var(--primary-color)] text-lg"
+                >
+                  Medical Condition:
+                </li>
+                <span class="text-[var(--primary-color)] font-regular">{{
+                  missingPerson.medicalIssues
                 }}</span>
               </div>
               <div
@@ -358,7 +435,7 @@ function timeAgo(date) {
         <h2
           class="text-[20px] text-[var(--primary-color)] font-medium mb-[1rem]"
         >
-          Comments({{ comments.length }})
+          Comments ({{ comments.length }})
         </h2>
         <div v-if="!visibleComments.length" class="text-[var(--primary-color)]">
           No comments yet. Be the first to comment!
@@ -411,8 +488,31 @@ function timeAgo(date) {
                   @click="submitReply(comment.id)"
                   class="mt-2 px-4 py-2 bg-[var(--secondary-color)] text-white rounded"
                 >
-                  Submit Reply
+                  Reply
                 </button>
+              </div>
+
+              <!-- Display Replies with Indentation -->
+              <div
+                v-if="comment.replies"
+                class="ml-6 mt-2 border-l-2 border-gray-200 pl-4"
+              >
+                <div
+                  v-for="reply in comment.replies"
+                  :key="reply.id"
+                  class="reply my-[0.5rem] pl-[1rem]"
+                >
+                  <p class="text-[var(--secondary-color)] font-medium">
+                    {{ reply.user?.Profile.firstName }}
+                    {{ reply.user?.Profile.lastName }}
+                  </p>
+                  <p class="text-[var(--primary-color)]">
+                    {{ reply.commentText }}
+                  </p>
+                  <p class="text-[#868686] text-sm">
+                    {{ timeAgo(reply.createdAt) }}
+                  </p>
+                </div>
               </div>
             </div>
           </div>

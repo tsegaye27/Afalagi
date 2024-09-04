@@ -28,7 +28,26 @@ const handleKeydown = (event, index) => {
     focusNext(index);
   } else if (event.key === "ArrowLeft") {
     focusPrev(index);
+  } else if (event.key === "Backspace") {
+    if (inputs.value[index] === "") {
+      focusPrev(index);
+    }
   }
+};
+
+// Toaster
+const showToaster = ref(false);
+const toasterMessage = ref("");
+const toasterType = ref(""); // success or error
+
+const showToast = (message, type) => {
+  toasterMessage.value = message;
+  toasterType.value = type;
+  showToaster.value = true;
+
+  setTimeout(() => {
+    showToaster.value = false;
+  }, 5000); // Hide after 5 seconds
 };
 
 const verify = async () => {
@@ -47,10 +66,13 @@ const verify = async () => {
         },
       }
     );
+    showToast("Verification successful", "success");
     console.log("verification success", response.data);
+
     navigateTo("/profile");
     store.setLoading(false);
   } catch (error) {
+    showToast("Verification failed", "error");
     console.error(
       "verification failed",
       error.response ? error.response.data : error.message
@@ -59,7 +81,6 @@ const verify = async () => {
   }
 };
 </script>
-
 <template>
   <div class="flex w-[100%] justify-center gap-[1rem] items-center">
     <div v-if="store.isLoading">
