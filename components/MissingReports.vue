@@ -39,6 +39,7 @@ const showMore = () => {
       Missing Reported
     </h1>
     <div
+      v-if="missingPersons.length > 0"
       class="flex justify-center flex-wrap items-center gap-[3rem] mx-[1rem]"
     >
       <MissingCard
@@ -78,6 +79,12 @@ const showMore = () => {
           ><Icon size="22px" name="material-symbols:arrow-right-alt"
         /></span>
       </button>
+    </div>
+    <div
+      v-else
+      class="flex justify-center items-center text-xl gap-[3rem] mx-[1rem] text-[var(--primary-color)]"
+    >
+      There are no reports available
     </div>
   </div>
 </template>
