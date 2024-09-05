@@ -126,16 +126,30 @@ const submitForm = async () => {
     store.setEmail(email.value);
     store.setToken(response.data.access_token);
     store.setRefreshToken(response.data.refresh_token);
+    // Set tokens in cookies
+    const accessTokenCookie = useCookie("access_token");
+    const refreshTokenCookie = useCookie("refresh_token");
+    const profileCookie = useCookie("profile");
+    const verifiedCookie = useCookie("verified");
+    accessTokenCookie.value = response.data.access_token;
+    refreshTokenCookie.value = response.data.refresh_token;
+    profileCookie.value = response.data.profile;
+    verifiedCookie.value = response.data.verified;
+    // showToast("Signup successful", "success");
     navigateTo("/auth/verification");
   } catch (error) {
+    showToast(
+      error.response ? error.response.data.message : error.message,
+      "error"
+    );
     console.error(
       "Signup failed:",
       error.response ? error.response.data : error.message
     );
-    const messages = Array.isArray(error.response?.data?.message)
-      ? error.response.data.message
-      : [error.response?.data?.message || error.response?.data];
-    messages.forEach((msg) => showToast(msg));
+    // const messages = Array.isArray(error.response?.data?.message)
+    //   ? error.response.data.message
+    //   : [error.response?.data?.message || error.response?.data];
+    // messages.forEach((msg) => showToast(msg));
   } finally {
     store.setLoading(false);
   }

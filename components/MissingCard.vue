@@ -49,6 +49,9 @@ const props = defineProps({
   posterRelation: {
     type: String,
   },
+  reporterImgUrl: {
+    type: String,
+  },
 });
 
 const sharePost = () => {
@@ -100,6 +103,12 @@ function formatDate(dateStr) {
 
   return `${month} ${day}, ${year}`;
 }
+
+const handleComment = () => {
+  store.setLoading(true);
+  navigateTo(`/posts/details/${props.postId}`);
+};
+
 const shortName = computed(() => {
   return `${props.firstName} ${props.middleName.charAt(0)}. ${props.lastName}`;
 });
@@ -123,9 +132,16 @@ const setStatus = (status) => {
     <div class="gap-1 w-full flex flex-col">
       <div
         v-if="reporterName"
-        class="p-4 text-[var(--primary-color)] font-semibold text-md"
+        class="p-2 text-[var(--primary-color)] flex gap-1 font-semibold text-md"
       >
-        Reported by: {{ `${reporterName}` }}
+        <img
+          class="w-[40px] h-[38px] rounded-[1.5rem] border-2 border-[#f4f4f4] mr-2"
+          :src="`http://localhost:3333/uploads/profile/${reporterImgUrl}`"
+          :alt="reporterName"
+        />
+        <span class="flex items-center">
+          {{ `${reporterName}` }}
+        </span>
       </div>
 
       <span
@@ -159,8 +175,9 @@ const setStatus = (status) => {
 
       <button
         v-if="reporterName"
-        @click="handleCommentClick"
-        class="absolute top-2 right-2 flex justify-center items-center p-2 rounded-full bg-[var(--secondary-color)] text-white hover:bg-[var(--secondary-color)]"
+        @click="handleComment"
+        title="Comment on this post"
+        class="absolute top-4 right-2 flex justify-center items-center text-[var(--secondary-color)] hover:text-[var(--primary-color)]"
       >
         <!-- Use an icon component here; example icon used -->
         <Icon name="mdi:comment" size="20px" />
