@@ -87,10 +87,6 @@ const logoutHandler = async () => {
     store.setLoading(true);
     store.setToken();
     store.setRefreshToken();
-    accessTokenCookie.value = null;
-    refreshTokenCookie.value = null;
-    profileCookie.value = null;
-    verifiedCookie.value = null;
   } catch (error) {
     console.log(
       error.response ? error.response.data.message : error.message,
@@ -98,6 +94,10 @@ const logoutHandler = async () => {
     );
   } finally {
     store.setLoading(false);
+    accessTokenCookie.value = null;
+    refreshTokenCookie.value = null;
+    profileCookie.value = null;
+    verifiedCookie.value = null;
     navigateTo("/");
   }
 };
