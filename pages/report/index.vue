@@ -53,6 +53,29 @@ const height = ref("");
 
 const currentStep = ref(1);
 
+const countries = ref([]);
+const nationalityQuery = ref("");
+const showCountryList = ref(false);
+
+onMounted(async () => {
+  const response = await fetch("https://restcountries.com/v3.1/all");
+  countries.value = await response.json();
+});
+
+const filteredCountries = computed(() => {
+  return countries.value.filter((country) =>
+    country.name.common
+      .toLowerCase()
+      .includes(nationalityQuery.value.toLowerCase())
+  );
+});
+
+const selectCountry = (country) => {
+  postData.value.nationality = country.name.common;
+  nationalityQuery.value = `${country.name.common}`;
+  showCountryList.value = false;
+};
+
 const handleLegalDocs = (event) => {
   postData.value.legalDocs = event.target.files[0];
 };
@@ -247,15 +270,30 @@ const goBack = () => {
           <label class="text-[var(--primary-color)] text-[1rem] font-medium"
             >Nationality:</label
           >
-          <select
-            v-model="postData.nationality"
-            class="border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] p-[0.1rem] w-[320px]"
-          >
-            <option value="" selected disabled>Select nationality</option>
-            <option value="ethiopian">Ethiopian</option>
-            <option value="other">Other</option>
-          </select>
+          <div class="relative w-[320px]">
+            <input
+              v-model="nationalityQuery"
+              type="text"
+              placeholder="Search nationality"
+              @focus="showCountryList = true"
+              class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
+            />
+            <ul
+              v-if="showCountryList && filteredCountries.length > 0"
+              class="absolute top-full left-0 w-full border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] mt-1 p-[0.3rem] bg-white z-10 max-h-40 overflow-y-auto"
+            >
+              <li
+                v-for="country in filteredCountries"
+                :key="country.cca2"
+                @mousedown="selectCountry(country)"
+                class="cursor-pointer p-[0.2rem] hover:bg-[var(--primary-color)] hover:text-white flex items-center"
+              >
+                <span>{{ country.flag }} {{ country.name.common }}</span>
+              </li>
+            </ul>
+          </div>
         </div>
+
         <div class="flex gap-[0.9rem] justify-between px-[3rem] items-center">
           <label class="text-[var(--primary-color)] text-[1rem] font-medium"
             >Date of birth:
