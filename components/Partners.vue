@@ -114,7 +114,7 @@
 
 /* Individual slide styling */
 .slide {
-  min-width: 16.6666%; /* Adjust based on the number of logos to fit in the track */
+  min-width: 10%; /* Adjust based on the number of logos to fit in the track */
   display: flex;
   justify-content: center;
   align-items: center;

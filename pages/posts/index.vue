@@ -178,15 +178,6 @@ const hideCountryList = () => {
               <option value="FEMALE">Female</option>
             </select>
 
-            <!-- <select
-              v-model="nationalityFilter"
-              class="w-full bg-white border border-[var(--primary-color)] text-gray-700 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
-            >
-              <option disabled value="">Nationality</option>
-              <option value="">All</option>
-              <option value="ethiopian">Ethiopian</option>
-              <option value="other">Other</option>
-            </select> -->
             <div class="flex justify-between items-center">
               <div class="relative">
                 <input
