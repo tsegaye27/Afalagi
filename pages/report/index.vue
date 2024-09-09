@@ -76,6 +76,12 @@ const selectCountry = (country) => {
   showCountryList.value = false;
 };
 
+const hideCountryList = () => {
+  setTimeout(() => {
+    showCountryList.value = false;
+  }, 100);
+};
+
 const handleLegalDocs = (event) => {
   postData.value.legalDocs = event.target.files[0];
 };
@@ -276,6 +282,7 @@ const goBack = () => {
               type="text"
               placeholder="Search nationality"
               @focus="showCountryList = true"
+              @blur="hideCountryList"
               class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
             />
             <ul
@@ -315,31 +322,36 @@ const goBack = () => {
           />
         </div>
         <div class="flex gap-[5.5rem] justify-between px-[3rem] items-center">
-          <label class="text-[var(--primary-color)] text-[1rem] font-medium"
-            >Last Seen Location:
+          <label class="text-[var(--primary-color)] text-[1rem] font-medium">
+            Last Seen Location:
           </label>
           <div class="flex gap-[0.5rem] w-[320px] flex-wrap">
+            <!-- Country dropdown -->
             <select
               class="outline-none h-[30px] rounded-md p-1 border border-[var(--primary-color)] text-[var(--primary-color)]"
+              v-model="selectedCountry"
+              @change="fetchCities"
             >
               <option value="" disabled selected>Country</option>
-              <option value="ethiopia">Ethiopia</option>
-              <option value="other">Other</option>
+              <option
+                v-for="country in countries"
+                :key="country.country"
+                :value="country.country"
+              >
+                {{ country.country }}
+              </option>
             </select>
+
+            <!-- City dropdown -->
             <select
               class="outline-none h-[30px] rounded-md p-1 border border-[var(--primary-color)] text-[var(--primary-color)]"
-            >
-              <option value="" disabled selected>State</option>
-              <option value="addis-ababa">Addis-Ababa</option>
-              <option value="other">other</option>
-            </select>
-            <select
-              class="outline-none h-[30px] rounded-md p-1 border border-[var(--primary-color)] text-[var(--primary-color)]"
-              v-model="postData.lastSeenLocation"
+              v-model="selectedCity"
+              @change="updateLastSeenLocation"
             >
               <option value="" disabled selected>City</option>
-              <option value="nefas-silk">nefas-silk</option>
-              <option value="other">other</option>
+              <option v-for="city in cities" :key="city" :value="city">
+                {{ city }}
+              </option>
             </select>
           </div>
         </div>

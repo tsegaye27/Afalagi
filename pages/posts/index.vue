@@ -6,6 +6,7 @@ const { $axios } = useNuxtApp();
 const missingPersons = ref([]);
 const searchQuery = ref("");
 
+// Filter options added for gender, nationality, skin color, marital status, hair color, and physical disability
 const genderFilter = ref("");
 const nationalityFilter = ref("");
 const skinColorFilter = ref("");
@@ -19,6 +20,7 @@ const currentPage = ref(1);
 const hasMore = ref(true);
 const isFetching = ref(false);
 
+// Function to fetch posts from the backend, modified to accept filters
 const fetchPosts = async () => {
   if (isFetching.value || !hasMore.value) return;
 
@@ -65,6 +67,7 @@ watch(searchQuery, () => {
 
 onMounted(fetchPosts);
 
+// Computed property to filter missing persons based on filter criteria
 const filteredMissingPersons = computed(() => {
   return missingPersons.value.filter((person) => {
     const matchesGender =
@@ -96,6 +99,7 @@ const filteredMissingPersons = computed(() => {
   });
 });
 
+// Fetch list of countries for nationality filter
 const countries = ref([]);
 const showCountryList = ref(false);
 
@@ -104,6 +108,7 @@ onMounted(async () => {
   countries.value = await response.json();
 });
 
+// Computed property to filter countries based on input
 const filteredCountries = computed(() => {
   return countries.value.filter((country) =>
     country.name.common
@@ -112,16 +117,45 @@ const filteredCountries = computed(() => {
   );
 });
 
+// Select country from the list
 const selectCountry = (country) => {
   nationalityFilter.value = `${country.name.common}`;
   showCountryList.value = false;
 };
 
+// Hide country list after selecting
 const hideCountryList = () => {
   setTimeout(() => {
     showCountryList.value = false;
-  }, 200);
+  }, 100);
 };
+
+// Handle skin color selection
+const showSkinColorList = ref(false);
+const skinColors = ref(["DARK", "BROWN", "WHITE", "LIGHT-SKIN", "OTHER"]);
+
+// Computed property to filter skin colors based on input
+const filteredSkinColors = computed(() => {
+  return skinColors.value.filter((skinColor) =>
+    skinColor.toLowerCase().includes(skinColorFilter.value.toLowerCase())
+  );
+});
+
+// Select skin color from the list
+const selectSkinColor = (skinColor) => {
+  skinColorFilter.value = skinColor;
+  showSkinColorList.value = false;
+};
+
+// Hide skin color list after selecting
+const hideSkinColorList = () => {
+  setTimeout(() => {
+    showSkinColorList.value = false;
+  }, 100);
+};
+
+// Utility function to format text
+const small = (str) => str.toLowerCase().replace(/-/g, " ");
 </script>
 
 <template>
@@ -151,6 +185,15 @@ const hideCountryList = () => {
     <div>
       <!-- Filter Button -->
 
+      <!-- Overlay to reduce opacity of the entire page when sidebar is open -->
+      <transition name="fade">
+        <div
+          v-if="showSidebar"
+          class="fixed inset-0 bg-black bg-opacity-50 z-40"
+          @click="showSidebar = false"
+        ></div>
+      </transition>
+
       <!-- Sidebar for filters -->
       <transition name="slide-right">
         <div
@@ -168,6 +211,7 @@ const hideCountryList = () => {
 
           <!-- Filter options inside the sidebar -->
           <div class="flex flex-col gap-4">
+            <!-- Gender filter -->
             <select
               v-model="genderFilter"
               class="w-full bg-white border border-[var(--primary-color)] text-gray-700 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
@@ -178,7 +222,8 @@ const hideCountryList = () => {
               <option value="FEMALE">Female</option>
             </select>
 
-            <div class="flex justify-between items-center">
+            <!-- Nationality filter with searchable dropdown -->
+            <div class="w-full">
               <div class="relative">
                 <input
                   v-model="nationalityFilter"
@@ -204,78 +249,67 @@ const hideCountryList = () => {
               </div>
             </div>
 
-            <select
-              v-model="skinColorFilter"
-              class="w-full bg-white border border-[var(--primary-color)] text-gray-700 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
-            >
-              <option disabled value="">Skin Color</option>
-              <option value="">All</option>
-              <option value="DARK">Dark</option>
-              <option value="BROWN">Brown</option>
-              <option value="WHITE">White</option>
-              <option value="LIGHT_SKIN">Light-Skin</option>
-              <option value="OTHER">Other</option>
-            </select>
+            <!-- Skin color filter with searchable dropdown -->
+            <div class="relative">
+              <input
+                v-model="skinColorFilter"
+                type="text"
+                placeholder="Search skin color"
+                @focus="showSkinColorList = true"
+                @blur="hideSkinColorList"
+                class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
+              />
+              <ul
+                v-if="showSkinColorList && filteredSkinColors.length > 0"
+                class="absolute top-full left-0 w-full border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] mt-1 p-[0.3rem] bg-white z-10 max-h-40 overflow-y-auto"
+              >
+                <li
+                  v-for="skinColor in filteredSkinColors"
+                  :key="skinColor"
+                  @mousedown="selectSkinColor(skinColor)"
+                  class="cursor-pointer p-[0.2rem] hover:bg-[var(--primary-color)] hover:text-white flex items-center"
+                >
+                  <span>{{ small(skinColor) }}</span>
+                </li>
+              </ul>
+            </div>
 
+            <!-- Marital status filter -->
             <select
               v-model="maritalStatusFilter"
               class="w-full bg-white border border-[var(--primary-color)] text-gray-700 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
             >
-              <option selected disabled value="">Marital Status</option>
+              <option disabled value="">Marital Status</option>
               <option value="">All</option>
-              <option value="SINGLE">Single</option>
               <option value="MARRIED">Married</option>
-              <option value="DIVORCED">Divorced</option>
-              <option value="WIDOWED">Widowed</option>
-              <option value="OTHER">Other</option>
+              <option value="SINGLE">Single</option>
             </select>
 
-            <select
+            <!-- Hair color filter -->
+            <input
               v-model="hairColorFilter"
-              class="w-full bg-white border border-[var(--primary-color)] text-gray-700 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
-            >
-              <option selected disabled value="">Hair Color</option>
-              <option value="">All</option>
-              <option value="BLACK">Black</option>
-              <option value="BROWN">Brown</option>
-              <option value="WHITE">White</option>
-              <option value="BLONDE">Blonde</option>
-              <option value="GRAY">Grey</option>
-              <option value="ORANGE">Orange</option>
-              <option value="OTHER">Other</option>
-            </select>
+              type="text"
+              placeholder="Hair Color"
+              class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
+            />
 
-            <select
+            <!-- Physical disability filter -->
+            <input
               v-model="physicalDisabilityFilter"
-              class="w-full bg-white border border-[var(--primary-color)] text-gray-700 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
-            >
-              <option selected disabled value="">Physical Disability</option>
-              <option value="">All</option>
-              <option value="NONE">None</option>
-              <option value="mobility_issue">Mobility Issue</option>
-              <option value="vision_impairment">Vision Impairment</option>
-              <option value="hearing_loss">Hearing Loss</option>
-              <option value="neurological_condition">
-                Neurological Condition
-              </option>
-              <option value="non_verbal">Non Verbal</option>
-              <option value="limb_difference">Limb Difference</option>
-              <option value="other">Other</option>
-            </select>
+              type="text"
+              placeholder="Physical Disability"
+              class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
+            />
           </div>
         </div>
       </transition>
     </div>
 
-    <div class="flex flex-wrap justify-start gap-[3rem] ml-[3rem] my-[2rem]">
-      <div
-        v-if="
-          missingPersons.length === 0 || filteredMissingPersons.length === 0
-        "
-        class="w-full h-[598px] text-center text-gray-500"
-      >
-        <p>No posts found</p>
-      </div>
+    <div v-if="!filteredMissingPersons.length" class="w-full text-center">
+      <p class="text-gray-500 text-lg">No matching results found.</p>
+    </div>
+
+    <div class="grid grid-cols-4 gap-[1rem] mt-[1rem] mx-[1rem]">
       <MissingCard
         v-for="(person, index) in filteredMissingPersons"
         :key="index"
@@ -307,6 +341,13 @@ const hideCountryList = () => {
         :reporterImgUrl="`${person.user.Profile?.profilePicture}`"
       />
     </div>
+    <button
+      v-if="hasMore && !isFetching"
+      @click="fetchPosts"
+      class="load-more-btn"
+    >
+      Load More
+    </button>
   </div>
 </template>
 <style>

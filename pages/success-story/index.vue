@@ -8,6 +8,8 @@
     >
       {{ toasterMessage }}
     </div>
+
+    <!-- Page Header -->
     <h1
       class="text-[30px] w-full my-[3rem] text-center text-[var(--primary-color)] font-semibold"
     >
@@ -15,55 +17,52 @@
     </h1>
     <hr />
 
-    <!-- Blog Post 1 -->
+    <!-- Success Stories List -->
     <div
+      v-for="story in successStories"
+      :key="story.id"
       class="blog-post w-full bg-white flex flex-col items-center px-[4rem] py-[2rem] mb-[2rem] rounded-lg shadow-md"
     >
       <h2
-        class="text-[24px] font-[sora] text-left w-full ml-[16.5rem] text-[var(--secondary-color)] my-4"
+        class="text-[24px] font-[sora] text-left w-full text-[var(--secondary-color)] my-4"
       >
-        Biruk Weldu meets his brother after 10 years
+        {{ story.title }}
       </h2>
-
       <div class="flex flex-col w-full max-w-[800px] text-left">
         <p class="text-[16px] text-[var(--primary-color)] mb-[1rem]">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati
-          minus incidunt consequuntur non delectus quam veritatis excepturi nam
-          recusandae quo in reiciendis quia ad harum, repellendus officia,
-          deserunt similique esse. Lorem ipsum dolor sit, amet consectetur
-          adipisicing elit. Obcaecati minus incidunt consequuntur non delectus
-          quam veritatis excepturi nam recusandae quo in reiciendis quia ad
-          harum, repellendus officia, deserunt similique esse.
+          {{ story.content }}
         </p>
-        <div class="my-4">
+
+        <!-- Video Section (Optional) -->
+        <div v-if="story.videoUrl" class="my-4">
           <iframe
             class="mb-[1.5rem] rounded-lg"
             width="560"
             height="315"
-            src="https://www.youtube.com/embed/NtfbWkxJTHw?si=WXzUSrBQPd5OUMNG"
-            title="YouTube video player"
+            :src="story.videoUrl"
+            title="Success Story Video"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
             allowfullscreen
           ></iframe>
         </div>
-        <div class="flex justify-end items-center">
-          <!-- Like and Share Section -->
+
+        <!-- Like and Share Section -->
+        <div class="flex justify-between items-center">
           <div class="flex items-center gap-[1rem]">
             <button
               class="like-button flex items-center gap-[0.5rem]"
-              @click="toggleLike(1)"
+              @click="toggleLike(story.id)"
             >
               <Icon
                 :name="
-                  isLiked(1)
+                  isLiked(story.id)
                     ? 'heroicons-solid:thumb-up'
                     : 'heroicons-outline:thumb-up'
                 "
-                :class="isLiked(1) ? 'text-blue-500' : 'text-gray-500'"
+                :class="isLiked(story.id) ? 'text-blue-500' : 'text-gray-500'"
               />
-              <span>{{ isLiked(1) ? likes[1] : likes[1] }}</span>
+              <span>{{ likes[story.id] || story.likes }}</span>
             </button>
             <button
               class="share-button flex items-center gap-[0.5rem] text-blue-500"
@@ -73,64 +72,29 @@
             </button>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Repeat for More Blog Posts -->
-    <!-- Blog Post 2 -->
-    <div
-      class="blog-post w-full bg-white flex flex-col items-center px-[4rem] py-[2rem] mb-[2rem] rounded-lg shadow-md"
-    >
-      <div class="flex flex-col w-full max-w-[800px] text-left">
-        <h2
-          class="text-[24px] font-[sora] text-[var(--secondary-color)] mb-[1rem]"
-        >
-          Biruk Weldu
-        </h2>
-        <p class="text-[16px] text-[var(--primary-color)] mb-[1rem]">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati
-          minus incidunt consequuntur non delectus quam veritatis excepturi nam
-          recusandae quo in reiciendis quia ad harum, repellendus officia,
-          deserunt similique esse. Lorem ipsum dolor sit, amet consectetur
-          adipisicing elit. Obcaecati minus incidunt consequuntur non delectus
-          quam veritatis excepturi nam recusandae quo in reiciendis quia ad
-          harum, repellendus officia, deserunt similique esse.
-        </p>
-        <div class="my-4">
-          <iframe
-            class="mb-[1.5rem] rounded-lg"
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/xwTub7_we0w?si=9bctIzD4Ci8-yfDc"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-          ></iframe>
-        </div>
-        <div class="flex justify-end items-center">
-          <!-- Like and Share Section -->
-          <div class="flex items-center gap-[1rem]">
+        <!-- Comment Section -->
+        <div class="comments mt-4">
+          <h3 class="text-lg font-semibold">Comments</h3>
+          <div v-for="comment in story.comments" :key="comment.id" class="mb-2">
+            <p class="text-sm text-gray-700">
+              <strong>{{ comment.user }}</strong
+              >: {{ comment.text }}
+            </p>
+          </div>
+
+          <!-- Add a comment -->
+          <div class="add-comment mt-4">
+            <textarea
+              v-model="newComment"
+              class="w-full p-2 border border-gray-300 rounded"
+              placeholder="Add a comment..."
+            ></textarea>
             <button
-              class="like-button flex items-center gap-[0.5rem]"
-              @click="toggleLike(2)"
+              class="mt-2 bg-blue-500 text-white px-4 py-2 rounded"
+              @click="addComment(story.id)"
             >
-              <Icon
-                :name="
-                  isLiked(2)
-                    ? 'heroicons-solid:thumb-up'
-                    : 'heroicons-outline:thumb-up'
-                "
-                :class="isLiked(2) ? 'text-blue-500' : 'text-gray-500'"
-              />
-              <span>{{ isLiked(2) ? likes[2] : likes[2] }}</span>
-            </button>
-            <button
-              class="share-button flex items-center gap-[0.5rem] text-blue-500"
-            >
-              <Icon name="heroicons-outline:share" />
-              Share
+              Submit
             </button>
           </div>
         </div>
@@ -162,31 +126,45 @@
 </template>
 
 <script setup>
-// State for likes
-const likes = ref({ 1: 10, 2: 15 }); // Initial like counts for each post
-const likedPosts = ref(new Set()); // Track liked posts to prevent multiple likes
+// Import necessary modules
+import { ref, onMounted } from "vue";
+import { useUserStore } from "#imports"; // Assuming you're using Pinia for authentication and other global states
+import { useRouter } from "vue-router"; // For navigation if needed
 
-// Toaster state
+// State for likes and success stories
+const likes = ref({});
+const likedPosts = ref(new Set());
+const successStories = ref([]);
+const newComment = ref("");
 const showToaster = ref(false);
 const toasterMessage = ref("");
 const toasterType = ref("");
+const authStore = useUserStore();
+
+// Function to fetch success stories
+const fetchSuccessStories = async () => {
+  try {
+    const { $axios } = useNuxtApp();
+    const response = await $axios.get("/success-stories");
+    successStories.value = response.data;
+  } catch (error) {
+    console.log("Error fetching success stories:", error.message);
+  }
+};
+
+// Fetch stories on component mount
+onMounted(fetchSuccessStories);
 
 // Toaster function
 const showToast = (message, type) => {
   toasterMessage.value = message;
   toasterType.value = type;
   showToaster.value = true;
-
-  setTimeout(() => {
-    showToaster.value = false;
-  }, 5000); // Hide after 5 seconds
+  setTimeout(() => (showToaster.value = false), 5000);
 };
 
-// Auth store
-const authStore = useUserStore();
-
 // Toggle like state
-const toggleLike = (postId) => {
+const toggleLike = async (postId) => {
   if (!authStore.token) {
     showToast("Please log in to react to posts.", "error");
     return;
@@ -196,13 +174,39 @@ const toggleLike = (postId) => {
     likes.value[postId]--;
     likedPosts.value.delete(postId);
   } else {
-    likes.value[postId]++;
+    likes.value[postId] = (likes.value[postId] || 0) + 1;
     likedPosts.value.add(postId);
+  }
+
+  try {
+    const { $axios } = useNuxtApp();
+    await $axios.post(`/success-stories/${postId}/like`);
+  } catch (error) {
+    console.log("Error liking post:", error.message);
   }
 };
 
 // Check if a post is liked
 const isLiked = (postId) => likedPosts.value.has(postId);
+
+// Add a comment to a story
+const addComment = async (storyId) => {
+  if (!newComment.value.trim()) return;
+
+  try {
+    const { $axios } = useNuxtApp();
+    const response = await $axios.post(`/success-stories/${storyId}/comment`, {
+      text: newComment.value,
+      user: authStore.user.name,
+    });
+
+    const story = successStories.value.find((s) => s.id === storyId);
+    story.comments.push(response.data); // Add the new comment to the story
+    newComment.value = ""; // Clear the input field
+  } catch (error) {
+    console.log("Error adding comment:", error.message);
+  }
+};
 </script>
 
 <style scoped>
