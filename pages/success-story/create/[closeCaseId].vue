@@ -1,11 +1,19 @@
 <script setup>
+import { useUserStore } from "#imports";
+
+const store = useUserStore();
 const title = ref("");
 const content = ref("");
-const image = ref(null);
+// const image = ref(null);
+const successStoryErrorMessage = ref("");
+const { $axios } = useNuxtApp();
 
-const handleFileChange = (event) => {
-  image.value = event.target.files[0];
-};
+const route = useRoute();
+const closedCaseId = ref(route.params.closeCaseId); // Renamed to closedCaseId
+
+// const handleFileChange = (event) => {
+//   image.value = event.target.files[0];
+// };
 
 const submitSuccessStory = async () => {
   if (!validateSuccessStoryForm()) {
@@ -17,23 +25,23 @@ const submitSuccessStory = async () => {
     const formData = new FormData();
     formData.append("title", title.value);
     formData.append("content", content.value);
-    formData.append("closeCaseId", postId.value);
+    formData.append("closedCaseId", closedCaseId.value); // Ensure correct field name
 
-    if (image.value) {
-      formData.append("images", image.value);
-    }
+    // if (image.value) {
+    //   formData.append("image", image.value); // Ensure correct field name for image
+    // }
 
     const response = await $axios.post("/success-story", formData, {
       headers: {
         Authorization: `Bearer ${store.token}`,
-        "Content-Type": "multipart/form-data",
       },
     });
 
     console.log("Story submitted successfully", response.data);
     title.value = "";
     content.value = "";
-    image.value = null;
+    // image.value = null;
+    navigateTo("/success-story");
   } catch (error) {
     console.log(error.response ? error.response.data : error.message);
   } finally {
@@ -42,7 +50,7 @@ const submitSuccessStory = async () => {
 };
 
 const validateSuccessStoryForm = () => {
-  if (!title.value.trim() || !content.value.trim() || !postId.value) {
+  if (!title.value.trim() || !content.value.trim() || !closedCaseId.value) {
     successStoryErrorMessage.value =
       "All fields are required for the success story.";
     return false;
@@ -53,7 +61,9 @@ const validateSuccessStoryForm = () => {
 </script>
 
 <template>
-  <div class="bg-white p-8 shadow-lg rounded-md max-w-lg mx-auto">
+  <div
+    class="bg-white p-8 ring ring-[var(--primary-color)] my-8 shadow-lg rounded-md max-w-lg mx-auto"
+  >
     <button
       @click="handleBackFromForm"
       class="bg-[var(--secondary-color)] text-white px-2 py-2 flex items-center rounded mb-6 hover:bg-[var(--secondary-color)] transition"
@@ -82,14 +92,14 @@ const validateSuccessStoryForm = () => {
           required
         />
       </div>
-      <div class="flex flex-col gap-2 mb-6">
+      <!-- <div class="flex flex-col gap-2 mb-6">
         <label class="font-semibold text-[var(--primary-color)]">Image:</label>
         <input
           type="file"
           @change="handleFileChange"
           class="p-2 border border-[var(--primary-color)] rounded w-full outline-none focus:ring-2 focus:ring-[var(--secondary-color)]"
         />
-      </div>
+      </div> -->
       <div v-if="successStoryErrorMessage" class="text-red-500 mb-4">
         {{ successStoryErrorMessage }}
       </div>

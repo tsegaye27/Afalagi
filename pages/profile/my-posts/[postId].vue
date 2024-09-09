@@ -1,5 +1,6 @@
 <script setup>
 import { useUserStore, useRoute, useRouter } from "#imports";
+import { ref } from "vue";
 
 const store = useUserStore();
 const { $axios } = useNuxtApp();
@@ -13,6 +14,8 @@ const foundDate = ref("");
 const foundLocation = ref("");
 const description = ref("");
 const closeCaseErrorMessage = ref("");
+const showStoryPrompt = ref(false);
+const closeCaseId = ref("");
 
 onMounted(() => {
   if (!store.token) {
@@ -57,15 +60,16 @@ const closeCase = async () => {
       description: description.value,
     };
 
-    await $axios.patch(`/post/close/${postId}`, data, {
+    const res = await $axios.patch(`/post/close/${postId}`, data, {
       headers: {
         Authorization: `Bearer ${store.token}`,
         "Content-Type": "application/json",
       },
     });
 
-    console.log("Case closed successfully");
-    router.push("/profile/my-posts");
+    console.log("Case closed successfully", res.data);
+    closeCaseId.value = res.data.data.id;
+    showStoryPrompt.value = true; // Show the Yes/No prompt after form submission
   } catch (error) {
     console.log(error.response ? error.response.data : error.message);
     closeCaseErrorMessage.value = error.response
@@ -78,6 +82,16 @@ const closeCase = async () => {
 
 const goBack = () => {
   router.back();
+};
+
+// Function to handle "Yes" response for writing the story
+const navigateToSuccessStory = () => {
+  router.push(`/success-story/create/${closeCaseId.value}`);
+};
+
+// Function to handle "No" response for skipping the story
+const closeWithoutStory = () => {
+  goBack();
 };
 </script>
 
@@ -112,6 +126,7 @@ const goBack = () => {
             <option value="INJURED">Injured</option>
             <option value="SICK">Sick</option>
             <option value="UNRESPONSIVE">Unresponsive</option>
+            <option value="DECEASED">Deceased</option>
             <option value="UNKNOWN">Unknown</option>
           </select>
         </div>
@@ -202,6 +217,32 @@ const goBack = () => {
           Close Case
         </button>
       </form>
+
+      <!-- Success Story Prompt (Pop-up) -->
+      <div
+        v-if="showStoryPrompt"
+        class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50"
+      >
+        <div class="bg-white p-6 rounded-lg text-center shadow-lg">
+          <h3 class="text-[var(--primary-color)] text-lg font-semibold mb-4">
+            Would you like to write your story?
+          </h3>
+          <div class="flex justify-center space-x-4">
+            <button
+              @click="navigateToSuccessStory"
+              class="text-[var(--primary-color)] ring-[var(--primary-color)] px-4 py-2 rounded hover:bg-[var(--primary-color)] hover:text-white transition"
+            >
+              Yes
+            </button>
+            <button
+              @click="closeWithoutStory"
+              class="text-[var(--primary-color)] ring-[var(--primary-color)] px-4 py-2 rounded hover:bg-[var(--primary-color)] hover:text-white transition"
+            >
+              No
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
