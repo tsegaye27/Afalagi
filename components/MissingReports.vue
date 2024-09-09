@@ -29,18 +29,18 @@ const showMore = () => {
 };
 </script>
 <template>
-  <div class="py-[3rem] bg-slate-50">
+  <div class="py-[2rem] lg:py-[3rem] bg-slate-50">
     <div v-if="store.isLoading">
       <Spinner />
     </div>
     <h1
-      class="text-center my-[2rem] text-[38px] font-semibold text-[var(--secondary-color)]"
+      class="text-center my-[2rem] text-[28px] lg:text-[38px] font-semibold text-[var(--secondary-color)]"
     >
       Missing Reported
     </h1>
     <div
       v-if="missingPersons.length > 0"
-      class="flex justify-center flex-wrap items-center gap-[3rem] mx-[1rem]"
+      class="flex justify-center flex-wrap items-center gap-[2rem] lg:gap-[3rem] mx-[1rem]"
     >
       <MissingCard
         v-for="(person, index) in missingPersons"
@@ -70,9 +70,11 @@ const showMore = () => {
         :legalDocuments="person.legalDocuments"
         :videoMessage="person.videoMessage"
         :reporterName="`${person.user.Profile?.firstName} ${person.user.Profile?.lastName}`"
+        :reporterImgUrl="person.user.Profile?.profilePicture"
       />
       <button
         @click="showMore"
+        title="Show more"
         class="text-[#f4f4f4] p-[0.7rem] rounded-full bg-[var(--secondary-color)] font-semibold w-[2.8rem] h-full flex items-center justify-center"
       >
         <span class="flex justify-center items-center"
