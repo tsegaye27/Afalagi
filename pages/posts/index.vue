@@ -130,30 +130,6 @@ const hideCountryList = () => {
   }, 100);
 };
 
-// Handle skin color selection
-const showSkinColorList = ref(false);
-const skinColors = ref(["DARK", "BROWN", "WHITE", "LIGHT-SKIN", "OTHER"]);
-
-// Computed property to filter skin colors based on input
-const filteredSkinColors = computed(() => {
-  return skinColors.value.filter((skinColor) =>
-    skinColor.toLowerCase().includes(skinColorFilter.value.toLowerCase())
-  );
-});
-
-// Select skin color from the list
-const selectSkinColor = (skinColor) => {
-  skinColorFilter.value = skinColor;
-  showSkinColorList.value = false;
-};
-
-// Hide skin color list after selecting
-const hideSkinColorList = () => {
-  setTimeout(() => {
-    showSkinColorList.value = false;
-  }, 100);
-};
-
 // Utility function to format text
 const small = (str) => str.toLowerCase().replace(/-/g, " ");
 </script>
@@ -216,7 +192,7 @@ const small = (str) => str.toLowerCase().replace(/-/g, " ");
               v-model="genderFilter"
               class="w-full bg-white border border-[var(--primary-color)] text-gray-700 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
             >
-              <option disabled value="">Gender</option>
+              <option disabled selected value="">Gender</option>
               <option value="">All</option>
               <option value="MALE">Male</option>
               <option value="FEMALE">Female</option>
@@ -228,7 +204,7 @@ const small = (str) => str.toLowerCase().replace(/-/g, " ");
                 <input
                   v-model="nationalityFilter"
                   type="text"
-                  placeholder="Search nationality"
+                  placeholder="Nationality"
                   @focus="showCountryList = true"
                   @blur="hideCountryList"
                   class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
@@ -249,30 +225,18 @@ const small = (str) => str.toLowerCase().replace(/-/g, " ");
               </div>
             </div>
 
-            <!-- Skin color filter with searchable dropdown -->
-            <div class="relative">
-              <input
-                v-model="skinColorFilter"
-                type="text"
-                placeholder="Search skin color"
-                @focus="showSkinColorList = true"
-                @blur="hideSkinColorList"
-                class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
-              />
-              <ul
-                v-if="showSkinColorList && filteredSkinColors.length > 0"
-                class="absolute top-full left-0 w-full border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] mt-1 p-[0.3rem] bg-white z-10 max-h-40 overflow-y-auto"
-              >
-                <li
-                  v-for="skinColor in filteredSkinColors"
-                  :key="skinColor"
-                  @mousedown="selectSkinColor(skinColor)"
-                  class="cursor-pointer p-[0.2rem] hover:bg-[var(--primary-color)] hover:text-white flex items-center"
-                >
-                  <span>{{ small(skinColor) }}</span>
-                </li>
-              </ul>
-            </div>
+            <!-- Skin color filter -->
+            <select
+              v-model="skinColorFilter"
+              class="w-full bg-white border border-[var(--primary-color)] text-gray-700 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
+            >
+              <option disabled selected value="">Skin Color</option>
+              <option value="">All</option>
+              <option value="WHITE">White</option>
+              <option value="LIGHTSKIN">Light-Skin</option>
+              <option value="BROWN">Brown</option>
+              <option value="OTHER">Other</option>
+            </select>
 
             <!-- Marital status filter -->
             <select

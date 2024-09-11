@@ -27,7 +27,6 @@ const postData = ref({
   images: "",
   legalDocs: "",
   description: "",
-  lastSeenLocation: "",
   lastSeenDate: "",
   languageSpoken: "",
   nationality: "",
@@ -158,7 +157,10 @@ const reportMissing = async () => {
   formData.append("languageSpoken", postData.value.languageSpoken);
   // formData.append("lastSeenWearing", lastSeenWearing.value);
   formData.append("lastSeenDate", postData.value.lastSeenDate);
-  formData.append("lastSeenLocation", postData.value.lastSeenLocation);
+  formData.append(
+    "lastSeenLocation",
+    `${selectedLSLCity.value}, ${selectedLSLCountry.value}`
+  );
   formData.append("lastSeenWearing", lastSeenWearing.value);
 
   try {
@@ -189,8 +191,67 @@ const reportMissing = async () => {
   }
 };
 
+// Validator function based on the current step
+function validateStep() {
+  let hasErrors = false;
+  if (currentStep.value === 1) {
+    if (!postData.value.firstName) {
+      hasErrors = true;
+    }
+    if (!postData.value.middleName) {
+      hasErrors = true;
+    }
+    if (!postData.value.lastName) {
+      hasErrors = true;
+    }
+    if (!postData.value.gender) {
+      hasErrors = true;
+    }
+    if (!postData.value.dateOfBirth) {
+      hasErrors = true;
+    }
+    if (!postData.value.lastSeenDate) {
+      hasErrors = true;
+    }
+    if (!postData.value.nationality) {
+      hasErrors = true;
+    }
+    if (!selectedLSLCountry.value) {
+      hasErrors = true;
+    }
+    if (!selectedLSLCity.value) {
+      hasErrors = true;
+    }
+  } else if (currentStep.value === 2) {
+    if (!lastSeenWearing.value) {
+      hasErrors = true;
+    }
+    if (!postData.value.description) {
+      hasErrors = true;
+    }
+    if (!postData.value.skinColor) {
+      hasErrors = true;
+    }
+    if (!postData.value.hairColor) {
+      hasErrors = true;
+    }
+  } else if (currentStep.value === 3) {
+    if (!postData.value.images) {
+      hasErrors = true;
+    }
+    if (!postData.value.legalDocs) {
+      hasErrors = true;
+    }
+  }
+  hasErrors ? showToaster("Please fill all the fields", "error") : "";
+  return !hasErrors; // Return true if no errors
+}
+
+// Function to go to the next step, only if validation passes
 const goNext = () => {
-  if (currentStep.value < 3) currentStep.value += 1;
+  if (validateStep()) {
+    if (currentStep.value < 3) currentStep.value += 1;
+  }
 };
 
 const goBack = () => {
@@ -366,7 +427,6 @@ function hideLSLCityList() {
             </ul>
           </div>
         </div>
-
         <div class="flex gap-[0.9rem] justify-between px-[3rem] items-center">
           <label class="text-[var(--primary-color)] text-[1rem] font-medium"
             >Date of birth:
@@ -387,43 +447,6 @@ function hideLSLCityList() {
             v-model="postData.lastSeenDate"
           />
         </div>
-        <!-- <div class="flex gap-[5.5rem] justify-between px-[3rem] items-center">
-          <label class="text-[var(--primary-color)] text-[1rem] font-medium"
-            >Last Seen Location:</label
-          >
-          <div class="flex gap-[0.5rem] w-[320px] flex-wrap">
-            <select
-              class="outline-none h-[30px] rounded-md p-1 border border-[var(--primary-color)] text-[var(--primary-color)]"
-              v-model="selectedCountry"
-            >
-              <option value="" disabled selected>Country</option>
-              <option
-                v-for="country in countries"
-                :key="country.country"
-                :value="country.country"
-              >
-                {{ country.country }}
-              </option>
-            </select>
-
-            <select
-              class="outline-none h-[30px] rounded-md p-1 border border-[var(--primary-color)] text-[var(--primary-color)]"
-              v-model="selectedCity"
-              :disabled="!selectedCountry"
-            >
-              <option value="" disabled selected>City</option>
-              <option
-                v-for="country in countries"
-                v-if="country.country === selectedCountry"
-                v-for="city in country.cities"
-                :key="city"
-                :value="city"
-              >
-                {{ city }}
-              </option>
-            </select>
-          </div>
-        </div> -->
         <div class="flex gap-[1.35rem] px-[3rem] justify-between items-center">
           <label class="text-[var(--primary-color)] text-[1rem] font-medium">
             Last Seen Location:
