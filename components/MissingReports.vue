@@ -71,11 +71,12 @@ const showMore = () => {
         :videoMessage="person.videoMessage"
         :reporterName="`${person.user.Profile?.firstName} ${person.user.Profile?.lastName}`"
         :reporterImgUrl="person.user.Profile?.profilePicture"
+        :reporterEmail="person.user.email"
       />
       <button
         @click="showMore"
         title="Show more"
-        class="text-[#f4f4f4] p-[0.7rem] rounded-full bg-[var(--secondary-color)] font-semibold w-[2.8rem] h-full flex items-center justify-center"
+        class="text-[#f4f4f4] p-[0.7rem] btn-round-white rounded-full bg-[var(--secondary-color)] hover:bg-[var(--secondary-color)] hover:text-white font-semibold w-[2.8rem] h-full flex items-center justify-center"
       >
         <span class="flex justify-center items-center"
           ><Icon size="22px" name="material-symbols:arrow-right-alt"
