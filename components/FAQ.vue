@@ -1,28 +1,23 @@
 <template>
   <section
-    class="flex justify-center items-center bg-slate-100 w-full h-full py-10"
+    class="flex justify-center items-center bg-[var(--primary-color)] w-full h-full py-10"
   >
     <div class="w-full max-w-[800px]">
-      <h2
-        class="text-3xl font-semibold text-center mb-8 text-[var(--secondary-color)]"
-      >
+      <h2 class="text-3xl font-semibold text-center mb-8 text-white">
         Frequently Asked Questions
       </h2>
       <div
         v-for="(faq, index) in faqs"
         :key="index"
-        class="mb-4 border-b-[0.1rem] border-[var(--primary-color)]"
+        class="mb-4 border-b-[0.1rem] border-white"
       >
         <button
-          class="w-full text-left py-4 px-6 text-lg font-medium text-[var(--primary-color)] hover:text-[var(--secondary-color)] focus:outline-none"
+          class="w-full text-left py-4 px-6 text-lg font-medium text-white hover:text-[var(--secondary-color)] focus:outline-none"
           @click="toggleFaq(index)"
         >
           {{ faq.question }}
         </button>
-        <div
-          v-show="activeFaq === index"
-          class="px-6 py-4 text-[var(--primary-color)]"
-        >
+        <div v-show="activeFaq === index" class="px-6 py-4 text-white">
           {{ faq.answer }}
         </div>
       </div>

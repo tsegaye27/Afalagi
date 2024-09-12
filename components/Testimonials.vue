@@ -6,7 +6,14 @@
       Testimonials
     </h1>
     <div class="flex justify-center items-center w-[100%]]">
-      <button class="btn-round-white mr-[3rem]"><</button>
+      <button
+        class="btn-round-white flex justify-center items-center mr-[3rem]"
+      >
+        <Icon
+          class="text-[var(--secondary-color)]"
+          name="material-symbols:arrow-left-alt"
+        />
+      </button>
       <div>
         <div
           class="w-[700px] h-[340px] flex justify-start gap-[0.75rem] rounded-lg bg-[#f4f4f4]"
@@ -33,7 +40,11 @@
           </div>
         </div>
       </div>
-      <button class="btn-round ml-[3rem]">></button>
+      <button class="btn-round flex items-center justify-center ml-12">
+        <span class="flex items-center"
+          ><Icon size="22px" name="material-symbols:arrow-right-alt"
+        /></span>
+      </button>
     </div>
   </div>
 </template>
