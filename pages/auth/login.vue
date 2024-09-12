@@ -66,51 +66,51 @@ const loginWithGoogle = () => {
 </script>
 
 <template>
-  <div class="flex w-[100%] h-[100vh] justify-center items-center">
+  <div
+    class="flex w-full h-screen bg-gradient-to-r from-blue-500 to-indigo-500 justify-center items-center"
+  >
     <!-- Toaster -->
     <div
       v-if="showToaster"
       :class="toasterType === 'success' ? 'bg-green-500' : 'bg-red-500'"
-      class="fixed top-5 right-5 p-4 rounded text-white shadow-lg z-50"
+      class="fixed top-5 right-5 p-4 rounded-lg text-white shadow-lg z-50 transition-all transform ease-out"
     >
       {{ toasterMessage }}
     </div>
-    <div v-if="store.isLoading">
-      <Spinner />
-    </div>
 
-    <div class="w-[38.19%] h-[100%]">
-      <h1
-        class="fixed font-bold text-[82px] text-white text-center mt-[2rem] w-[30%] h-[96px]"
+    <div class="flex w-full h-full">
+      <!-- Left Section -->
+      <div
+        class="hidden lg:flex w-[38%] h-full flex-col justify-center items-center"
       >
-        Afalagi
-      </h1>
-      <p
-        class="fixed font-[sora] text-center font-semibold text-[36px] text-white mt-[10.5rem] w-[478px] h-[130px] z-1"
+        <!-- <img
+          class="w-32 mb-4 h-auto object-contain"
+          src="/assets/img/logo_white.webp"
+          alt="logo"
+        /> -->
+        <h1 class="font-bold text-7xl text-white text-center mb-10">Afalagi</h1>
+        <p class="font-semibold text-3xl text-white text-center mb-5 w-4/5">
+          Connecting Hearts, Finding Hope
+        </p>
+      </div>
+
+      <!-- Right Section -->
+      <div
+        class="w-full lg:w-[62%] h-full bg-white flex flex-col gap-8 justify-center items-center p-8 lg:p-16 rounded-lg shadow-xl"
       >
-        Connecting Hearts, Finding Hope
-      </p>
-      <img
-        class="object-fit w-[500px] h-full"
-        src="/assets/img/signup.webp"
-        alt="two-people-hugging"
-      />
-    </div>
-    <div
-      class="right w-[61.81%] h-[100vh] flex flex-col gap-[2rem] justify-center items-center"
-    >
-      <h1 class="text-[var(--primary-color)] font-semibold text-4xl">Login</h1>
-      <form
-        @submit.prevent="submitForm"
-        class="form-card flex flex-col w-[40%] rounded-md py-[3rem] border border-[var(--secondary-color)] justify-start gap-[1rem] items-center"
-      >
-        <div class="flex flex-col items-center w-[100%] py-[1rem]">
+        <h1 class="text-[var(--primary-color)] font-semibold text-4xl">
+          Login
+        </h1>
+        <form
+          @submit.prevent="submitForm"
+          class="flex flex-col w-full max-w-md gap-6"
+        >
           <input
             type="email"
             v-model="email"
             placeholder="Email"
             required
-            class="input outline-none p-2 w-4/5 my-2 text-[var(--primary-color)] border border-[var(--secondary-color)] rounded"
+            class="p-3 w-full border border-gray-300 rounded-lg text-[var(--primary-color)] placeholder-gray-400 focus:border-[var(--secondary-color)] focus:ring-2 focus:ring-[var(--secondary-color)] transition-all outline-none"
           />
 
           <input
@@ -118,38 +118,39 @@ const loginWithGoogle = () => {
             v-model="password"
             placeholder="Password"
             required
-            class="input outline-none p-2 w-4/5 my-2 text-[var(--primary-color)] border border-[var(--secondary-color)] rounded"
+            class="p-3 w-full border border-gray-300 rounded-lg text-[var(--primary-color)] placeholder-gray-400 focus:border-[var(--secondary-color)] focus:ring-2 focus:ring-[var(--secondary-color)] transition-all outline-none"
           />
           <nuxt-link
-            class="text-[var(--secondary-color)] justify-self-start"
+            class="text-[var(--secondary-color)] self-end mt-1"
             to="/auth/reset-password"
             >Forgot Password?</nuxt-link
           >
-        </div>
-        <div class="flex flex-col items-center gap-[1rem] justify-center">
+
           <button
             type="submit"
-            class="px-4 py-2 bg-[var(--secondary-color)] flex gap-[0.5rem] text-white rounded-lg"
+            class="w-full py-3 bg-[var(--secondary-color)] text-white rounded-lg shadow-lg hover:bg-blue-500 transition-all"
           >
             Login
           </button>
-        </div>
-      </form>
-      <button
-        class="m-4 px-4 py-2 bg-[#000] flex gap-[0.8rem] justify-center w-[250px] text-white rounded-full"
-        @click="loginWithGoogle"
-      >
-        <span class="flex items-center"
-          ><Icon name="logos:google-icon" size="22px"
-        /></span>
-        Continue with Google
-      </button>
-      <p class="text-center text-[var(--primary-color)] mt-4">
-        Don't have an account?
-        <NuxtLink class="text-[var(--secondary-color)]" to="/auth/signup"
-          >Signup</NuxtLink
+        </form>
+
+        <button
+          class="flex items-center justify-center w-full max-w-md py-3 bg-black text-white rounded-lg gap-3 shadow-lg hover:bg-gray-800 transition-all"
+          @click="loginWithGoogle"
         >
-      </p>
+          <Icon name="logos:google-icon" size="22px" />
+          Continue with Google
+        </button>
+
+        <p class="text-center text-[var(--primary-color)]">
+          Don't have an account?
+          <NuxtLink
+            class="text-[var(--secondary-color)] font-semibold"
+            to="/auth/signup"
+            >Signup</NuxtLink
+          >
+        </p>
+      </div>
     </div>
   </div>
 </template>
