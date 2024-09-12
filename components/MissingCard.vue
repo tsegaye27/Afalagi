@@ -52,6 +52,9 @@ const props = defineProps({
   reporterImgUrl: {
     type: String,
   },
+  reporterEmail: {
+    type: String,
+  },
 });
 
 const sharePost = () => {
@@ -132,16 +135,21 @@ const setStatus = (status) => {
     <div class="gap-1 w-full flex flex-col">
       <div
         v-if="reporterName"
-        class="p-2 text-[var(--primary-color)] flex gap-1 font-semibold text-md"
+        class="p-2 text-[var(--primary-color)] flex font-semibold text-md"
       >
         <img
-          class="w-[40px] h-[38px] rounded-[1.5rem] border-2 border-[#f4f4f4] mr-2"
+          class="w-[45px] h-[43px] rounded-[1.5rem] border-2 border-[#f4f4f4] mr-1"
           :src="`http://localhost:3333/uploads/profile/${reporterImgUrl}`"
           :alt="reporterName"
         />
-        <span class="flex items-center">
-          {{ `${reporterName}` }}
-        </span>
+        <div class="flex flex-col justify-center">
+          <span class="text-md">
+            {{ reporterName }}
+          </span>
+          <span v-if="reporterEmail" class="text-slate-400 text-sm font-arial">
+            {{ reporterEmail }}
+          </span>
+        </div>
       </div>
 
       <span
