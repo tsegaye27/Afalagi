@@ -13,6 +13,7 @@ const skinColorFilter = ref("");
 const maritalStatusFilter = ref("");
 const hairColorFilter = ref("");
 const physicalDisabilityFilter = ref("");
+const mentalDisabilityFilter = ref("");
 
 const showSidebar = ref(false);
 
@@ -87,6 +88,11 @@ const filteredMissingPersons = computed(() => {
       person.physicalDisability.includes(
         physicalDisabilityFilter.value.toLocaleUpperCase()
       );
+    const matchesMentalDisabilityFilter =
+      !mentalDisabilityFilter.value.toLocaleUpperCase ||
+      person.mentalDisability.includes(
+        mentalDisabilityFilter.value.toLocaleUpperCase()
+      );
 
     return (
       matchesGender &&
@@ -94,7 +100,8 @@ const filteredMissingPersons = computed(() => {
       matchesSkinColor &&
       matchesMaritalStatus &&
       matchesHairColorFilter &&
-      matchesPhysicalDisabilityFilter
+      matchesPhysicalDisabilityFilter &&
+      matchesMentalDisabilityFilter
     );
   });
 });
@@ -250,20 +257,60 @@ const small = (str) => str.toLowerCase().replace(/-/g, " ");
             </select>
 
             <!-- Hair color filter -->
-            <input
+            <select
               v-model="hairColorFilter"
-              type="text"
-              placeholder="Hair Color"
-              class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
-            />
+              class="w-full bg-white border border-[var(--primary-color)] text-gray-700 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
+            >
+              <option disabled selected value="">Hair Color</option>
+              <option value="">All</option>
+              <option value="BLACK">Black</option>
+              <option value="GRAY">Gray</option>
+              <option value="BROWN">Brown</option>
+              <option value="BLONDE">Blonde</option>
+              <option value="WHITE">White</option>
+              <option value="OTHER">Other</option>
+            </select>
 
             <!-- Physical disability filter -->
-            <input
+            <select
               v-model="physicalDisabilityFilter"
-              type="text"
-              placeholder="Physical Disability"
-              class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
-            />
+              class="w-full bg-white border border-[var(--primary-color)] text-gray-700 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
+            >
+              <option disabled selected value="">Physical Disability</option>
+              <option value="NONE">None</option>
+              <option value="MOBILITY_ISSUE">Mobility Issue</option>
+              <option value="VISION_IMPAIRMENT">Vision Impairment</option>
+              <option value="HEARING_LOSS">Hearing Loss</option>
+              <option value="NEUROLOGICAL_CONDITION">
+                Neurological condition
+              </option>
+              <option value="NON_VERBAL">Non Verbal</option>
+              <option value="LIMB_DIFFERENCE">Limb Difference</option>
+              <option value="OTHER">Other</option>
+            </select>
+            <!-- Mental disability filter -->
+            <select
+              v-model="mentalDisabilityFilter"
+              class="w-full bg-white border border-[var(--primary-color)] text-gray-700 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
+            >
+              <option selected disabled value="">Mental Disability</option>
+              <option value="NONE">None</option>
+              <option value="INTELLECTUAL_DISABILITY">
+                Intellectual Disability
+              </option>
+              <option value="AUTISM_SPECTRUM_DISORDER">
+                Autism Spectrum Disorder
+              </option>
+              <option value="ADHD">ADHD</option>
+              <option value="SCHIZOPHRENIA">Schizophrenia</option>
+              <option value="BIPOLAR_DISORDER">Bipolar Disorder</option>
+              <option value="ANXIETY_DISORDER">Anxiety Disorder</option>
+              <option value="DEPRESSION">Depression</option>
+              <option value="OCD">OCD</option>
+              <option value="PTSD">PTSD</option>
+              <option value="DEMENTIA">Dementia</option>
+              <option value="OTHER">Other</option>
+            </select>
           </div>
         </div>
       </transition>
@@ -273,7 +320,7 @@ const small = (str) => str.toLowerCase().replace(/-/g, " ");
       <p class="text-gray-500 text-lg">No matching results found.</p>
     </div>
 
-    <div class="grid grid-cols-4 gap-[1rem] mt-[1rem] mx-[1rem]">
+    <div class="grid grid-cols-4 gap-4 px-12 py-4 mt-4 mx-4">
       <MissingCard
         v-for="(person, index) in filteredMissingPersons"
         :key="index"
@@ -302,7 +349,8 @@ const small = (str) => str.toLowerCase().replace(/-/g, " ");
         :legalDocuments="person.legalDocuments"
         :videoMessage="person.videoMessage"
         :reporterName="`${person.user.Profile?.firstName} ${person.user.Profile?.lastName}`"
-        :reporterImgUrl="`${person.user.Profile?.profilePicture}`"
+        :reporterImgUrl="person.user.Profile?.profilePicture"
+        :reporterEmail="person.user.email"
       />
     </div>
     <button
