@@ -5,10 +5,10 @@ definePageMeta({
   layout: "",
 });
 
-onMounted(() => {
-  store.setLoading(true);
-  if (!store.token) navigateTo("/auth/signup");
-});
+// onMounted(() => {
+//   store.setLoading(true);
+//   if (!store.token) navigateTo("/auth/signup");
+// });
 
 //Toster
 const showToaster = ref(false);
@@ -41,7 +41,14 @@ const number = ref("");
 const code = ref("");
 
 const handleFileChange = (event) => {
-  profilePicture.value = event.target.files[0];
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      profilePicture.value = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
 };
 
 const createProfile = async () => {
@@ -79,116 +86,142 @@ const createProfile = async () => {
 </script>
 
 <template>
-  <div class="h-screen bg-[#f3f3f3] flex justify-center items-center">
-    <div class="flex gap-[1rem] border rounded bg-white flex-col items-center">
+  <div class="relative min-h-screen flex justify-center items-center">
+    <div
+      class="absolute inset-0 bg-gradient-to-r from-[var(--secondary-color)] to-[var(--primary-color)]"
+    ></div>
+    <div
+      class="absolute inset-0 transform -skew-y-24 bg-white w-1/2 flex items-center justify-start pl-4"
+      style="z-index: 1"
+    >
+      <h1
+        class="text-[var(--primary-color)] text-center ml-8 text-3xl font-semibold"
+      >
+        Let's create your profile
+      </h1>
+    </div>
+
+    <div
+      class="relative z-10 flex gap-4 border rounded-lg bg-white flex-col items-center ml-32 shadow-lg w-[700px] p-8"
+    >
       <form
         @submit.prevent="createProfile"
-        class="w-[600px] p-[3rem] flex-col gap-[0.25rem] flex justify-center items-center"
+        class="w-full max-w-xl flex flex-col gap-6"
       >
-        <h1
-          class="text-[var(--primary-color)] mb-[2rem] text-center text-2xl font-semibold"
-        >
-          Let's create your profile
-        </h1>
-        <div class="flex flex-col gap-[.5rem]">
-          <div class="flex justify-start items-baseline gap-[3.2rem]">
+        <div class="flex flex-col gap-3">
+          <div class="flex justify-center mb-4">
+            <div class="relative w-32 h-32">
+              <img
+                v-if="profilePicture"
+                :src="profilePicture"
+                alt="Profile"
+                class="w-full h-full rounded-full object-cover border border-[var(--primary-color)]"
+              />
+              <div
+                v-else
+                class="w-full h-full rounded-full bg-gray-200 flex items-center justify-center border border-[var(--primary-color)]"
+              >
+                <span class="text-gray-500">No image</span>
+              </div>
+              <input
+                class="absolute inset-0 w-32 h-32 opacity-0 cursor-pointer"
+                type="file"
+                @change="handleFileChange"
+              />
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center">
             <label class="text-[var(--primary-color)] font-semibold"
               >First Name:
             </label>
             <input
-              class="outline-none w-[300px] p-1 pl-2 rounded text-[var(--primary-color)] border border-[var(--primary-color)]"
+              class="outline-none w-80 p-2 rounded-lg border text-[var(--primary-color)] border-[var(--primary-color)]"
               type="text"
+              placeholder="John"
               v-model="firstName"
             />
           </div>
-          <div class="flex justify-start items-baseline gap-[1.8rem]">
+          <div class="flex justify-between items-center">
             <label class="text-[var(--primary-color)] font-semibold"
               >Middle Name:
             </label>
             <input
-              class="outline-none w-[300px] p-1 pl-2 rounded text-[var(--primary-color)] border border-[var(--primary-color)]"
+              class="outline-none w-80 p-2 rounded-lg border text-[var(--primary-color)] border-[var(--primary-color)]"
               type="text"
+              placeholder="Doe"
               v-model="middleName"
             />
           </div>
-          <div class="flex justify-start items-baseline gap-[3.25rem]">
+          <div class="flex justify-between items-center">
             <label class="text-[var(--primary-color)] font-semibold"
               >Last Name:
             </label>
             <input
-              class="outline-none w-[300px] p-1 pl-2 rounded text-[var(--primary-color)] border border-[var(--primary-color)]"
+              class="outline-none w-80 p-2 rounded-lg border text-[var(--primary-color)] border-[var(--primary-color)]"
               type="text"
+              placeholder="Doe"
               v-model="lastName"
             />
           </div>
-          <div class="flex justify-start items-baseline gap-[5.8rem]">
+          <div class="flex justify-between items-center">
             <label class="text-[var(--primary-color)] font-semibold"
               >Email:
             </label>
             <input
-              class="outline-none w-[300px] p-1 pl-2 rounded text-[var(--primary-color)] border border-[var(--primary-color)]"
+              class="outline-none w-80 p-2 rounded-lg border text-[var(--primary-color)] border-[var(--primary-color)]"
               type="email"
               :value="email"
             />
           </div>
-          <div class="flex justify-start items-baseline gap-[4.4rem]">
+          <div class="flex justify-between items-center">
             <label class="text-[var(--primary-color)] font-semibold"
               >Country:
             </label>
             <input
-              class="outline-none w-[300px] p-1 pl-2 rounded text-[var(--primary-color)] border border-[var(--primary-color)]"
+              class="outline-none w-80 p-2 rounded-lg border text-[var(--primary-color)] border-[var(--primary-color)]"
               type="text"
               v-model="country"
             />
           </div>
-
-          <div class="flex justify-start gap-[4.7rem] items-baseline">
-            <label class="text-[var(--primary-color)] text-[1rem] font-semibold"
-              >Gender:</label
-            >
+          <div class="flex justify-between items-center">
+            <label class="text-[var(--primary-color)] font-semibold"
+              >Gender:
+            </label>
             <select
               v-model="gender"
-              class="border border-[var(--primary-color)] bg-white w-[300px] rounded outline-none text-[var(--primary-color)] p-[0.2rem]"
+              class="outline-none w-80 p-2 rounded-lg border bg-white text-[var(--primary-color)] border-[var(--primary-color)]"
             >
               <option value="" selected disabled>Select gender</option>
               <option value="MALE">Male</option>
               <option value="FEMALE">Female</option>
             </select>
           </div>
-          <div class="flex justify-start items-baseline gap-[1.3rem]">
-            <label class="text-[var(--primary-color)] font-semibold"
-              >Profile Picture:
-            </label>
-            <input
-              class="outline-none w-[300px] p-1 pl-2 rounded text-[var(--primary-color)] border border-[var(--primary-color)]"
-              type="file"
-              @change="handleFileChange"
-            />
-          </div>
-          <div class="flex justify-start items-baseline gap-[2.1rem]">
+
+          <div class="flex justify-between items-center">
             <label class="text-[var(--primary-color)] font-semibold"
               >Date of Birth:
             </label>
             <input
-              class="outline-none w-[300px] p-1 pl-2 rounded text-[var(--primary-color)] border border-[var(--primary-color)]"
+              class="outline-none w-80 p-2 rounded-lg border text-[var(--primary-color)] border-[var(--primary-color)]"
               type="date"
               v-model="birthDate"
             />
           </div>
-          <div class="flex justify-start items-baseline gap-[5.3rem]">
+          <div class="flex justify-between items-center">
             <label class="text-[var(--primary-color)] font-semibold"
               >Phone:
             </label>
-            <div class="flex gap-[1rem]">
+            <div class="flex gap-2">
               <select
                 v-model="code"
-                class="outline-none p-1 bg-whitesmoke rounded border border-[var(--primary-color)]"
+                class="outline-none p-2 rounded-lg border bg-gray-50 border-[var(--primary-color)]"
               >
                 <option value="+251">🇪🇹</option>
                 <option value="+44">🇬🇧</option>
               </select>
               <input
-                class="p-1 rounded w-[200px] pl-2 border text-[#606060] border-[var(--primary-color)] outline-none"
+                class="outline-none w-56 p-2 rounded-lg border text-[var(--primary-color)] border-[var(--primary-color)]"
                 type="text"
                 v-model="number"
                 placeholder="912-34-5678"
@@ -197,7 +230,7 @@ const createProfile = async () => {
           </div>
         </div>
         <button
-          class="flex mt-[2rem] justify-center px-[0.5rem] gap-[0.6rem] btn"
+          class="mt-4 py-3 px-4 bg-[var(--primary-color)] text-white rounded-lg hover:bg-[var(--secondary-color)] transition-all"
         >
           Create Profile
         </button>
