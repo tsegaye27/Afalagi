@@ -245,6 +245,7 @@ const small = (str) => str.toLowerCase().replace(/-/g, " ");
               <option disabled selected value="">Skin Color</option>
               <option value="">All</option>
               <option value="WHITE">White</option>
+              <option value="DARK">Dark</option>
               <option value="LIGHTSKIN">Light-Skin</option>
               <option value="BROWN">Brown</option>
               <option value="OTHER">Other</option>
@@ -259,6 +260,9 @@ const small = (str) => str.toLowerCase().replace(/-/g, " ");
               <option value="">All</option>
               <option value="MARRIED">Married</option>
               <option value="SINGLE">Single</option>
+              <option value="DIVORCED">Divorced</option>
+              <option value="WIDOWED">Widowed</option>
+              <option value="ENGAGED">Engaged</option>
             </select>
 
             <!-- Hair color filter -->
@@ -273,6 +277,7 @@ const small = (str) => str.toLowerCase().replace(/-/g, " ");
               <option value="BROWN">Brown</option>
               <option value="BLONDE">Blonde</option>
               <option value="WHITE">White</option>
+              <option value="ORANGE">Orange</option>
               <option value="OTHER">Other</option>
             </select>
 
