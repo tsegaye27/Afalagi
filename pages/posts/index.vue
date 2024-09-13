@@ -49,6 +49,11 @@ const fetchPosts = async () => {
 
     store.setLoading(false);
     isFetching.value = false;
+    // console.log(
+    //   response.data.data,
+    //   missingPersons.value,
+    //   filteredMissingPersons.value
+    // );
   } catch (error) {
     console.error(
       "Failed to load posts",
@@ -68,7 +73,6 @@ watch(searchQuery, () => {
 
 onMounted(fetchPosts);
 
-// Computed property to filter missing persons based on filter criteria
 const filteredMissingPersons = computed(() => {
   return missingPersons.value.filter((person) => {
     const matchesGender =
@@ -81,27 +85,28 @@ const filteredMissingPersons = computed(() => {
     const matchesMaritalStatus =
       !maritalStatusFilter.value ||
       person.maritalStatus === maritalStatusFilter.value;
-    const matchesHairColorFilter =
+    const matchesHairColor =
       !hairColorFilter.value || person.hairColor === hairColorFilter.value;
-    const matchesPhysicalDisabilityFilter =
-      !physicalDisabilityFilter.value.toLocaleUpperCase() ||
+    const matchesPhysicalDisability =
+      !physicalDisabilityFilter.value ||
       person.physicalDisability.includes(
         physicalDisabilityFilter.value.toLocaleUpperCase()
       );
-    const matchesMentalDisabilityFilter =
-      !mentalDisabilityFilter.value.toLocaleUpperCase ||
+    const matchesMentalDisability =
+      !mentalDisabilityFilter.value ||
       person.mentalDisability.includes(
         mentalDisabilityFilter.value.toLocaleUpperCase()
       );
 
+    // If all filters are empty, show all posts
     return (
       matchesGender &&
       matchesNationality &&
       matchesSkinColor &&
       matchesMaritalStatus &&
-      matchesHairColorFilter &&
-      matchesPhysicalDisabilityFilter &&
-      matchesMentalDisabilityFilter
+      matchesHairColor &&
+      matchesPhysicalDisability &&
+      matchesMentalDisability
     );
   });
 });
@@ -250,7 +255,7 @@ const small = (str) => str.toLowerCase().replace(/-/g, " ");
               v-model="maritalStatusFilter"
               class="w-full bg-white border border-[var(--primary-color)] text-gray-700 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
             >
-              <option disabled value="">Marital Status</option>
+              <option disabled selected value="">Marital Status</option>
               <option value="">All</option>
               <option value="MARRIED">Married</option>
               <option value="SINGLE">Single</option>
@@ -317,7 +322,7 @@ const small = (str) => str.toLowerCase().replace(/-/g, " ");
     </div>
 
     <div v-if="!filteredMissingPersons.length" class="w-full text-center">
-      <p class="text-gray-500 text-lg">No matching results found.</p>
+      <p class="text-gray-500 h-64 text-lg py-12">No matching results found.</p>
     </div>
 
     <div class="grid grid-cols-4 gap-4 px-12 py-4 mt-4 mx-4">
