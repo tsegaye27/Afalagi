@@ -12,6 +12,24 @@
 :root {
   --primary-color: #005782;
   --secondary-color: #0097d3;
+  --background-color: #ffffff;
+  --text-color: #000000;
+}
+
+.dark {
+  --primary-color: #90cdf4; /* Lighter shade for better contrast */
+  --secondary-color: #2b6cb0; /* Adjusted for dark mode */
+  --background-color: #1a202c; /* Dark background */
+  --text-color: #e2e8f0; /* Lighter text for dark background */
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.nav-menu {
+  @apply text-[var(--primary-color)] text-[19px] font-medium px-2 py-1 flex items-baseline rounded font-[sora];
 }
 
 .nav-menu:hover {
@@ -20,10 +38,6 @@
 
 .footer-menu {
   @apply text-white;
-}
-
-.nav-menu {
-  @apply text-[var(--primary-color)] text-[19px] font-medium px-2 py-1 flex items-baseline rounded font-[sora];
 }
 
 .nav-btn {
@@ -35,12 +49,13 @@
 }
 
 .btn-posts {
-  @apply p-2 bg-[var(--secondary-color)]  text-white hover:bg-[#1896c8];
+  @apply p-2 bg-[var(--secondary-color)] text-white hover:bg-[#1896c8];
 }
 
 .btn-round {
   @apply w-[50px] h-[50px] px-2 font-semibold text-[25px] bg-[var(--secondary-color)] rounded-full text-white;
 }
+
 .btn-round-white {
   @apply w-[50px] h-[50px] px-2 font-semibold text-[25px] bg-white rounded-full text-[var(--secondary-color)] shadow-[1px_1px_3px_2px_lightgray];
 }
