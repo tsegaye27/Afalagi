@@ -64,6 +64,30 @@ onMounted(async () => {
 const isLoggedIn = computed(() => !!store.token); // Reactive check
 const language = ref("English");
 
+const isDarkMode = ref(false);
+
+onMounted(() => {
+  if (typeof window !== "undefined") {
+    // Check local storage for the dark mode preference
+    isDarkMode.value = localStorage.getItem("dark-mode") === "true";
+  }
+});
+
+// Toggle Dark Mode function
+const toggleDarkMode = () => {
+  if (typeof window !== "undefined") {
+    isDarkMode.value = !isDarkMode.value;
+    localStorage.setItem("dark-mode", isDarkMode.value);
+    document.documentElement.classList.toggle("dark", isDarkMode.value);
+  }
+};
+
+watchEffect(() => {
+  if (typeof window !== "undefined") {
+    document.documentElement.classList.toggle("dark", isDarkMode.value);
+  }
+});
+
 // Function to toggle mobile menu
 function toggleMobileMenu() {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
@@ -122,6 +146,7 @@ function toggleMobileMenu() {
             />Login</NuxtLink
           >
         </div>
+
         <!-- Mobile Menu Button -->
         <button
           class="block lg:hidden text-2xl text-[var(--primary-color)]"
@@ -231,6 +256,21 @@ function toggleMobileMenu() {
           <option class="bg-slate-100" value="English">🇬🇧</option>
           <option class="bg-slate-100" value="Amharic">🇪🇹</option>
         </select>
+        <!-- Dark Mode Toggle -->
+        <button @click="toggleDarkMode">
+          <Icon
+            v-if="isDarkMode"
+            name="heroicons-outline:sun"
+            size="24px"
+            class="text-white"
+          />
+          <Icon
+            v-else
+            name="heroicons-outline:moon"
+            size="24px"
+            class="text-gray-900"
+          />
+        </button>
         <li v-if="!isLoggedIn" class="nav-menu">
           <NuxtLink
             to="/auth/login"
@@ -241,6 +281,7 @@ function toggleMobileMenu() {
             />Login</NuxtLink
           >
         </li>
+
         <li
           v-else
           class="rounded-full border border-[var(--secondary-color)] hover:text-[var(--secondary-color)]"
