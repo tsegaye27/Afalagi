@@ -5,10 +5,10 @@ definePageMeta({
   layout: "",
 });
 
-// onMounted(() => {
-//   store.setLoading(true);
-//   if (!store.token) navigateTo("/auth/signup");
-// });
+onMounted(() => {
+  store.setLoading(true);
+  if (!store.token) navigateTo("/auth/signup");
+});
 
 //Toster
 const showToaster = ref(false);
@@ -83,6 +83,35 @@ const createProfile = async () => {
     );
   }
 };
+
+// Fetch list of countries for nationality filter
+const countries = ref([]);
+const showCountryList = ref(false);
+
+onMounted(async () => {
+  const response = await fetch("https://restcountries.com/v3.1/all");
+  countries.value = await response.json();
+});
+
+// Computed property to filter countries based on input
+const filteredCountries = computed(() => {
+  return countries.value.filter((c) =>
+    c.name.common.toLowerCase().includes(country.value.toLowerCase())
+  );
+});
+
+// Select country from the list
+const selectCountry = (c) => {
+  country.value = `${c.name.common}`;
+  showCountryList.value = false;
+};
+
+// Hide country list after selecting
+const hideCountryList = () => {
+  setTimeout(() => {
+    showCountryList.value = false;
+  }, 100);
+};
 </script>
 
 <template>
@@ -102,7 +131,7 @@ const createProfile = async () => {
     </div>
 
     <div
-      class="relative z-10 flex gap-4 border rounded-lg bg-white flex-col items-center ml-32 shadow-lg w-[700px] p-8"
+      class="relative z-10 flex gap-4 border ring ring-blue-500 rounded-lg bg-white flex-col items-center ml-32 shadow-lg w-[700px] p-8"
     >
       <form
         @submit.prevent="createProfile"
@@ -119,9 +148,9 @@ const createProfile = async () => {
               />
               <div
                 v-else
-                class="w-full h-full rounded-full bg-gray-200 flex items-center justify-center border border-[var(--primary-color)]"
+                class="w-full h-full rounded-full bg-gray-100 flex items-center justify-center border border-[var(--primary-color)]"
               >
-                <span class="text-gray-500">No image</span>
+                <span class="text-gray-500">Insert image</span>
               </div>
               <input
                 class="absolute inset-0 w-32 h-32 opacity-0 cursor-pointer"
@@ -176,14 +205,36 @@ const createProfile = async () => {
           </div>
           <div class="flex justify-between items-center">
             <label class="text-[var(--primary-color)] font-semibold"
-              >Country:
-            </label>
-            <input
-              class="outline-none w-80 p-2 rounded-lg border text-[var(--primary-color)] border-[var(--primary-color)]"
-              type="text"
-              v-model="country"
-            />
+              >Country:</label
+            >
+            <!-- Nationality filter with searchable dropdown -->
+            <div class="w-[320px]">
+              <div class="relative">
+                <input
+                  v-model="country"
+                  type="text"
+                  placeholder="Nationality"
+                  @focus="showCountryList = true"
+                  @blur="hideCountryList"
+                  class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
+                />
+                <ul
+                  v-if="showCountryList && filteredCountries.length > 0"
+                  class="absolute top-full left-0 w-full border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] mt-1 p-[0.3rem] bg-white z-10 max-h-40 overflow-y-auto"
+                >
+                  <li
+                    v-for="c in filteredCountries"
+                    :key="c.cca2"
+                    @mousedown="selectCountry(c)"
+                    class="cursor-pointer p-[0.2rem] hover:bg-[var(--primary-color)] hover:text-white flex items-center"
+                  >
+                    <span>{{ c.flag }} {{ c.name.common }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
+
           <div class="flex justify-between items-center">
             <label class="text-[var(--primary-color)] font-semibold"
               >Gender:
