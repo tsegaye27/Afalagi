@@ -1,6 +1,6 @@
 <template>
   <div
-    class="footer flex justify-start items-center w-[100%] h-[200px] bg-[var(--primary-color)]"
+    class="footer flex justify-start items-center w-[100%] h-[200px] bg-black"
   >
     <div>
       <nuxt-link to="/">
