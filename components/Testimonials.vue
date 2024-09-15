@@ -16,7 +16,7 @@
       </button>
       <div>
         <div
-          class="w-[700px] h-[340px] flex justify-start gap-[0.75rem] rounded-lg bg-[#f4f4f4]"
+          class="w-[700px] h-[340px] flex justify-start gap-[0.75rem] rounded-lg bg-[var(--background-color)] ring ring-[var(--secondary-color)]"
         >
           <img
             class="w-[250px] h-[340px]"

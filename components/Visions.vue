@@ -1,9 +1,9 @@
 <template>
   <div
-    class="visions flex flex-col w-[100%] bg-[var(--primary-color)] h-[500px] justify-start items-center"
+    class="visions flex flex-col w-[100%] bg-[var(--background-color)] h-[500px] justify-start items-center"
   >
     <h1
-      class="text-[38px] font-[sora] font-semibold text-white align-center py-[3rem]"
+      class="text-[38px] font-[sora] font-semibold text-[var(--secondary-color)] align-center py-[3rem]"
     >
       Our Vision
     </h1>

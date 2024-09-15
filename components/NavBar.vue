@@ -69,7 +69,7 @@ const isDarkMode = ref(false);
 onMounted(() => {
   if (typeof window !== "undefined") {
     // Check local storage for the dark mode preference
-    isDarkMode.value = localStorage.getItem("dark-mode") === "true";
+    isDarkMode.value = localStorage.getItem("dark-mode") === true;
   }
 });
 
@@ -258,18 +258,12 @@ function toggleMobileMenu() {
         </select>
         <!-- Dark Mode Toggle -->
         <button @click="toggleDarkMode">
-          <Icon
-            v-if="isDarkMode"
-            name="heroicons-outline:sun"
-            size="24px"
-            class="text-white"
-          />
-          <Icon
-            v-else
-            name="heroicons-outline:moon"
-            size="24px"
-            class="text-gray-900"
-          />
+          <span class="flex items-center" v-if="isDarkMode">
+            <Icon name="heroicons-outline:sun" size="24px" />
+          </span>
+          <span class="flex items-center" v-else>
+            <Icon name="heroicons-outline:moon" size="24px" />
+          </span>
         </button>
         <li v-if="!isLoggedIn" class="nav-menu">
           <NuxtLink
