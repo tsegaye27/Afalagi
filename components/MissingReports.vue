@@ -29,7 +29,7 @@ const showMore = () => {
 };
 </script>
 <template>
-  <div class="py-[2rem] lg:py-[3rem] bg-slate-50">
+  <div class="py-[2rem] lg:py-[3rem] bg-[var(--background-color)]">
     <div v-if="store.isLoading">
       <Spinner />
     </div>

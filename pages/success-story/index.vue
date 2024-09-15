@@ -21,7 +21,7 @@
     <div
       v-for="story in successStories"
       :key="story.id"
-      class="blog-post w-full bg-white flex flex-col items-center px-[4rem] py-[2rem] mb-[2rem] rounded-lg shadow-md"
+      class="blog-post w-full bg-[var(--background-color)] flex flex-col items-center px-[4rem] py-[2rem] mb-[2rem] rounded-lg shadow-md"
     >
       <h2
         class="text-[24px] font-[sora] text-left w-full text-[var(--secondary-color)] my-4"
@@ -145,8 +145,13 @@ const authStore = useUserStore();
 const fetchSuccessStories = async () => {
   try {
     const { $axios } = useNuxtApp();
-    const response = await $axios.get("/success-stories");
-    successStories.value = response.data;
+    const response = await $axios.get("/success-story", {
+      params: {
+        title: "reunited",
+      },
+    });
+    successStories.value = response.data.data;
+    console.log(response.data.data);
   } catch (error) {
     console.log("Error fetching success stories:", error.message);
   }

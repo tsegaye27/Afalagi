@@ -57,5 +57,5 @@ body {
 }
 
 .btn-round-white {
-  @apply w-[50px] h-[50px] px-2 font-semibold text-[25px] bg-white rounded-full text-[var(--secondary-color)] shadow-[1px_1px_3px_2px_lightgray];
+  @apply w-[50px] h-[50px] px-2 font-semibold text-[25px] bg-white rounded-full text-[var(--secondary-color)];
 }

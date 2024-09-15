@@ -130,7 +130,7 @@ const setStatus = (status) => {
   </div>
   <div
     v-else
-    class="relative w-[300px] flex flex-col bg-[#fafafa] rounded-lg border-2 border-[#d2d2d2] items-start"
+    class="relative w-[300px] flex flex-col bg-[var(--background-color)] rounded-lg ring-2 ring-[var(--secondary-color)] items-start"
   >
     <div class="gap-1 w-full flex flex-col">
       <div
