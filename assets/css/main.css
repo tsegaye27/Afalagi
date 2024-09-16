@@ -12,15 +12,15 @@
 :root {
   --primary-color: #005782;
   --secondary-color: #0097d3;
-  --background-color: #ffffff;
-  --text-color: #000000;
+  --background-color: #fafdff; /* Light, airy background */
+  --text-color: #343a40; /* Dark gray for better readability */
 }
 
 .dark {
-  --primary-color: #90cdf4; /* Lighter shade for better contrast */
-  --secondary-color: #2b6cb0; /* Adjusted for dark mode */
-  --background-color: #1a202c; /* Dark background */
-  --text-color: #e2e8f0; /* Lighter text for dark background */
+  --primary-color: #90cdf4; /* Soft light blue */
+  --secondary-color: #1d4ed8; /* Richer, deeper blue */
+  --background-color: #2d3748; /* Darker background for contrast */
+  --text-color: #edf2f4; /* Soft white for text */
 }
 
 body {
