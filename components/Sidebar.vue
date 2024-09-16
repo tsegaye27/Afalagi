@@ -105,7 +105,7 @@ const logoutHandler = async () => {
 
 <template>
   <div
-    class="flex flex-col justify-center gap-[1rem] items-center border-r-2 border-[slate-100] bg-[var(--primary-color)]"
+    class="flex flex-col justify-center gap-[1rem] items-center ring-r-2 ring-[var(--primary-color)] bg-[#005782]"
   >
     <div v-if="store.isLoading">
       <Spinner />
@@ -125,7 +125,7 @@ const logoutHandler = async () => {
     <ul class="pt-[2rem] flex flex-col items-center h-[50%] w-[100%]">
       <nuxt-link class="py-1 flex justify-center w-[60%]" to="/profile/details">
         <div
-          class="text-white flex justify-center gap-[0.2rem] py-[0.3rem] border border-white w-[100%] text-center rounded-md cursor-pointer hover:text-[var(--secondary-color)]"
+          class="text-white flex justify-center gap-[0.2rem] py-[0.3rem] border border-white w-[100%] text-center rounded-md cursor-pointer hover:text-blue-500 hover:border-blue-500"
         >
           <span class="flex justify-center items-baseline"
             ><Icon name="humbleicons:user" size="20px"
@@ -138,7 +138,7 @@ const logoutHandler = async () => {
         to="/profile/my-posts"
       >
         <div
-          class="text-white flex justify-center gap-[0.2rem] py-[0.3rem] border border-white w-[100%] text-center rounded-md cursor-pointer hover:text-[var(--secondary-color)]"
+          class="text-white flex justify-center gap-[0.2rem] py-[0.3rem] border border-white w-[100%] text-center rounded-md cursor-pointer hover:text-blue-500 hover:border-blue-500"
         >
           <span class="flex justify-center items-baseline"
             ><Icon name="humbleicons:documents" size="20px"
@@ -147,7 +147,7 @@ const logoutHandler = async () => {
         </div>
       </nuxt-link>
       <div
-        class="text-white py-[0.3rem] border border-white w-[60%] text-center rounded-md cursor-pointer hover:text-[var(--secondary-color)]"
+        class="text-white py-[0.3rem] border border-white w-[60%] text-center rounded-md cursor-pointer hover:text-blue-500 hover:border-blue-500"
       >
         <nuxt-link
           class="flex justify-center gap-[0.2rem]"
@@ -160,7 +160,7 @@ const logoutHandler = async () => {
         </nuxt-link>
       </div>
       <div
-        class="text-white my-1 border border-white w-[60%] text-center rounded-md cursor-pointer hover:text-[var(--secondary-color)]"
+        class="text-white my-1 border border-white w-[60%] text-center rounded-md cursor-pointer hover:text-blue-500 hover:border-blue-500"
       >
         <nuxt-link
           class="flex py-[0.3rem] justify-center gap-[0.2rem]"
@@ -175,7 +175,7 @@ const logoutHandler = async () => {
     </ul>
     <button
       @click="logoutHandler"
-      class="w-[60%] mb-[30px] flex justify-center py-1 gap-[0.35rem] text-white border border-white rounded-md"
+      class="w-[60%] mb-[30px] flex justify-center py-1 gap-[0.35rem] text-white border border-white rounded-md hover:text-blue-500 hover:border-blue-500"
     >
       <span class="flex justify-center items-center"
         ><Icon size="22px" name="iconoir:log-out"
