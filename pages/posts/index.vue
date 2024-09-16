@@ -141,9 +141,6 @@ const hideCountryList = () => {
     showCountryList.value = false;
   }, 100);
 };
-
-// Utility function to format text
-const small = (str) => str.toLowerCase().replace(/-/g, " ");
 </script>
 
 <template>

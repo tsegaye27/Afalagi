@@ -47,7 +47,7 @@
             v-model="email"
             placeholder="Email"
             required
-            class="p-3 w-full border border-gray-300 rounded-lg text-[var(--primary-color)] placeholder-gray-400 focus:border-[var(--secondary-color)] focus:ring-2 focus:ring-[var(--secondary-color)] transition-all outline-none"
+            class="p-3 w-full border border-gray-300 rounded-lg text-slate-600 placeholder-gray-400 focus:border-[var(--secondary-color)] focus:ring-2 focus:ring-[var(--secondary-color)] transition-all outline-none"
           />
 
           <input
@@ -55,14 +55,14 @@
             v-model="password"
             placeholder="Password"
             required
-            class="p-3 w-full border border-gray-300 rounded-lg text-[var(--primary-color)] placeholder-gray-400 focus:border-[var(--secondary-color)] focus:ring-2 focus:ring-[var(--secondary-color)] transition-all outline-none"
+            class="p-3 w-full border border-gray-300 rounded-lg text-slate-600 placeholder-gray-400 focus:border-[var(--secondary-color)] focus:ring-2 focus:ring-[var(--secondary-color)] transition-all outline-none"
           />
           <input
             type="password"
             v-model="passwordConfirm"
             placeholder="Confirm Password"
             required
-            class="p-3 w-full border border-gray-300 rounded-lg text-[var(--primary-color)] placeholder-gray-400 focus:border-[var(--secondary-color)] focus:ring-2 focus:ring-[var(--secondary-color)] transition-all outline-none"
+            class="p-3 w-full border border-gray-300 rounded-lg text-slate-600 placeholder-gray-400 focus:border-[var(--secondary-color)] focus:ring-2 focus:ring-[var(--secondary-color)] transition-all outline-none"
           />
 
           <button

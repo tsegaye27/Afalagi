@@ -1,8 +1,8 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch } from "vue";
 
 // Define the emit function using defineEmits
-const emit = defineEmits(['search']);
+const emit = defineEmits(["search"]);
 
 const input = ref("");
 
@@ -19,7 +19,7 @@ watch(input, (newValue) => {
   <div class="search h-[40px] flex">
     <input
       type="text"
-      class="h-[41px] rounded-[8px_0_0_8px] w-[400px] pl-4 border-2 border-[var(--secondary-color)] text-[var(--primary-color)] outline-none"
+      class="h-[41px] rounded-[8px_0_0_8px] w-[400px] pl-4 border-2 border-[var(--secondary-color)] text-slate-600 outline-none"
       placeholder="Search here..."
       v-model="input"
     />
