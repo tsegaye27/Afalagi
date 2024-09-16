@@ -36,11 +36,6 @@ onMounted(async () => {
     );
     imagePath.value = `http://localhost:3333/uploads/post/${response.data.data.images[0]}`;
     store.setLoading(false);
-    console.log(
-      "Post details fetched successfully:",
-      response.data.data,
-      replies.value
-    );
   } catch (error) {
     console.error(error.response ? error.response.data : error.message);
     store.setLoading(false);
@@ -55,7 +50,6 @@ const fetchComments = async () => {
       },
     });
     comments.value = response.data.data.comments;
-    console.log("Comments fetched successfully:", response.data.data.comments);
   } catch (error) {
     console.error(error.response ? error.response.data : error.message);
   }
@@ -109,7 +103,6 @@ const submitComment = async () => {
     );
 
     comments.value.push(response.data.data);
-    console.log("Comment added successfully:", response.data.data);
     newComment.value = ""; // Clear input after submission
     parentId.value = null; // Reset parentId after reply submission
     fetchComments();
@@ -158,7 +151,6 @@ const submitReply = async (parentId) => {
     replyVisible.value = null; // Hide the reply textarea
     newReply.value = {}; // Reset the newReply object
 
-    console.log("Reply added successfully:", response.data.data);
     fetchComments(); // Optionally refetch comments after reply submission
   } catch (error) {
     console.error(error.response ? error.response.data : error.message);
@@ -167,9 +159,7 @@ const submitReply = async (parentId) => {
 
 const getReplies = (parentId) => {
   // Add new reply to the comments array (or send to backend)
-  console.log(
-    comments.value.filter((comment) => comment.parentId === parentId)
-  );
+
   return comments.value.filter((comment) => comment.parentId === parentId);
 };
 
@@ -193,8 +183,25 @@ function getInitials(firstName, lastName) {
 }
 
 const visibleComments = computed(() => {
-  return topLevelComments.value.slice(0, showAllComments.value ? undefined : 4);
+  return topLevelComments.value.slice(0, showAllComments.value ? undefined : 3);
 });
+
+function formatArrayText(arr) {
+  // Access the first element of the array
+  if (!arr) return;
+  const text = arr[0];
+
+  // Replace underscores with spaces
+  const replacedText = text.replace(/_/g, " ");
+
+  // Capitalize each word
+  const formattedText = replacedText
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+
+  return formattedText;
+}
 
 function timeAgo(date) {
   const seconds = Math.floor((new Date() - new Date(date)) / 1000);
@@ -232,7 +239,7 @@ function timeAgo(date) {
         class="flex text-[var(--primary-color)] justify-center items-center mr-[1rem]"
       >
         <!-- <Icon name="material-symbols:arrow-left-alt" size="20px" /> -->
-        <span class="text-[var(--primary-color)] font-regular text-2xl"
+        <span class="text-[var(--primary-color)] font-regular text-lg"
           >Back</span
         >
       </button>
@@ -240,396 +247,287 @@ function timeAgo(date) {
 
     <hr />
     <div class="flex flex-col">
-      <div>
-        <div class="flex mx-[5rem] my-[2rem] justify-between gap-[4rem]">
-          <div class="person-image">
-            <img
-              class="w-[400px] h-[500px]"
-              :src="imagePath"
-              alt="missing_person"
-            />
-          </div>
-          <div class="w-[900px] justify-start flex mt-[1rem]">
-            <ul class="flex flex-col gap-4">
-              <div class="flex justify-start gap-[6rem] w-full">
-                <li
-                  class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
-                >
-                  Full Name:
-                </li>
-                <span class="text-[var(--primary-color)] font-regular">{{
-                  `${missingPerson.firstName} ${missingPerson.middleName} ${missingPerson.lastName}`
-                }}</span>
-              </div>
-              <div class="flex justify-start">
-                <li
-                  class="font-medium w-[265px] text-[var(--primary-color)] text-lg"
-                >
-                  Date of Birth:
-                </li>
-                <span class="text-[var(--primary-color)] font-regular">{{
-                  formatDate(missingPerson.dateOfBirth)
-                }}</span>
-              </div>
-              <div class="flex justify-start gap-[6rem] wrap">
-                <li
-                  class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
-                >
-                  Gender:
-                </li>
-                <span class="text-[var(--primary-color)] font-regular">{{
-                  missingPerson.gender?.toLowerCase()
-                }}</span>
-              </div>
-              <div class="flex justify-start gap-[6rem] wrap">
-                <li
-                  class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
-                >
-                  Nationality:
-                </li>
-                <span class="text-[var(--primary-color)] font-regular">{{
-                  missingPerson.nationality?.toLowerCase()
-                }}</span>
-              </div>
-              <div class="flex justify-start gap-[6rem] wrap">
-                <li
-                  class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
-                >
-                  Hair-Color:
-                </li>
-                <span class="text-[var(--primary-color)] font-regular">{{
-                  missingPerson.hairColor?.toLowerCase()
-                }}</span>
-              </div>
-              <div class="flex justify-start gap-[6rem] wrap">
-                <li
-                  class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
-                >
-                  Skin-Color:
-                </li>
-                <span class="text-[var(--primary-color)] font-regular">{{
-                  missingPerson.skinColor?.toLowerCase()
-                }}</span>
-              </div>
-              <div class="flex justify-start gap-[6rem] wrap">
-                <li
-                  class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
-                >
-                  Height:
-                </li>
-                <span class="text-[var(--primary-color)] font-regular">{{
-                  missingPerson.height ? missingPerson.height : "Not Specified"
-                }}</span>
-              </div>
-              <div class="flex justify-start gap-[5.5rem] wrap">
-                <li
-                  class="font-medium w-[180px] text-[var(--primary-color)] text-lg"
-                >
-                  Last-seen Wearing:
-                </li>
-                <span class="text-[var(--primary-color)] font-regular">{{
-                  missingPerson.lastSeenWearing
-                }}</span>
-              </div>
-              <div class="flex justify-start gap-[4.25rem] wrap">
-                <li
-                  class="font-medium w-[200px] text-[var(--primary-color)] text-lg"
-                >
-                  Last-seen Location:
-                </li>
-                <span class="text-[var(--primary-color)] font-regular">{{
-                  missingPerson.lastSeenLocation
-                }}</span>
-              </div>
-              <div class="flex justify-start gap-[6rem] wrap">
-                <li
-                  class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
-                >
-                  Last-seen Date:
-                </li>
-                <span class="text-[var(--primary-color)] font-regular">{{
-                  formatDate(missingPerson.lastSeenDate)
-                }}</span>
-              </div>
-              <div class="flex justify-start gap-[6rem] wrap">
-                <li
-                  class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
-                >
-                  Description:
-                </li>
-                <span class="text-[var(--primary-color)] font-regular">{{
-                  missingPerson.description
-                }}</span>
-              </div>
-              <div class="flex justify-start gap-[6rem] wrap">
-                <li
-                  class="font-medium w-[170px] whitespace-nowrap text-[var(--primary-color)] text-lg"
-                >
-                  Recognizable Features:
-                </li>
-                <span class="text-[var(--primary-color)] font-regular">{{
-                  missingPerson.recognizableFeatures
-                }}</span>
-              </div>
-              <div class="flex justify-start gap-[6rem] wrap">
-                <li
-                  class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
-                >
-                  Education:
-                </li>
-                <span class="text-[var(--primary-color)] font-regular">{{
-                  missingPerson.educationalLevel?.toLowerCase()
-                }}</span>
-              </div>
-              <div class="flex justify-start gap-[6rem] wrap">
-                <li
-                  class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
-                >
-                  Language Spoken:
-                </li>
-                <span class="text-[var(--primary-color)] font-regular">{{
-                  missingPerson.languageSpoken
-                }}</span>
-              </div>
-              <div class="flex justify-start gap-[6rem] wrap">
-                <li
-                  class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
-                >
-                  Marital Status:
-                </li>
-                <span class="text-[var(--primary-color)] font-regular">{{
-                  missingPerson.maritalStatus?.toLowerCase()
-                }}</span>
-              </div>
-              <div class="flex justify-start gap-[6rem] wrap">
-                <li
-                  class="font-medium w-[170px] whitespace-nowrap text-[var(--primary-color)] text-lg"
-                >
-                  Physical Disability:
-                </li>
-                <span class="text-[var(--primary-color)] font-regular">{{
-                  missingPerson.physicalDisability
-                }}</span>
-              </div>
-              <div class="flex justify-start gap-[6rem] wrap">
-                <li
-                  class="font-medium w-[170px] whitespace-nowrap text-[var(--primary-color)] text-lg"
-                >
-                  Mental Disability:
-                </li>
-                <span class="text-[var(--primary-color)] font-regular">{{
-                  missingPerson.mentalDisability
-                }}</span>
-              </div>
-              <div class="flex justify-start gap-[6rem] wrap">
-                <li
-                  class="font-medium w-[170px] whitespace-nowrap text-[var(--primary-color)] text-lg"
-                >
-                  Medical Condition:
-                </li>
-                <span class="text-[var(--primary-color)] font-regular">{{
-                  missingPerson.medicalIssues
-                }}</span>
-              </div>
-              <div
-                v-if="missingPerson.height"
-                class="flex justify-start gap-[6rem] wrap"
-              >
-                <li
-                  class="font-medium w-[170px] text-[var(--primary-color)] text-lg"
-                >
-                  Height:
-                </li>
-                <span class="text-[var(--primary-color)] font-regular">{{
-                  missingPerson.height
-                }}</span>
-              </div>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <hr class="mb-[2rem]" />
-      <div class="video-card">
+      <div class="flex flex-col md:flex-row justify-start my-[2rem] w-full">
         <div
-          class="flex flex-col items-center justify-center gap-[1rem] mb-[3rem]"
+          class="bg-[var(--background-color)] shadow-sm shadow-[var(--primary-color)] rounded-xl p-6 px-4 mx-8 w-full"
         >
-          <h1
-            class="text-[30px] text-[var(--primary-color)] font-medium font-[sora]"
-          >
-            Message from his {{ missingPerson.posterRelation?.toLowerCase() }}
-          </h1>
-          <video class="w-[600px] h-[400px] rounded-md" controls src=""></video>
-        </div>
-      </div>
-      <!-- Comments Section -->
-      <div class="comments-section mx-[5rem] my-[2rem]">
-        <h2
-          class="text-[20px] text-[var(--primary-color)] font-medium mb-[1rem]"
-        >
-          Comments ({{ topLevelComments.length }})
-        </h2>
-
-        <div
-          v-if="!topLevelComments.length"
-          class="text-[var(--primary-color)]"
-        >
-          No comments yet. Be the first to comment!
-        </div>
-
-        <div
-          v-for="comment in visibleComments"
-          :key="comment.id"
-          class="my-[1rem]"
-        >
-          <!-- Comment with Replies -->
-          <div
-            :class="{
-              'border border-[#d2d2d2] w-[35rem] p-[1rem] rounded': true,
-            }"
-          >
-            <div class="flex items-center gap-[1rem]">
-              <div
-                class="w-11 h-10 rounded-full bg-green-500 text-white flex items-center justify-center text-md font-bold"
-              >
-                {{
-                  getInitials(
-                    comment.user?.Profile.firstName,
-                    comment.user?.Profile.lastName
-                  )
-                }}
-              </div>
-              <div class="flex flex-col w-full">
-                <p class="text-[var(--secondary-color)] font-medium">
-                  {{ comment.user?.Profile.firstName }}
-                  {{ comment.user?.Profile.lastName }}
-                </p>
-                <p class="text-[var(--primary-color)]">
-                  {{ comment.commentText }}
-                </p>
-                <div class="flex items-center justify-between">
-                  <p class="text-[#868686]">{{ timeAgo(comment.createdAt) }}</p>
-                  <!-- Added "replyVisible" check for displaying reply textarea and submit button -->
-
-                  <!-- Updated reply icon button with a click event to toggle replyVisible -->
-                  <button
-                    @click="replyVisible = comment.id"
-                    class="flex items-center text-[var(--primary-color)]"
-                  >
-                    <Icon name="heroicons-solid:reply" size="22px" />
-                  </button>
-                </div>
-                <div
-                  v-if="replyVisible === comment.id"
-                  class="ml-[2rem] mt-[1rem] flex flex-col"
-                >
-                  <textarea
-                    v-model="replyText"
-                    class="w-2/3 p-2 ring ring-[var(--secondary-color)] outline-none bg-[var(--background-color)] text-[var(--primary-color)] rounded"
-                    rows="2"
-                    placeholder="Write your reply..."
-                  ></textarea>
-                  <button
-                    @click="submitReply(comment.id)"
-                    class="px-4 py-2 w-[8rem] bg-[var(--secondary-color)] text-white rounded mt-[0.5rem]"
-                  >
-                    Submit
-                  </button>
-                </div>
-              </div>
+          <div class="flex gap-12">
+            <!-- Profile Image -->
+            <div class="person-image mb-6 md:mb-0 md:mr-6">
+              <img
+                class="w-[500px] h-[500px] object-cover rounded-lg"
+                :src="imagePath"
+                alt="missing_person"
+              />
             </div>
 
-            <!-- Toggle View Replies -->
-            <button
-              v-if="getReplies(comment.id).length > 0"
-              @click="toggleReplies(comment.id)"
-              class="text-[var(--primary-color)] mt-[0.5rem]"
-            >
-              {{
-                replyVisibility[comment.id] ? "Hide Replies" : "View Replies"
-              }}
-              ({{ getReplies(comment.id).length }})
-            </button>
+            <!-- Main Details -->
+            <div>
+              <ul class="flex flex-col w-[450px] gap-4">
+                <DetailsRow
+                  label="Full Name"
+                  :value="`${missingPerson.firstName} ${missingPerson.middleName} ${missingPerson.lastName}`"
+                />
+                <DetailsRow
+                  label="Date of Birth"
+                  :value="formatDate(missingPerson.dateOfBirth)"
+                />
+                <DetailsRow
+                  label="Gender"
+                  :value="missingPerson.gender?.toLowerCase()"
+                />
+                <DetailsRow
+                  label="Nationality"
+                  :value="missingPerson.nationality?.toLowerCase()"
+                />
+                <DetailsRow
+                  label="Hair Color"
+                  :value="missingPerson.hairColor?.toLowerCase()"
+                />
+                <DetailsRow
+                  label="Skin Color"
+                  :value="missingPerson.skinColor?.toLowerCase()"
+                />
+                <DetailsRow label="Height" :value="missingPerson.height" />
+                <DetailsRow
+                  label="Last Seen Wearing"
+                  :value="missingPerson.lastSeenWearing"
+                />
+                <DetailsRow
+                  label="Last Seen Location"
+                  :value="missingPerson.lastSeenLocation"
+                />
+                <DetailsRow
+                  label="Last Seen Date"
+                  :value="formatDate(missingPerson.lastSeenDate)"
+                />
+                <DetailsRow
+                  label="Description"
+                  :value="missingPerson.description"
+                />
+                <DetailsRow
+                  label="Recognizable Features"
+                  :value="missingPerson.recognizableFeatures"
+                />
+              </ul>
+            </div>
 
-            <!-- Display Replies (Hidden by default) -->
-            <div v-if="replyVisibility[comment.id]" class="ml-[2rem]">
+            <!-- Additional Details (Right Side) -->
+            <div>
+              <ul class="flex flex-col w-[380px] gap-4">
+                <DetailsRow
+                  label="Education"
+                  :value="missingPerson.educationalLevel?.toLowerCase()"
+                />
+                <DetailsRow
+                  label="Language Spoken"
+                  :value="missingPerson.languageSpoken"
+                />
+                <DetailsRow
+                  label="Marital Status"
+                  :value="missingPerson.maritalStatus?.toLowerCase()"
+                />
+                <DetailsRow
+                  label="Physical Disability"
+                  :value="formatArrayText(missingPerson.physicalDisability)"
+                />
+                <DetailsRow
+                  label="Mental Disability"
+                  :value="formatArrayText(missingPerson.mentalDisability)"
+                />
+                <DetailsRow
+                  label="Medical Condition"
+                  :value="formatArrayText(missingPerson.medicalIssues)"
+                />
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="w-[1500px] bg-[var(--background-color)] mx-8 px-4 my-4 rounded-xl shadow-sm shadow-[var(--primary-color)] p-6"
+      >
+        <!-- Card Container -->
+        <div class="flex gap-8">
+          <!-- Video Section -->
+          <div
+            class="video-section flex flex-col justify-start items-center w-2/3"
+          >
+            <video class="w-full h-[550px] rounded-md" controls src=""></video>
+            <h1
+              class="text-[24px] text-left text-[var(--primary-color)] font-medium font-[sora] mt-[1rem]"
+            >
+              Message from his {{ missingPerson.posterRelation?.toLowerCase() }}
+            </h1>
+          </div>
+
+          <!-- Comments Section -->
+          <div
+            class="comments-section p-[1rem] w-1/3 h-[550px] overflow-y-auto flex-1 border border-[var(--secondary-color)] rounded"
+          >
+            <h2
+              class="text-[20px] text-[var(--primary-color)] font-medium mb-[1rem]"
+            >
+              Comments ({{ topLevelComments.length }})
+            </h2>
+
+            <div
+              v-if="!topLevelComments.length"
+              class="text-[var(--primary-color)]"
+            >
+              No comments yet. Be the first to comment!
+            </div>
+
+            <div class="overflow-y-auto">
+              <!-- Comment List -->
               <div
-                v-for="reply in getReplies(comment.id)"
-                :key="reply.id"
-                class="my-[0.5rem]"
+                v-for="comment in visibleComments"
+                :key="comment.id"
+                class=""
               >
-                <div class="flex items-center gap-[1rem]">
+                <div
+                  class="flex items-center gap-[1rem] p-2 border-b-[1.1px] border-[var(--primary-color)]"
+                >
                   <div
-                    class="w-10 h-9 rounded-full bg-blue-500 text-white flex items-center justify-center text-md font-bold"
+                    class="w-10 h-9 rounded-full bg-green-500 text-white flex items-center justify-center text-md font-bold"
                   >
                     {{
                       getInitials(
-                        reply.user?.Profile.firstName,
-                        reply.user?.Profile.lastName
+                        comment.user?.Profile.firstName,
+                        comment.user?.Profile.lastName
                       )
                     }}
                   </div>
                   <div class="flex flex-col w-full">
-                    <p class="text-[var(--secondary-color)] font-medium">
-                      {{ reply.user?.Profile.firstName }}
-                      {{ reply.user?.Profile.lastName }}
+                    <p class="text-[var(--primary-color)] font-medium">
+                      {{ comment.user?.Profile.firstName }}
+                      {{ comment.user?.Profile.lastName }}
+                      <span class="text-[var(--secondary-color)] font-light">{{
+                        comment.user.email
+                      }}</span>
                     </p>
-                    <p class="text-[var(--primary-color)]">
-                      {{ reply.commentText }}
+                    <p class="text-[var(--text-color)]">
+                      {{ comment.commentText }}
                     </p>
-                    <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between mt-1">
                       <p class="text-[#868686]">
-                        {{ timeAgo(reply.createdAt) }}
+                        {{ timeAgo(comment.createdAt) }}
                       </p>
+                      <div class="flex items-center gap-4">
+                        <!-- View Replies Button -->
+                        <button
+                          v-if="getReplies(comment.id).length > 0"
+                          @click="toggleReplies(comment.id)"
+                          class="text-[var(--primary-color)]"
+                        >
+                          {{
+                            replyVisibility[comment.id]
+                              ? "Hide Replies"
+                              : "View Replies"
+                          }}
+                          ({{ getReplies(comment.id).length }})
+                        </button>
+                        <!-- Reply Button -->
+                        <button
+                          @click="replyVisible = comment.id"
+                          @dblclick="replyVisible = null"
+                          title="reply"
+                          class="flex items-center text-[var(--primary-color)] hover:text-[var(--secondary-color)]"
+                        >
+                          <Icon name="heroicons-solid:reply" size="22px" />
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Reply Textarea -->
+                    <div
+                      v-if="replyVisible === comment.id"
+                      class="ml-[2rem] mt-[1rem] flex flex-col"
+                    >
+                      <textarea
+                        v-model="replyText"
+                        class="w-full p-2 ring ring-[var(--secondary-color)] outline-none bg-[var(--background-color)] text-[var(--primary-color)] rounded"
+                        rows="2"
+                        placeholder="Write your reply..."
+                      ></textarea>
+                      <button
+                        @click="submitReply(comment.id)"
+                        class="px-4 py-2 w-[8rem] bg-[var(--secondary-color)] text-white rounded mt-[0.5rem]"
+                      >
+                        Submit
+                      </button>
                     </div>
                   </div>
                 </div>
 
-                <!-- Add Nested Reply Section -->
-                <div
-                  v-if="replyVisible === reply.id"
-                  class="ml-[2rem] mt-[1rem]"
-                >
-                  <textarea
-                    v-model="replies[reply.id]"
-                    class="w-2/3 p-2 ring ring-[var(--secondary-color)] outline-none bg-[var(--background-color)] text-[var(--text-color)] rounded"
-                    rows="3"
-                    placeholder="Write your reply..."
-                  ></textarea>
-                  <button
-                    @click="submitReply(reply.id)"
-                    class="px-4 py-2 w-[8rem] bg-[var(--secondary-color)] text-white rounded mt-[0.5rem]"
+                <!-- Display Replies -->
+                <div v-if="replyVisibility[comment.id]" class="ml-[2rem]">
+                  <div
+                    v-for="reply in getReplies(comment.id)"
+                    :key="reply.id"
+                    class="my-[0.5rem]"
                   >
-                    Submit
-                  </button>
+                    <div
+                      class="flex items-center p-2 gap-[1rem] border-b border-[var(--primary-color)]"
+                    >
+                      <div
+                        class="w-10 h-9 rounded-full bg-blue-500 text-white flex items-center justify-center text-md font-bold"
+                      >
+                        {{
+                          getInitials(
+                            reply.user?.Profile.firstName,
+                            reply.user?.Profile.lastName
+                          )
+                        }}
+                      </div>
+                      <div class="flex flex-col w-full">
+                        <p class="text-[var(--primary-color)] font-medium">
+                          {{ reply.user?.Profile.firstName }}
+                          {{ reply.user?.Profile.lastName }}
+                          <span
+                            class="text-[var(--secondary-color)] font-light"
+                            >{{ reply.user.email }}</span
+                          >
+                        </p>
+                        <p class="text-[var(--primary-color)]">
+                          {{ reply.commentText }}
+                        </p>
+                        <p class="text-[#868686]">
+                          {{ timeAgo(reply.createdAt) }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+
+              <!-- Toggle View More/Less Comments -->
+              <button
+                v-if="comments.length > 3"
+                @click="showAllComments = !showAllComments"
+                class="text-[var(--primary-color)] mt-4"
+              >
+                {{ showAllComments ? "View Less" : "View More" }}
+              </button>
+            </div>
+
+            <!-- Add Comment -->
+            <div class="mt-[2rem]">
+              <textarea
+                v-model="newComment"
+                class="w-full p-2 ring ring-[var(--secondary-color)] outline-none bg-[var(--background-color)] text-[var(--text-color)] rounded"
+                rows="2"
+                placeholder="Write your comment..."
+              ></textarea>
+              <button
+                @click="submitComment"
+                class="px-4 py-2 w-[8rem] bg-[var(--secondary-color)] text-white rounded mt-[0.5rem]"
+              >
+                Submit
+              </button>
             </div>
           </div>
-        </div>
-
-        <!-- Toggle Button -->
-        <button
-          v-if="comments.length > 4"
-          @click="showAllComments = !showAllComments"
-          class="text-[var(--primary-color)] mt-4"
-        >
-          {{ showAllComments ? "View Less" : "View More" }}
-        </button>
-
-        <!-- Add Comment -->
-        <div class="mt-[2rem]">
-          <textarea
-            v-model="newComment"
-            class="w-full p-2 ring ring-[var(--secondary-color)] outline-none bg-[var(--background-color)] text-[var(--text-color)] rounded"
-            rows="3"
-            placeholder="Write your comment..."
-          ></textarea>
-          <button
-            @click="submitComment"
-            class="px-4 py-2 w-[8rem] bg-[var(--secondary-color)] text-white rounded mt-[0.5rem]"
-          >
-            Submit
-          </button>
         </div>
       </div>
     </div>
