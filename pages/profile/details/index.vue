@@ -156,9 +156,11 @@ const updateProfile = async () => {
     <div class="flex gap-[1rem] flex-col justify-center items-center">
       <form
         @submit.prevent="updateProfile"
-        class="w-[32rem] p-[3rem] border rounded flex-col gap-[0.25rem] flex justify-center items-center"
+        class="w-136 p-[3rem] ring ring-[var(--primary-color)] rounded flex-col gap-[0.25rem] flex justify-center mb-4 items-center"
       >
-        <h1 class="text-[#878787] mb-[2rem] text-center text-2xl font-semibold">
+        <h1
+          class="text-[var(--primary-color)] mb-[2rem] text-center text-2xl font-medium"
+        >
           Personal Information
         </h1>
         <div class="flex flex-col gap-[1.5rem]">
@@ -216,7 +218,7 @@ const updateProfile = async () => {
               >First Name:
             </label>
             <input
-              class="outline-none p-1 w-[300px] pl-2 rounded text-[var(--primary-color)] border border-[var(--primary-color)]"
+              class="outline-none p-1 w-[300px] pl-2 rounded bg-[var(--background-color)] text-[var(--primary-color)] border border-[var(--primary-color)]"
               type="text"
               placeholder="Enter your first name here"
               v-model="user.firstName"
@@ -227,7 +229,7 @@ const updateProfile = async () => {
               >Middle Name:
             </label>
             <input
-              class="outline-none p-1 w-[300px] pl-2 rounded text-[var(--primary-color)] border border-[var(--primary-color)]"
+              class="outline-none p-1 w-[300px] pl-2 rounded bg-[var(--background-color)] text-[var(--primary-color)] border border-[var(--primary-color)]"
               type="text"
               placeholder="Enter your middle name here"
               v-model="user.middleName"
@@ -238,7 +240,7 @@ const updateProfile = async () => {
               >Last Name:
             </label>
             <input
-              class="outline-none p-1 w-[300px] pl-2 rounded text-[var(--primary-color)] border border-[var(--primary-color)]"
+              class="outline-none p-1 w-[300px] pl-2 rounded bg-[var(--background-color)] text-[var(--primary-color)] border border-[var(--primary-color)]"
               type="text"
               placeholder="Enter your last name here"
               v-model="user.lastName"
@@ -250,7 +252,7 @@ const updateProfile = async () => {
               >Country:
             </label>
             <input
-              class="outline-none p-1 w-[300px] pl-2 rounded text-[var(--primary-color)] border border-[var(--primary-color)]"
+              class="outline-none p-1 w-[300px] pl-2 rounded bg-[var(--background-color)] text-[var(--primary-color)] border border-[var(--primary-color)]"
               type="text"
               placeholder="Enter your country here"
               v-model="user.country"
@@ -263,7 +265,7 @@ const updateProfile = async () => {
             >
             <select
               v-model="user.gender"
-              class="border border-[var(--primary-color)] h-[35px] rounded outline-none text-[var(--primary-color)] p-[0.1rem] w-[300px]"
+              class="border border-[var(--primary-color)] bg-[var(--background-color)] h-[35px] rounded outline-none text-[var(--primary-color)] p-[0.1rem] w-[300px]"
             >
               <option value="" selected disabled>Select gender</option>
               <option value="MALE">Male</option>
@@ -275,7 +277,7 @@ const updateProfile = async () => {
               >Date of Birth:
             </label>
             <input
-              class="outline-none w-[300px] p-1 pl-2 rounded text-[#606060] border border-[var(--primary-color)]"
+              class="outline-none bg-[var(--background-color)] w-[300px] p-1 pl-2 rounded text-[var(--primary-color)] border border-[var(--primary-color)]"
               type="date"
               :value="formatDateToInput(user.birthDate)"
             />
