@@ -11,15 +11,18 @@
       <div
         v-for="(faq, index) in faqs"
         :key="index"
-        class="mb-4 border-b-[0.1rem] border-white"
+        class="mb-4 border-b-[0.1rem] border-[var(--text-color)]"
       >
         <button
-          class="w-full text-left py-4 px-6 text-lg font-medium text-white hover:text-[var(--secondary-color)] focus:outline-none"
+          class="w-full text-left py-4 px-6 text-lg font-medium text-[var(--text-color)] hover:text-[var(--secondary-color)] focus:outline-none"
           @click="toggleFaq(index)"
         >
           {{ faq.question }}
         </button>
-        <div v-show="activeFaq === index" class="px-6 py-4 text-white">
+        <div
+          v-show="activeFaq === index"
+          class="px-6 py-4 text-[var(--text-color)]"
+        >
           {{ faq.answer }}
         </div>
       </div>

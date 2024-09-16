@@ -7,7 +7,7 @@
     >
       Our Vision
     </h1>
-    <p class="text-[20px] w-[60%] text-white">
+    <p class="text-[20px] w-[60%] text-[var(--text-color)]">
       In nulla posuere sollicitudin aliquam ultrices In nulla posuere
       sollicitudin aliquam ultrices.In nulla posuere sollicitudin aliquam
       sollicitudin aliquam ultriosuere soiquam ultrices. sollicitudin aliquam
