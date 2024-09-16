@@ -14,7 +14,8 @@ const newComment = ref("");
 const postId = route.params.postId;
 const showAllComments = ref(false);
 const parentId = ref(null);
-const replyText = ref({});
+const replyText = ref("");
+const newReply = ref({});
 
 const previousPage = () => {
   router.go(-1);
@@ -31,7 +32,7 @@ onMounted(async () => {
     missingPerson.value = response.data.data;
     comments.value = response.data.data.comments;
     replies.value = comments.value.map((comment) =>
-      comment.parentId !== null ? replies.value.push(comment) : replies.value
+      comment.parentId !== null ? replies.value : replies.value
     );
     imagePath.value = `http://localhost:3333/uploads/post/${response.data.data.images[0]}`;
     store.setLoading(false);
@@ -124,21 +125,44 @@ const toggleReply = (commentId) => {
   replyVisible.value = replyVisible.value === commentId ? null : commentId;
 };
 
-const submitReply = (parentId) => {
-  const replyText = replies.value[parentId];
-  if (!replyText) return;
+const submitReply = async (parentId) => {
+  if (!store.token) {
+    navigateTo("/auth/login");
+    return;
+  }
 
-  const newReply = {
-    parentId,
-    commentText: replyText,
-    createdAt: new Date().toISOString(),
-    user: { Profile: { firstName: "John", lastName: "Doe" } },
-  };
+  if (!replyText.value.trim()) return; // Access replyText.value since it's a ref
 
-  comments.value.push(newReply);
+  try {
+    const response = await $axios.post(
+      `/comment/post`,
+      {
+        postId, // Ensure postId is passed correctly
+        commentText: replyText.value, // Use replyText.value
+        parentId, // Send parentId to link the reply with the comment
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${store.token}`,
+        },
+      }
+    );
 
-  replies.value[parentId] = "";
-  replyVisible.value = null;
+    // Use the response directly (no need for response.json())
+    newReply.value = response.data.data;
+
+    // Push the new reply to the comments array
+    comments.value.push(newReply.value);
+
+    replyText.value = ""; // Clear the reply input after submission
+    replyVisible.value = null; // Hide the reply textarea
+    newReply.value = {}; // Reset the newReply object
+
+    console.log("Reply added successfully:", response.data.data);
+    fetchComments(); // Optionally refetch comments after reply submission
+  } catch (error) {
+    console.error(error.response ? error.response.data : error.message);
+  }
 };
 
 const getReplies = (parentId) => {
@@ -148,6 +172,20 @@ const getReplies = (parentId) => {
   );
   return comments.value.filter((comment) => comment.parentId === parentId);
 };
+
+// Reactive state for managing visibility of replies
+const replyVisibility = ref({});
+
+// Toggle reply visibility for a specific comment
+const toggleReplies = (commentId) => {
+  replyVisibility.value[commentId] = !replyVisibility.value[commentId];
+};
+
+// Get top-level comments only
+const topLevelComments = computed(() => {
+  return comments.value.filter((comment) => comment.parentId === null);
+});
+
 function getInitials(firstName, lastName) {
   const firstInitial = firstName ? firstName.charAt(0).toUpperCase() : "";
   const lastInitial = lastName ? lastName.charAt(0).toUpperCase() : "";
@@ -155,7 +193,7 @@ function getInitials(firstName, lastName) {
 }
 
 const visibleComments = computed(() => {
-  return showAllComments.value ? comments.value : comments.value.slice(0, 4);
+  return topLevelComments.value.slice(0, showAllComments.value ? undefined : 4);
 });
 
 function timeAgo(date) {
@@ -193,7 +231,7 @@ function timeAgo(date) {
         @click="previousPage"
         class="flex text-[var(--primary-color)] justify-center items-center mr-[1rem]"
       >
-        <Icon name="heroicons-outline:arrow-left" size="24px" />
+        <!-- <Icon name="material-symbols:arrow-left-alt" size="20px" /> -->
         <span class="text-[var(--primary-color)] font-regular text-2xl"
           >Back</span
         >
@@ -428,9 +466,13 @@ function timeAgo(date) {
         <h2
           class="text-[20px] text-[var(--primary-color)] font-medium mb-[1rem]"
         >
-          Comments ({{ comments.length }})
+          Comments ({{ topLevelComments.length }})
         </h2>
-        <div v-if="!visibleComments.length" class="text-[var(--primary-color)]">
+
+        <div
+          v-if="!topLevelComments.length"
+          class="text-[var(--primary-color)]"
+        >
           No comments yet. Be the first to comment!
         </div>
 
@@ -466,82 +508,100 @@ function timeAgo(date) {
                 </p>
                 <div class="flex items-center justify-between">
                   <p class="text-[#868686]">{{ timeAgo(comment.createdAt) }}</p>
+                  <!-- Added "replyVisible" check for displaying reply textarea and submit button -->
+
+                  <!-- Updated reply icon button with a click event to toggle replyVisible -->
                   <button
-                    @click="toggleReply(comment.id)"
+                    @click="replyVisible = comment.id"
                     class="flex items-center text-[var(--primary-color)]"
                   >
                     <Icon name="heroicons-solid:reply" size="22px" />
                   </button>
                 </div>
+                <div
+                  v-if="replyVisible === comment.id"
+                  class="ml-[2rem] mt-[1rem] flex flex-col"
+                >
+                  <textarea
+                    v-model="replyText"
+                    class="w-2/3 p-2 ring ring-[var(--secondary-color)] outline-none bg-[var(--background-color)] text-[var(--primary-color)] rounded"
+                    rows="2"
+                    placeholder="Write your reply..."
+                  ></textarea>
+                  <button
+                    @click="submitReply(comment.id)"
+                    class="px-4 py-2 w-[8rem] bg-[var(--secondary-color)] text-white rounded mt-[0.5rem]"
+                  >
+                    Submit
+                  </button>
+                </div>
               </div>
             </div>
 
-            <!-- Add Reply Section -->
-            <div v-if="replyVisible === comment.id" class="ml-[2rem] mt-[1rem]">
-              <textarea
-                v-model="replies[comment.id]"
-                class="w-2/3 p-2 ring ring-[var(--secondary-color)] outline-none bg-[var(--background-color)] text-[var(--text-color)] rounded"
-                rows="3"
-                placeholder="Write your reply..."
-              ></textarea>
-              <button
-                @click="submitReply(comment.id)"
-                class="px-4 py-2 w-[8rem] bg-[var(--secondary-color)] text-white rounded mt-[0.5rem]"
-              >
-                Submit Reply
-              </button>
-            </div>
-
-            <!-- Display Replies -->
-            <div
-              v-for="reply in getReplies(comment.id)"
-              :key="reply.id"
-              class="ml-[2rem] mt-[1rem]"
+            <!-- Toggle View Replies -->
+            <button
+              v-if="getReplies(comment.id).length > 0"
+              @click="toggleReplies(comment.id)"
+              class="text-[var(--primary-color)] mt-[0.5rem]"
             >
-              <div class="flex items-center gap-[1rem]">
-                <div
-                  class="w-9 h-9 rounded-full bg-blue-500 text-white flex items-center justify-center text-md font-bold"
-                >
-                  {{
-                    getInitials(
-                      reply.user?.Profile.firstName,
-                      reply.user?.Profile.lastName
-                    )
-                  }}
-                </div>
-                <div class="flex flex-col w-full">
-                  <p class="text-[var(--secondary-color)] font-medium">
-                    {{ reply.user?.Profile.firstName }}
-                    {{ reply.user?.Profile.lastName }}
-                  </p>
-                  <p class="text-[var(--primary-color)]">
-                    {{ reply.commentText }}
-                  </p>
-                  <div class="flex items-center justify-between">
-                    <p class="text-[#868686]">{{ timeAgo(reply.createdAt) }}</p>
-                    <button
-                      @click="toggleReply(reply.id)"
-                      class="flex items-center text-[var(--primary-color)]"
-                    >
-                      <Icon name="heroicons-solid:reply" size="22px" />
-                    </button>
+              {{
+                replyVisibility[comment.id] ? "Hide Replies" : "View Replies"
+              }}
+              ({{ getReplies(comment.id).length }})
+            </button>
+
+            <!-- Display Replies (Hidden by default) -->
+            <div v-if="replyVisibility[comment.id]" class="ml-[2rem]">
+              <div
+                v-for="reply in getReplies(comment.id)"
+                :key="reply.id"
+                class="my-[0.5rem]"
+              >
+                <div class="flex items-center gap-[1rem]">
+                  <div
+                    class="w-10 h-9 rounded-full bg-blue-500 text-white flex items-center justify-center text-md font-bold"
+                  >
+                    {{
+                      getInitials(
+                        reply.user?.Profile.firstName,
+                        reply.user?.Profile.lastName
+                      )
+                    }}
+                  </div>
+                  <div class="flex flex-col w-full">
+                    <p class="text-[var(--secondary-color)] font-medium">
+                      {{ reply.user?.Profile.firstName }}
+                      {{ reply.user?.Profile.lastName }}
+                    </p>
+                    <p class="text-[var(--primary-color)]">
+                      {{ reply.commentText }}
+                    </p>
+                    <div class="flex items-center justify-between">
+                      <p class="text-[#868686]">
+                        {{ timeAgo(reply.createdAt) }}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <!-- Nested Reply Section -->
-              <div v-if="replyVisible === reply.id" class="ml-[2rem] mt-[1rem]">
-                <textarea
-                  v-model="replies[reply.id]"
-                  class="w-2/3 p-2 ring ring-[var(--secondary-color)] outline-none bg-[var(--background-color)] text-[var(--text-color)] rounded"
-                  rows="3"
-                  placeholder="Write your reply..."
-                ></textarea>
-                <button
-                  @click="submitReply(reply.id)"
-                  class="px-4 py-2 w-[8rem] bg-[var(--secondary-color)] text-white rounded mt-[0.5rem]"
+
+                <!-- Add Nested Reply Section -->
+                <div
+                  v-if="replyVisible === reply.id"
+                  class="ml-[2rem] mt-[1rem]"
                 >
-                  Submit Reply
-                </button>
+                  <textarea
+                    v-model="replies[reply.id]"
+                    class="w-2/3 p-2 ring ring-[var(--secondary-color)] outline-none bg-[var(--background-color)] text-[var(--text-color)] rounded"
+                    rows="3"
+                    placeholder="Write your reply..."
+                  ></textarea>
+                  <button
+                    @click="submitReply(reply.id)"
+                    class="px-4 py-2 w-[8rem] bg-[var(--secondary-color)] text-white rounded mt-[0.5rem]"
+                  >
+                    Submit
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -555,6 +615,22 @@ function timeAgo(date) {
         >
           {{ showAllComments ? "View Less" : "View More" }}
         </button>
+
+        <!-- Add Comment -->
+        <div class="mt-[2rem]">
+          <textarea
+            v-model="newComment"
+            class="w-full p-2 ring ring-[var(--secondary-color)] outline-none bg-[var(--background-color)] text-[var(--text-color)] rounded"
+            rows="3"
+            placeholder="Write your comment..."
+          ></textarea>
+          <button
+            @click="submitComment"
+            class="px-4 py-2 w-[8rem] bg-[var(--secondary-color)] text-white rounded mt-[0.5rem]"
+          >
+            Submit
+          </button>
+        </div>
       </div>
     </div>
   </div>
