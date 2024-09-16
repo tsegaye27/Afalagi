@@ -6,6 +6,7 @@
     <MissingReports />
     <hr class="text-lg" />
     <Visions />
+    <hr class="text-lg" />
     <ClientOnly>
       <Partners />
     </ClientOnly>

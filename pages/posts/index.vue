@@ -183,11 +183,11 @@ const hideCountryList = () => {
       <transition name="slide-right">
         <div
           v-if="showSidebar"
-          class="fixed right-0 top-0 h-full w-[300px] bg-white shadow-lg p-4 z-50"
+          class="fixed right-0 top-0 h-full w-[300px] bg-[var(--background-color)] shadow-lg p-4 z-50"
         >
           <button
             @click="showSidebar = false"
-            class="absolute top-2 right-2 text-gray-500 hover:text-black"
+            class="absolute top-2 right-2 text-gray-500 hover:text-[var(--text-color)]"
           >
             ✕
           </button>
@@ -199,7 +199,7 @@ const hideCountryList = () => {
             <!-- Gender filter -->
             <select
               v-model="genderFilter"
-              class="w-full bg-white border border-[var(--primary-color)] text-gray-700 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
+              class="w-full bg-[var(--background-color)] border border-[var(--primary-color)] text-[var(--text-color)] text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
             >
               <option disabled selected value="">Gender</option>
               <option value="">All</option>
@@ -216,11 +216,11 @@ const hideCountryList = () => {
                   placeholder="Nationality"
                   @focus="showCountryList = true"
                   @blur="hideCountryList"
-                  class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
+                  class="w-full p-[0.3rem] border border-[var(--primary-color)] bg-[var(--background-color)] text-[var(--text-color)] rounded outline-none"
                 />
                 <ul
                   v-if="showCountryList && filteredCountries.length > 0"
-                  class="absolute top-full left-0 w-full border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] mt-1 p-[0.3rem] bg-white z-10 max-h-40 overflow-y-auto"
+                  class="absolute top-full left-0 w-full border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] mt-1 p-[0.3rem] bg-[var(--background-color)] z-10 max-h-40 overflow-y-auto"
                 >
                   <li
                     v-for="country in filteredCountries"
@@ -237,7 +237,7 @@ const hideCountryList = () => {
             <!-- Skin color filter -->
             <select
               v-model="skinColorFilter"
-              class="w-full bg-white border border-[var(--primary-color)] text-gray-700 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
+              class="w-full bg-[var(--background-color)] border border-[var(--primary-color)] text-[var(--text-color)] text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
             >
               <option disabled selected value="">Skin Color</option>
               <option value="">All</option>
@@ -251,7 +251,7 @@ const hideCountryList = () => {
             <!-- Marital status filter -->
             <select
               v-model="maritalStatusFilter"
-              class="w-full bg-white border border-[var(--primary-color)] text-gray-700 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
+              class="w-full bg-[var(--background-color)] border border-[var(--primary-color)] text-[var(--text-color)] text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
             >
               <option disabled selected value="">Marital Status</option>
               <option value="">All</option>
@@ -265,7 +265,7 @@ const hideCountryList = () => {
             <!-- Hair color filter -->
             <select
               v-model="hairColorFilter"
-              class="w-full bg-white border border-[var(--primary-color)] text-gray-700 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
+              class="w-full bg-[var(--background-color)] border border-[var(--primary-color)] text-[var(--text-color)] text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
             >
               <option disabled selected value="">Hair Color</option>
               <option value="">All</option>
@@ -281,7 +281,7 @@ const hideCountryList = () => {
             <!-- Physical disability filter -->
             <select
               v-model="physicalDisabilityFilter"
-              class="w-full bg-white border border-[var(--primary-color)] text-gray-700 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
+              class="w-full bg-[var(--background-color)] border border-[var(--primary-color)] text-[var(--text-color)] text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
             >
               <option disabled selected value="">Physical Disability</option>
               <option value="NONE">None</option>
@@ -298,7 +298,7 @@ const hideCountryList = () => {
             <!-- Mental disability filter -->
             <select
               v-model="mentalDisabilityFilter"
-              class="w-full bg-white border border-[var(--primary-color)] text-gray-700 text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
+              class="w-full bg-[var(--background-color)] border border-[var(--primary-color)] text-[var(--text-color)] text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
             >
               <option selected disabled value="">Mental Disability</option>
               <option value="NONE">None</option>
@@ -373,7 +373,7 @@ const hideCountryList = () => {
 /* Filter button styling */
 .btn-filter {
   padding: 0.5rem 1rem;
-  background-color: var(--primary-color);
+  background-color: var(--secondary-color);
   color: white;
   border: none;
   border-radius: 4px;
@@ -381,7 +381,7 @@ const hideCountryList = () => {
 }
 
 .btn-filter:hover {
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
 }
 
 /* Slide in transition */

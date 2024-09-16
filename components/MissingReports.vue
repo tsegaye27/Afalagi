@@ -76,7 +76,7 @@ const showMore = () => {
       <button
         @click="showMore"
         title="Show more"
-        class="text-[#f4f4f4] p-[0.7rem] btn-round-white rounded-full bg-[var(--secondary-color)] hover:bg-[var(--secondary-color)] hover:text-white font-semibold w-[2.8rem] h-full flex items-center justify-center"
+        class="text-[var(--text-white)] p-[0.7rem] btn-round-white ring-[1.1px] ring-[var(--primary-color)] rounded-full bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] hover:text-white font-semibold w-[2.8rem] h-full flex items-center justify-center"
       >
         <span class="flex justify-center items-center"
           ><Icon size="22px" name="material-symbols:arrow-right-alt"

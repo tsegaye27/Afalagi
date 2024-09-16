@@ -170,7 +170,7 @@ const setStatus = (status) => {
       />
       <h1
         :title="`${firstName} ${middleName} ${lastName}`"
-        class="text-[27px] whitespace-nowrap text-center font-semibold text-[var(--primary-color)] mt-4 w-full"
+        class="text-[27px] whitespace-nowrap text-left mx-4 font-semibold text-[var(--text-color)] mt-4 w-full"
       >
         {{ shortName }}
       </h1>
@@ -185,7 +185,7 @@ const setStatus = (status) => {
         v-if="reporterName"
         @click="handleComment"
         title="Comment on this post"
-        class="absolute top-4 right-2 flex justify-center items-center text-[var(--secondary-color)] hover:text-[var(--primary-color)]"
+        class="absolute top-4 right-2 flex justify-center items-center text-[var(--primary-color)] hover:text-[var(--secondary-color)]"
       >
         <!-- Use an icon component here; example icon used -->
         <Icon name="mdi:comment" size="20px" />
