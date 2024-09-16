@@ -82,7 +82,7 @@ const previousPage = () => {
       >
         My Posts
       </h1>
-      <hr class="my-[1rem]" />
+      <hr class="my-12 border-[var(--primary-color)]" />
 
       <!-- Display posts with UNDER_REVIEW and OPEN status -->
       <div class="flex flex-wrap justify-start gap-[3rem] mx-[2rem]">
@@ -120,7 +120,7 @@ const previousPage = () => {
       </div>
 
       <!-- Separator -->
-      <hr class="my-8 border-t-2 border-dashed border-gray-300" />
+      <!-- <hr class="my-8 border-t-2 border-dashed border-[var(--primary-color)]" /> -->
 
       <!-- Display posts with CLOSED and REJECTED status -->
       <div class="flex flex-wrap justify-start gap-[3rem] mx-[2rem]">
@@ -158,11 +158,11 @@ const previousPage = () => {
       </div>
 
       <!-- Pagination Controls -->
-      <div class="flex justify-center items-center mt-4">
+      <div class="flex justify-center items-center mt-8">
         <button
           @click="previousPage"
           :disabled="currentPage === 1"
-          class="px-4 py-2 mx-2 bg-gray-300 rounded disabled:opacity-50"
+          class="px-4 py-2 mx-2 bg-[var(--background-color)] text-[var(--primary-color)] rounded disabled:opacity-50"
         >
           Previous
         </button>
@@ -170,7 +170,7 @@ const previousPage = () => {
         <button
           @click="nextPage"
           :disabled="currentPage === totalPages"
-          class="px-4 py-2 mx-2 bg-gray-300 rounded disabled:opacity-50"
+          class="px-4 py-2 mx-2 bg-[var(--background-color)] text-[var(--primary-color)] rounded disabled:opacity-50"
         >
           Next
         </button>
