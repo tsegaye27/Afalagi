@@ -236,12 +236,13 @@ function timeAgo(date) {
     <div class="flex items-center m-8">
       <button
         @click="previousPage"
+        title="Go back"
         class="flex text-[var(--primary-color)] justify-center items-center mr-[1rem]"
       >
-        <!-- <Icon name="material-symbols:arrow-left-alt" size="20px" /> -->
-        <span class="text-[var(--primary-color)] font-regular text-lg"
+        <Icon name="material-symbols:arrow-left-alt" size="24px" />
+        <!-- <span class="text-[var(--primary-color)] font-regular text-lg"
           >Back</span
-        >
+        > -->
       </button>
     </div>
 
@@ -356,7 +357,7 @@ function timeAgo(date) {
           >
             <video class="w-full h-[550px] rounded-md" controls src=""></video>
             <h1
-              class="text-[24px] text-left text-[var(--primary-color)] font-medium font-[sora] mt-[1rem]"
+              class="text-[24px] w-full text-left text-[var(--primary-color)] font-medium font-[sora] mt-[1rem]"
             >
               Message from his {{ missingPerson.posterRelation?.toLowerCase() }}
             </h1>

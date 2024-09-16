@@ -110,7 +110,7 @@ const loginWithGoogle = () => {
             v-model="email"
             placeholder="Email"
             required
-            class="p-3 w-full border border-gray-300 rounded-lg text-[var(--primary-color)] placeholder-gray-400 focus:border-[var(--secondary-color)] focus:ring-2 focus:ring-[var(--secondary-color)] transition-all outline-none"
+            class="p-3 w-full border border-gray-300 rounded-lg text-slate-700 placeholder-gray-400 focus:border-[var(--secondary-color)] focus:ring-2 focus:ring-[var(--secondary-color)] transition-all outline-none"
           />
 
           <input
@@ -118,7 +118,7 @@ const loginWithGoogle = () => {
             v-model="password"
             placeholder="Password"
             required
-            class="p-3 w-full border border-gray-300 rounded-lg text-[var(--primary-color)] placeholder-gray-400 focus:border-[var(--secondary-color)] focus:ring-2 focus:ring-[var(--secondary-color)] transition-all outline-none"
+            class="p-3 w-full border border-gray-300 rounded-lg text-slate-700 placeholder-gray-400 focus:border-[var(--secondary-color)] focus:ring-2 focus:ring-[var(--secondary-color)] transition-all outline-none"
           />
           <nuxt-link
             class="text-[var(--secondary-color)] self-end mt-1"
