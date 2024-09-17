@@ -86,6 +86,14 @@ const verify = async () => {
     <div v-if="store.isLoading">
       <Spinner />
     </div>
+    <div v-if="showToaster" class="fixed top-0 right-0 p-4">
+      <div
+        class="p-4 bg-[var(--secondary-color)] text-white rounded-md shadow-md"
+        :class="toasterType === 'success' ? 'bg-green-500' : 'bg-red-500'"
+      >
+        {{ toasterMessage }}
+      </div>
+    </div>
     <input
       v-for="(input, index) in inputs"
       :key="index"
