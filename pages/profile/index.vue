@@ -36,12 +36,15 @@ const lastName = ref("");
 const country = ref("");
 const gender = ref("");
 const profilePicture = ref(null);
+const profilePictureB = ref(null);
 const birthDate = ref("");
 const number = ref("");
 const code = ref("");
 
 const handleFileChange = (event) => {
   const file = event.target.files[0];
+  profilePictureB.value = file;
+  console.log(file);
   if (file) {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -55,7 +58,7 @@ const createProfile = async () => {
   const formData = new FormData();
   const phoneNumber = `${code.value} ${number.value}`;
 
-  formData.append("profilePicture", profilePicture.value);
+  formData.append("profilePicture", profilePictureB.value);
   formData.append("firstName", firstName.value);
   formData.append("middleName", middleName.value);
   formData.append("lastName", lastName.value);
@@ -116,6 +119,14 @@ const hideCountryList = () => {
 
 <template>
   <div class="relative min-h-screen flex justify-center items-center">
+    <!-- Toaster -->
+    <div
+      v-if="showToaster"
+      :class="toasterType === 'success' ? 'bg-green-500' : 'bg-red-500'"
+      class="fixed top-5 right-5 p-4 rounded-lg text-white shadow-lg z-50 transition-all transform ease-out"
+    >
+      {{ toasterMessage }}
+    </div>
     <div
       class="absolute inset-0 bg-gradient-to-r from-[var(--secondary-color)] to-[var(--primary-color)]"
     ></div>
@@ -155,6 +166,7 @@ const hideCountryList = () => {
               <input
                 class="absolute inset-0 w-32 h-32 opacity-0 cursor-pointer"
                 type="file"
+                accept="image/*"
                 @change="handleFileChange"
               />
             </div>
