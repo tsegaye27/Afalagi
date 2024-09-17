@@ -113,7 +113,9 @@ const handleComment = () => {
 };
 
 const shortName = computed(() => {
-  return `${props.firstName} ${props.middleName.charAt(0)}. ${props.lastName}`;
+  return `${props.firstName} ${props.middleName.charAt(0)}. ${
+    props.firstName.length > 7 ? props.lastName.charAt(0) + "." : props.lastName
+  }`;
 });
 
 const setStatus = (status) => {
@@ -130,7 +132,7 @@ const setStatus = (status) => {
   </div>
   <div
     v-else
-    class="relative w-[300px] flex flex-col bg-[var(--background-color)] rounded-lg ring-2 ring-[var(--secondary-color)] items-start"
+    class="relative w-[310px] flex flex-col bg-[var(--background-color)] border border-[var(--secondary-color)] rounded-lg items-start"
   >
     <div class="gap-1 w-full flex flex-col">
       <div
@@ -154,7 +156,7 @@ const setStatus = (status) => {
 
       <span
         :class="[
-          'absolute top-0 right-0 px-3 py-1 rounded-sm z-10 text-white font-bold',
+          'absolute top-0 right-0 px-3 py-1 rounded-tr-lg z-10 text-white font-bold',
           status === 'OPEN' ? 'bg-green-500' : '',
           status === 'UNDER_REVIEW' ? 'bg-orange-300' : '',
           status === 'REJECTED' ? 'bg-red-500' : '',
@@ -164,7 +166,7 @@ const setStatus = (status) => {
         {{ setStatus(status) }}
       </span>
       <img
-        class="w-full h-[280px] object-center border-y-[0.15rem] border-[var(--secondary-color)]"
+        class="w-full h-[280px] object-cover rounded-tl-lg rounded-tr-lg"
         :src="`http://localhost:3333/uploads/post/${images[0]}`"
         :alt="shortName"
       />
