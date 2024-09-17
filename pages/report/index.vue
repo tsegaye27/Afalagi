@@ -159,7 +159,7 @@ const reportMissing = async () => {
   formData.append("lastSeenDate", postData.value.lastSeenDate);
   formData.append(
     "lastSeenLocation",
-    `${selectedLSLCity.value}, ${selectedLSLCountry.value}`
+    `${selectedLSLCity.value}, ${selectedLSLCountry.value.country}`
   );
   formData.append("lastSeenWearing", lastSeenWearing.value);
 
@@ -285,10 +285,13 @@ const filteredLSLCities = computed(() => {
 // Fetch countries and cities data from the API
 const fetchLSLCountries = async () => {
   try {
-    const response = await $axios.get(
+    const response = await fetch(
       "https://countriesnow.space/api/v0.1/countries"
     );
-    lSLCountries.value = response.data.data; // API response data
+
+    const data = await response.json();
+    lSLCountries.value = data.data;
+    console.log(lSLCountries.value);
   } catch (error) {
     console.error("Error fetching countries:", error);
   }
@@ -491,7 +494,11 @@ function hideLSLCityList() {
               class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
             />
             <ul
-              v-if="showLSLCityList && filteredLSLCities.length > 0"
+              v-if="
+                showLSLCityList &&
+                filteredLSLCities &&
+                filteredLSLCities.length > 0
+              "
               class="absolute top-full left-0 w-full border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] mt-1 p-[0.3rem] bg-white z-10 max-h-40 overflow-y-auto"
             >
               <li
