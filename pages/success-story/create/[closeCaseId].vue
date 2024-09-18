@@ -68,7 +68,11 @@ const validateSuccessStoryForm = () => {
       @click="handleBackFromForm"
       class="bg-[var(--secondary-color)] text-white px-2 py-2 flex items-center rounded mb-6 hover:bg-[var(--secondary-color)] transition"
     >
-      <Icon name="ic:baseline-keyboard-arrow-left" size="22px" />
+      <Icon name="material-symbols:arrow-left-alt" size="24px" />
+      <span
+        class="text-[var(--primary-color)] text-lg font-[poppins] ml-[0.5rem]"
+        >Back</span
+      >
     </button>
     <form @submit.prevent="submitSuccessStory">
       <div class="flex flex-col gap-2 mb-6">
