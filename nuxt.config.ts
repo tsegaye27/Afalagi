@@ -3,12 +3,14 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
   css: ["~/assets/css/main.css", "~/assets/css/fonts.css"],
+
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
   },
+
   modules: [
     // "nuxt-swiper",
     // '@primevue/nuxt-module',
@@ -20,8 +22,12 @@ export default defineNuxtConfig({
     ],
     "@nuxt/icon",
   ],
+
   plugins: ["~/plugins/axios.ts"],
+
   imports: {
     dirs: ["stores"],
   },
+
+  compatibilityDate: "2024-09-18",
 });
