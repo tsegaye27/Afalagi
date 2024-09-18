@@ -233,66 +233,67 @@ function hideLSLCityList() {
           />
         </div>
 
-        <div class="flex gap-[1.35rem] px-[3rem] justify-between items-center">
-          <label class="text-[var(--primary-color)] text-[1rem] font-medium">
+        <div class="flex mb-4 justify-between items-center">
+          <label
+            class="text-[var(--primary-color)] font-medium w-1/4 text-right pr-2"
+          >
             Found Location:
           </label>
 
           <!-- Country Input -->
-          <div
-            class="relative"
-            :class="selectedLSLCountry ? 'w-[150px]' : 'w-[320px]'"
-          >
-            <input
-              v-model="lSLCountryQuery"
-              type="text"
-              placeholder="Search Country"
-              @focus="showLSLCountryList = true"
-              @blur="hideLSLCountryList"
-              class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
-            />
-            <ul
-              v-if="showLSLCountryList && filteredLSLCountries.length > 0"
-              class="absolute top-full left-0 w-full border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] mt-1 p-[0.3rem] bg-white z-10 max-h-40 overflow-y-auto"
-            >
-              <li
-                v-for="(country, index) in filteredLSLCountries"
-                :key="index"
-                @mousedown="selectLSLCountry(country)"
-                class="cursor-pointer p-[0.2rem] hover:bg-[var(--primary-color)] hover:text-white flex items-center"
+          <div class="relative flex space-x-4 w-3/4">
+            <div :class="selectedLSLCountry ? 'w-1/2' : 'w-full'">
+              <input
+                v-model="lSLCountryQuery"
+                type="text"
+                placeholder="Search Country"
+                @focus="showLSLCountryList = true"
+                @blur="hideLSLCountryList"
+                class="p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none w-full"
+              />
+              <ul
+                v-if="showLSLCountryList && filteredLSLCountries.length > 0"
+                class="absolute top-full left-0 w-full border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] mt-1 p-[0.3rem] bg-white z-10 max-h-40 overflow-y-auto"
               >
-                <span>{{ country.country }}</span>
-              </li>
-            </ul>
-          </div>
+                <li
+                  v-for="(country, index) in filteredLSLCountries"
+                  :key="index"
+                  @mousedown="selectLSLCountry(country)"
+                  class="cursor-pointer p-[0.2rem] hover:bg-[var(--primary-color)] hover:text-white flex items-center"
+                >
+                  <span>{{ country.country }}</span>
+                </li>
+              </ul>
+            </div>
 
-          <!-- City Input -->
-          <div v-if="selectedLSLCountry" class="relative w-[150px]">
-            <input
-              v-model="lSLCityQuery"
-              type="text"
-              placeholder="Search City"
-              @focus="showLSLCityList = true"
-              @blur="hideLSLCityList"
-              class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
-            />
-            <ul
-              v-if="
-                showLSLCityList &&
-                filteredLSLCities &&
-                filteredLSLCities.length > 0
-              "
-              class="absolute top-full left-0 w-full border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] mt-1 p-[0.3rem] bg-white z-10 max-h-40 overflow-y-auto"
-            >
-              <li
-                v-for="(city, index) in filteredLSLCities"
-                :key="index"
-                @mousedown="selectLSLCity(city)"
-                class="cursor-pointer p-[0.2rem] hover:bg-[var(--primary-color)] hover:text-white flex items-center"
+            <!-- City Input (appears when a country is selected) -->
+            <div v-if="selectedLSLCountry" class="w-1/2 relative">
+              <input
+                v-model="lSLCityQuery"
+                type="text"
+                placeholder="Search City"
+                @focus="showLSLCityList = true"
+                @blur="hideLSLCityList"
+                class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
+              />
+              <ul
+                v-if="
+                  showLSLCityList &&
+                  filteredLSLCities &&
+                  filteredLSLCities.length > 0
+                "
+                class="absolute top-full left-0 w-full border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] mt-1 p-[0.3rem] bg-white z-10 max-h-40 overflow-y-auto"
               >
-                <span>{{ city }}</span>
-              </li>
-            </ul>
+                <li
+                  v-for="(city, index) in filteredLSLCities"
+                  :key="index"
+                  @mousedown="selectLSLCity(city)"
+                  class="cursor-pointer p-[0.2rem] hover:bg-[var(--primary-color)] hover:text-white flex items-center"
+                >
+                  <span>{{ city }}</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 
