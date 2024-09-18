@@ -120,7 +120,7 @@ const previousPage = () => {
       </div>
 
       <!-- Separator -->
-      <!-- <hr class="my-8 border-t-2 border-dashed border-[var(--primary-color)]" /> -->
+      <hr class="my-8 border-t-2 border-dashed border-[var(--primary-color)]" />
 
       <!-- Display posts with CLOSED and REJECTED status -->
       <div class="flex flex-wrap justify-start gap-[3rem] mx-[2rem]">
