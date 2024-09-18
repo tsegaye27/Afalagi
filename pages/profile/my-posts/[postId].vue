@@ -56,7 +56,7 @@ const closeCase = async () => {
       foundCondition: foundCondition.value,
       foundThrough: foundThrough.value,
       foundDate: formatDateToInput(foundDate.value),
-      foundLocation: foundLocation.value,
+      foundLocation: `${selectedLSLCity.value}, ${selectedLSLCountry.value.country}`,
       description: description.value,
     };
 
@@ -93,6 +93,75 @@ const navigateToSuccessStory = () => {
 const closeWithoutStory = () => {
   goBack();
 };
+
+// Reactive variables for country and city search
+const lSLCountryQuery = ref("");
+const lSLCityQuery = ref("");
+const selectedLSLCountry = ref(null);
+const selectedLSLCity = ref(null);
+
+// State to show/hide dropdowns
+const showLSLCountryList = ref(false);
+const showLSLCityList = ref(false);
+
+// Store fetched countries and cities
+const lSLCountries = ref([]);
+const filteredLSLCountries = computed(() => {
+  return lSLCountries.value.filter((country) =>
+    country.country.toLowerCase().includes(lSLCountryQuery.value.toLowerCase())
+  );
+});
+const filteredLSLCities = computed(() => {
+  if (!selectedLSLCountry.value) return [];
+  return selectedLSLCountry.value.cities.filter((city) =>
+    city.toLowerCase().includes(lSLCityQuery.value.toLowerCase())
+  );
+});
+
+// Fetch countries and cities data from the API
+const fetchLSLCountries = async () => {
+  try {
+    const response = await fetch(
+      "https://countriesnow.space/api/v0.1/countries"
+    );
+
+    const data = await response.json();
+    lSLCountries.value = data.data;
+    console.log(lSLCountries.value);
+  } catch (error) {
+    console.error("Error fetching countries:", error);
+  }
+};
+
+// Fetch data when component is mounted
+onMounted(() => {
+  fetchLSLCountries();
+});
+
+// Select a country and reset the city
+function selectLSLCountry(country) {
+  selectedLSLCountry.value = country;
+  lSLCountryQuery.value = country.country;
+  showLSLCountryList.value = false;
+  lSLCityQuery.value = ""; // Reset city query on country change
+  selectedLSLCity.value = null; // Reset selected city
+}
+
+// Select a city
+function selectLSLCity(city) {
+  selectedLSLCity.value = city;
+  lSLCityQuery.value = city;
+  showLSLCityList.value = false;
+}
+
+// Hide country and city lists
+function hideLSLCountryList() {
+  setTimeout(() => (showLSLCountryList.value = false), 100);
+}
+
+function hideLSLCityList() {
+  setTimeout(() => (showLSLCityList.value = false), 100);
+}
 </script>
 
 <template>
@@ -164,34 +233,66 @@ const closeWithoutStory = () => {
           />
         </div>
 
-        <div class="flex items-center justify-between mb-4">
-          <label
-            class="text-[var(--primary-color)] font-medium w-1/4 text-right pr-2"
-            >Found Location:</label
+        <div class="flex gap-[1.35rem] px-[3rem] justify-between items-center">
+          <label class="text-[var(--primary-color)] text-[1rem] font-medium">
+            Found Location:
+          </label>
+
+          <!-- Country Input -->
+          <div
+            class="relative"
+            :class="selectedLSLCountry ? 'w-[150px]' : 'w-[320px]'"
           >
-          <div class="flex gap-2 w-3/4">
-            <select
-              class="border border-[var(--primary-color)] rounded-md outline-none text-[var(--primary-color)] p-2 w-full"
+            <input
+              v-model="lSLCountryQuery"
+              type="text"
+              placeholder="Search Country"
+              @focus="showLSLCountryList = true"
+              @blur="hideLSLCountryList"
+              class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
+            />
+            <ul
+              v-if="showLSLCountryList && filteredLSLCountries.length > 0"
+              class="absolute top-full left-0 w-full border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] mt-1 p-[0.3rem] bg-white z-10 max-h-40 overflow-y-auto"
             >
-              <option value="" disabled selected>Country</option>
-              <option value="ethiopia">Ethiopia</option>
-              <option value="other">Other</option>
-            </select>
-            <select
-              class="border border-[var(--primary-color)] rounded-md outline-none text-[var(--primary-color)] p-2 w-full"
+              <li
+                v-for="(country, index) in filteredLSLCountries"
+                :key="index"
+                @mousedown="selectLSLCountry(country)"
+                class="cursor-pointer p-[0.2rem] hover:bg-[var(--primary-color)] hover:text-white flex items-center"
+              >
+                <span>{{ country.country }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- City Input -->
+          <div v-if="selectedLSLCountry" class="relative w-[150px]">
+            <input
+              v-model="lSLCityQuery"
+              type="text"
+              placeholder="Search City"
+              @focus="showLSLCityList = true"
+              @blur="hideLSLCityList"
+              class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
+            />
+            <ul
+              v-if="
+                showLSLCityList &&
+                filteredLSLCities &&
+                filteredLSLCities.length > 0
+              "
+              class="absolute top-full left-0 w-full border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] mt-1 p-[0.3rem] bg-white z-10 max-h-40 overflow-y-auto"
             >
-              <option value="" disabled selected>State</option>
-              <option value="addis-ababa">Addis-Ababa</option>
-              <option value="other">Other</option>
-            </select>
-            <select
-              v-model="foundLocation"
-              class="border border-[var(--primary-color)] rounded-md outline-none text-[var(--primary-color)] p-2 w-full"
-            >
-              <option value="" disabled selected>City</option>
-              <option value="nefas-silk">Nefas-Silk</option>
-              <option value="other">Other</option>
-            </select>
+              <li
+                v-for="(city, index) in filteredLSLCities"
+                :key="index"
+                @mousedown="selectLSLCity(city)"
+                class="cursor-pointer p-[0.2rem] hover:bg-[var(--primary-color)] hover:text-white flex items-center"
+              >
+                <span>{{ city }}</span>
+              </li>
+            </ul>
           </div>
         </div>
 
