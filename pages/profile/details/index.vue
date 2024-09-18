@@ -20,14 +20,19 @@ const { $axios } = useNuxtApp();
 
 onMounted(async () => {
   try {
-    const response = await $axios.get("/user/profile/me", {
-      headers: {
-        Authorization: `Bearer ${store.token}`,
-      },
-    });
-    user.value = response.data.data;
-    user.value.birthDate = formatDateToInput(response.data.data.birthDate);
-    console.log("success✅", response.data, user.value);
+    const [profileResponse, pictureResponse] = await Promise.all([
+      $axios.get("/user/profile/me", {
+        headers: { Authorization: `Bearer ${store.token}` },
+      }),
+      $axios.get("/user/profile/pic", {
+        headers: { Authorization: `Bearer ${store.token}` },
+      }),
+    ]);
+    user.value = profileResponse.data.data;
+    user.value.birthDate = formatDateToInput(
+      profileResponse.data.data.birthDate
+    );
+    user.value.profilePicture = `http://localhost:3333/${pictureResponse.data.imagePath}`;
   } catch (error) {
     console.error(
       "failed❌",
@@ -80,6 +85,7 @@ const updateProfilePicture = async () => {
 
     showToast("Profile picture updated successfully", "success");
     console.log("Profile picture updated successfully", response);
+    user.value.profilePicture = `http://localhost:3333/${response.data.imagePath}`;
     store.setProfileUpdated(true);
     store.setLoading(false);
     showImagePreview.value = false; // Close preview after successful update
@@ -98,8 +104,8 @@ const handleProfilePictureChange = (event) => {
   const file = event.target.files[0];
   if (file) {
     profilePictureFile.value = file;
-    previewImage.value = URL.createObjectURL(file); // Preview image
-    showImagePreview.value = true; // Show image preview
+    previewImage.value = URL.createObjectURL(file);
+    showImagePreview.value = true;
   }
 };
 
@@ -121,7 +127,7 @@ const updateProfile = async () => {
         lastName: user.value.lastName,
         country: user.value.country,
         gender: user.value.gender,
-        birthDate: user.value.birthDate,
+        birthDate: formatDateToInput(user.value.birthDate),
       },
       {
         headers: {
@@ -200,9 +206,11 @@ const updateProfile = async () => {
                 for="profilePictureInput"
                 class="w-32 h-32 rounded-full border-2 border-[var(--primary-color)] flex justify-center items-center cursor-pointer"
               >
-                <span class="text-[var(--primary-color)] font-semibold"
-                  >Change Image</span
-                >
+                <img
+                  :src="user.profilePicture"
+                  alt="Current Profile Picture"
+                  class="w-full h-full rounded-full object-cover"
+                />
               </label>
               <input
                 type="file"
@@ -279,7 +287,7 @@ const updateProfile = async () => {
             <input
               class="outline-none bg-[var(--background-color)] w-[300px] p-1 pl-2 rounded text-[var(--primary-color)] border border-[var(--primary-color)]"
               type="date"
-              :value="formatDateToInput(user.birthDate)"
+              v-model="user.birthDate"
             />
           </div>
         </div>
