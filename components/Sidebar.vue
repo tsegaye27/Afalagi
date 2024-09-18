@@ -35,10 +35,10 @@ const fetchProfileData = async () => {
   store.setLoading(true);
   try {
     const [profileResponse, pictureResponse] = await Promise.all([
-      $axios.get("user/profile/me", {
+      $axios.get("/user/profile/me", {
         headers: { Authorization: `Bearer ${store.token}` },
       }),
-      $axios.get("user/profile/pic", {
+      $axios.get("/user/profile/pic", {
         headers: { Authorization: `Bearer ${store.token}` },
       }),
     ]);
