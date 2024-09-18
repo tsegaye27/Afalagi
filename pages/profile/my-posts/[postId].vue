@@ -24,6 +24,11 @@ onMounted(() => {
 });
 
 const validateCloseCaseForm = () => {
+  if (selectedLSLCountry.value === null || selectedLSLCity.value === null) {
+    closeCaseErrorMessage.value = "Please select a country and city.";
+    return false;
+  }
+  foundLocation.value = `${selectedLSLCity.value}, ${selectedLSLCountry.value.country}`;
   if (
     !foundCondition.value.trim() ||
     !foundThrough.value.trim() ||
@@ -175,7 +180,12 @@ function hideLSLCityList() {
         title="Back"
         class="flex items-center text-[var(--primary-color)] px-4 py-2 mt-4 hover:underline"
       >
-        <Icon name="mdi-arrow-left" size="24" class="mr-2" />
+        <Icon name="material-symbols:arrow-left-alt" size="24px" />
+        <span
+          class="text-[var(--primary-color)] text-lg font-[poppins] ml-[0.5rem]"
+          >Back</span
+        >
+        <!-- <Icon name="mdi-arrow-left" size="24" class="mr-2" /> -->
       </button>
 
       <h2 class="text-[var(--primary-color)] text-2xl mb-6">Person Found</h2>
