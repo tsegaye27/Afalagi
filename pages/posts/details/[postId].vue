@@ -240,9 +240,10 @@ function timeAgo(date) {
         class="flex text-[var(--primary-color)] justify-center items-center mr-[1rem]"
       >
         <Icon name="material-symbols:arrow-left-alt" size="24px" />
-        <!-- <span class="text-[var(--primary-color)] font-regular text-lg"
+        <span
+          class="text-[var(--primary-color)] text-lg font-[poppins] ml-[0.5rem]"
           >Back</span
-        > -->
+        >
       </button>
     </div>
 
