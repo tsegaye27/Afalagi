@@ -36,12 +36,12 @@ onMounted(async () => {
 
   try {
     const [profileResponse, picResponse] = await Promise.all([
-      $axios.get("user/profile/me", {
+      $axios.get("/user/profile/me", {
         headers: {
           Authorization: `Bearer ${store.token}`,
         },
       }),
-      $axios.get("user/profile/pic", {
+      $axios.get("/user/profile/pic", {
         headers: {
           Authorization: `Bearer ${store.token}`,
         },
@@ -51,6 +51,7 @@ onMounted(async () => {
     firstName.value = profileResponse.data.data.firstName;
     lastName.value = profileResponse.data.data.lastName;
     profilePicture.value = `http://localhost:3333/${picResponse.data.imagePath}`;
+    console.log(profileResponse);
   } catch (error) {
     console.log(
       "❌❌Failed❌❌",
