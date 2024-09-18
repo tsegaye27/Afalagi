@@ -24,7 +24,7 @@
       class="blog-post w-full bg-[var(--background-color)] flex flex-col items-center px-[4rem] py-[2rem] mb-[2rem] rounded-lg shadow-md"
     >
       <h2
-        class="text-[24px] font-[sora] text-left w-full text-[var(--secondary-color)] my-4"
+        class="text-[24px] font-[sora] text-left w-full max-w-[800px] text-[var(--secondary-color)] my-4"
       >
         {{ story.title }}
       </h2>
