@@ -176,8 +176,16 @@ const setStatus = (status) => {
       >
         {{ shortName }}
       </h1>
-      <p class="text-[var(--primary-color)] pl-4 w-full">
-        Last-Seen(Location): {{ lastSeenLocation }}
+      <p
+        class="text-[var(--primary-color)] pl-4 w-full"
+        :title="lastSeenLocation"
+      >
+        Last-Seen(Location):
+        {{
+          lastSeenLocation.length > 10
+            ? lastSeenLocation.slice(0, 10) + "..."
+            : lastSeenLocation
+        }}
       </p>
       <p class="text-[var(--primary-color)] pl-4 w-full">
         Last-Seen(Date): {{ formatDate(lastSeenDate) }}
