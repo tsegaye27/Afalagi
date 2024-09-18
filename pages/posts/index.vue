@@ -284,6 +284,7 @@ const hideCountryList = () => {
               class="w-full bg-[var(--background-color)] border border-[var(--primary-color)] text-[var(--text-color)] text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
             >
               <option disabled selected value="">Physical Disability</option>
+              <option value="">All</option>
               <option value="NONE">None</option>
               <option value="MOBILITY_ISSUE">Mobility Issue</option>
               <option value="VISION_IMPAIRMENT">Vision Impairment</option>
@@ -301,6 +302,7 @@ const hideCountryList = () => {
               class="w-full bg-[var(--background-color)] border border-[var(--primary-color)] text-[var(--text-color)] text-sm rounded-lg focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] block h-[40px] p-[0.5rem] shadow-sm transition outline-none duration-150 ease-in-out"
             >
               <option selected disabled value="">Mental Disability</option>
+              <option value="">All</option>
               <option value="NONE">None</option>
               <option value="INTELLECTUAL_DISABILITY">
                 Intellectual Disability
