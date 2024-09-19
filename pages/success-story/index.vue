@@ -30,24 +30,13 @@
       </h2>
       <div class="flex flex-col w-full max-w-[800px] text-left">
         <p class="text-[16px] text-[var(--primary-color)] mb-[1rem]">
-          {{ story.content }}
+          Posted by:
+          {{
+            `${story.user.Profile?.firstName} ${story.user.Profile?.lastName}`
+          }}
         </p>
 
-        <!-- Video Section (Optional) -->
-        <div v-if="story.videoUrl" class="my-4">
-          <iframe
-            class="mb-[1.5rem] rounded-lg"
-            width="560"
-            height="315"
-            :src="story.videoUrl"
-            title="Success Story Video"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          ></iframe>
-        </div>
-
-        <!-- Like and Share Section -->
+        <!-- Like and View Details Section -->
         <div class="flex justify-between items-center">
           <div class="flex items-center gap-[1rem]">
             <button
@@ -64,37 +53,8 @@
               />
               <span>{{ likes[story.id] || story.likes }}</span>
             </button>
-            <button
-              class="share-button flex items-center gap-[0.5rem] text-blue-500"
-            >
-              <Icon name="heroicons-outline:share" />
-              Share
-            </button>
-          </div>
-        </div>
-
-        <!-- Comment Section -->
-        <div class="comments mt-4">
-          <h3 class="text-lg font-semibold">Comments</h3>
-          <div v-for="comment in story.comments" :key="comment.id" class="mb-2">
-            <p class="text-sm text-gray-700">
-              <strong>{{ comment.user }}</strong
-              >: {{ comment.text }}
-            </p>
-          </div>
-
-          <!-- Add a comment -->
-          <div class="add-comment mt-4">
-            <textarea
-              v-model="newComment"
-              class="w-full p-2 border border-gray-300 rounded"
-              placeholder="Add a comment..."
-            ></textarea>
-            <button
-              class="mt-2 bg-blue-500 text-white px-4 py-2 rounded"
-              @click="addComment(story.id)"
-            >
-              Submit
+            <button @click="viewDetails(story.id)" class="text-blue-500">
+              View Details
             </button>
           </div>
         </div>
@@ -128,14 +88,12 @@
 <script setup>
 // Import necessary modules
 import { ref, onMounted } from "vue";
-import { useUserStore } from "#imports"; // Assuming you're using Pinia for authentication and other global states
-import { useRouter } from "vue-router"; // For navigation if needed
+import { useUserStore } from "#imports"; // Assuming you're using Pinia for authentication
 
 // State for likes and success stories
 const likes = ref({});
 const likedPosts = ref(new Set());
 const successStories = ref([]);
-const newComment = ref("");
 const showToaster = ref(false);
 const toasterMessage = ref("");
 const toasterType = ref("");
@@ -145,28 +103,25 @@ const authStore = useUserStore();
 const fetchSuccessStories = async () => {
   try {
     const { $axios } = useNuxtApp();
-    const response = await $axios.get("/success-story", {
-      params: {
-        title: "reunited",
-      },
-    });
+    const response = await $axios.get("/success-story");
     successStories.value = response.data.data;
-    console.log(response.data.data);
   } catch (error) {
     console.log("Error fetching success stories:", error.message);
   }
 };
 
-// Fetch stories on component mount
-onMounted(fetchSuccessStories);
-
-// Toaster function
+// toaster
 const showToast = (message, type) => {
   toasterMessage.value = message;
   toasterType.value = type;
   showToaster.value = true;
-  setTimeout(() => (showToaster.value = false), 5000);
+  setTimeout(() => {
+    showToaster.value = false;
+  }, 3000);
 };
+
+// Fetch stories on component mount
+onMounted(fetchSuccessStories);
 
 // Toggle like state
 const toggleLike = async (postId) => {
@@ -191,27 +146,13 @@ const toggleLike = async (postId) => {
   }
 };
 
+const viewDetails = (storyId) => {
+  // Redirect to the story details page
+  navigateTo(`/success-story/${storyId}`);
+};
+
 // Check if a post is liked
 const isLiked = (postId) => likedPosts.value.has(postId);
-
-// Add a comment to a story
-const addComment = async (storyId) => {
-  if (!newComment.value.trim()) return;
-
-  try {
-    const { $axios } = useNuxtApp();
-    const response = await $axios.post(`/success-stories/${storyId}/comment`, {
-      text: newComment.value,
-      user: authStore.user.name,
-    });
-
-    const story = successStories.value.find((s) => s.id === storyId);
-    story.comments.push(response.data); // Add the new comment to the story
-    newComment.value = ""; // Clear the input field
-  } catch (error) {
-    console.log("Error adding comment:", error.message);
-  }
-};
 </script>
 
 <style scoped>
@@ -222,12 +163,7 @@ const addComment = async (storyId) => {
 .blog-post {
   border: 1px solid #e2e8f0;
 }
-.stats-section {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-.like-button,
-.share-button {
+.like-button {
   cursor: pointer;
 }
 </style>
