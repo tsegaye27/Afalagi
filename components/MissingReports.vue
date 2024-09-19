@@ -12,7 +12,6 @@ onMounted(async () => {
         limit: 4,
       },
     });
-    console.log(response.data.data);
     missingPersons.value = response.data.data;
     store.setLoading(false);
   } catch (error) {
