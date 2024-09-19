@@ -168,12 +168,11 @@ const reportMissing = async () => {
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log("Success✅", response.data.data);
     showToaster("Operation successful", "success");
     navigateTo("/profile/my-posts");
     store.setLoading(false);
   } catch (error) {
-    console.log(
+    console.error(
       "Failure❌",
       error.response ? error.response.data : error.message,
       postData,
@@ -289,7 +288,7 @@ const fetchLSLCountries = async () => {
 
     const data = await response.json();
     lSLCountries.value = data.data;
-    console.log(lSLCountries.value);
+    console.error(lSLCountries.value);
   } catch (error) {
     console.error("Error fetching countries:", error);
   }
