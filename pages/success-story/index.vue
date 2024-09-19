@@ -114,7 +114,7 @@ const fetchSuccessStories = async () => {
     const response = await $axios.get("/success-story");
     successStories.value = response.data.data;
   } catch (error) {
-    console.log("Error fetching success stories:", error.message);
+    console.error("Error fetching success stories:", error.message);
   }
 };
 
@@ -150,7 +150,7 @@ const toggleLike = async (postId) => {
     const { $axios } = useNuxtApp();
     await $axios.post(`/success-stories/${postId}/like`);
   } catch (error) {
-    console.log("Error liking post:", error.message);
+    console.error("Error liking post:", error.message);
   }
 };
 

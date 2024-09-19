@@ -90,7 +90,7 @@ const fetchStoryDetails = async () => {
     );
     story.value = response.data;
   } catch (error) {
-    console.log("Error fetching story details:", error.message);
+    console.error("Error fetching story details:", error.message);
   }
 };
 
@@ -116,7 +116,7 @@ const toggleLike = async (postId) => {
     const { $axios } = useNuxtApp();
     await $axios.post(`/success-stories/${postId}/like`);
   } catch (error) {
-    console.log("Error liking post:", error.message);
+    console.error("Error liking post:", error.message);
   }
 };
 
