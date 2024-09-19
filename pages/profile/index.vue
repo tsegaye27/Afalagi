@@ -1,13 +1,11 @@
 <script setup>
-import { useUserStore } from "@/stores/user";
-
 definePageMeta({
   layout: "",
 });
 
 onMounted(() => {
   store.setLoading(true);
-  if (!store.token) navigateTo("/auth/signup");
+  // if (!store.token) navigateTo("/auth/signup");
 });
 
 //Toster
@@ -44,7 +42,6 @@ const code = ref("");
 const handleFileChange = (event) => {
   const file = event.target.files[0];
   profilePictureB.value = file;
-  console.log(file);
   if (file) {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -75,7 +72,6 @@ const createProfile = async () => {
       },
     });
 
-    console.log("✅ Profile Created Successfully!!!", response.data);
     showToast("Profile Created Successfully!!!", "success");
     navigateTo("/");
   } catch (error) {
@@ -90,22 +86,36 @@ const createProfile = async () => {
 // Fetch list of countries for nationality filter
 const countries = ref([]);
 const showCountryList = ref(false);
+const showCityList = ref(false);
+const cityQuery = ref("");
+const selectedCountry = ref(null);
 
 onMounted(async () => {
-  const response = await fetch("https://restcountries.com/v3.1/all");
-  countries.value = await response.json();
+  const response = await fetch("https://countriesnow.space/api/v0.1/countries");
+  const data = await response.json();
+  countries.value = data.data;
 });
 
 // Computed property to filter countries based on input
 const filteredCountries = computed(() => {
   return countries.value.filter((c) =>
-    c.name.common.toLowerCase().includes(country.value.toLowerCase())
+    c.country.toLowerCase().includes(country.value.toLowerCase())
   );
+});
+
+// Computed property to filter cities based on input
+const filteredCities = computed(() => {
+  return selectedCountry.value
+    ? selectedCountry.value.cities.filter((city) =>
+        city.toLowerCase().includes(cityQuery.value.toLowerCase())
+      )
+    : [];
 });
 
 // Select country from the list
 const selectCountry = (c) => {
-  country.value = `${c.name.common}`;
+  country.value = `${c.country}`;
+  selectedCountry.value = c;
   showCountryList.value = false;
 };
 
@@ -113,6 +123,63 @@ const selectCountry = (c) => {
 const hideCountryList = () => {
   setTimeout(() => {
     showCountryList.value = false;
+  }, 100);
+};
+
+// Select city from the list
+const selectCity = (city) => {
+  cityQuery.value = city;
+  showCityList.value = false;
+};
+
+// Hide city list after selecting
+const hideCityList = () => {
+  setTimeout(() => {
+    showCityList.value = false;
+  }, 100);
+};
+
+const phoneNumber = ref("");
+const showPhoneCodeList = ref(false);
+const selectedPhoneCode = ref(null);
+const countriesPhone = ref([]);
+const filteredPhoneCodes = computed(() => {
+  return countriesPhone.value.filter((pc) => pc.code.includes(code.value));
+});
+
+const fetchPhoneCodes = async () => {
+  try {
+    const response = await fetch("https://restcountries.com/v3.1/all");
+    const countriesData = await response.json();
+    countriesPhone.value = countriesData.map((country) => {
+      return {
+        name: country.name.common,
+        code: `${country.idd.root}${
+          country.idd.suffixes?.length > 1
+            ? country.idd.suffixes[0]
+            : country.idd.suffixes
+        }`,
+        flag: country.flag,
+      };
+    });
+  } catch (error) {
+    console.error("Failed to fetch phone codes", error);
+  }
+};
+
+onMounted(() => {
+  fetchPhoneCodes();
+});
+
+const handlePhoneCodeClick = (phoneCode) => {
+  code.value = phoneCode.code;
+  selectedPhoneCode.value = phoneCode;
+  showPhoneCodeList.value = false;
+};
+
+const hidePhoneCodeList = () => {
+  setTimeout(() => {
+    showPhoneCodeList.value = false;
   }, 100);
 };
 </script>
@@ -148,34 +215,36 @@ const hideCountryList = () => {
         @submit.prevent="createProfile"
         class="w-full max-w-xl flex flex-col gap-6"
       >
-        <div class="flex flex-col gap-3">
-          <div class="flex justify-center mb-4">
-            <div class="relative w-32 h-32">
-              <img
-                v-if="profilePicture"
-                :src="profilePicture"
-                alt="Profile"
-                class="w-full h-full rounded-full object-cover border border-[var(--primary-color)]"
-              />
-              <div
-                v-else
-                class="w-full h-full rounded-full bg-gray-100 flex items-center justify-center border border-[var(--primary-color)]"
-              >
-                <span class="text-gray-500">Insert image</span>
-              </div>
-              <input
-                class="absolute inset-0 w-32 h-32 opacity-0 cursor-pointer"
-                type="file"
-                accept="image/*"
-                @change="handleFileChange"
-              />
+        <!-- Profile Picture -->
+        <div class="flex justify-center mb-4">
+          <div class="relative w-32 h-32">
+            <img
+              v-if="profilePicture"
+              :src="profilePicture"
+              alt="Profile"
+              class="w-full h-full rounded-full object-cover border border-[var(--primary-color)]"
+            />
+            <div
+              v-else
+              class="w-full h-full rounded-full bg-gray-100 flex items-center justify-center border border-[var(--primary-color)]"
+            >
+              <span class="text-gray-500">Insert image</span>
             </div>
+            <input
+              class="absolute inset-0 w-32 h-32 opacity-0 cursor-pointer"
+              type="file"
+              accept="image/*"
+              @change="handleFileChange"
+            />
           </div>
+        </div>
 
+        <!-- Form Fields -->
+        <div class="flex flex-col gap-3">
           <div class="flex justify-between items-center">
             <label class="text-[var(--primary-color)] font-semibold"
-              >First Name:
-            </label>
+              >First Name:</label
+            >
             <input
               class="outline-none w-80 p-2 rounded-lg border text-[var(--primary-color)] border-[var(--primary-color)]"
               type="text"
@@ -185,8 +254,8 @@ const hideCountryList = () => {
           </div>
           <div class="flex justify-between items-center">
             <label class="text-[var(--primary-color)] font-semibold"
-              >Middle Name:
-            </label>
+              >Middle Name:</label
+            >
             <input
               class="outline-none w-80 p-2 rounded-lg border text-[var(--primary-color)] border-[var(--primary-color)]"
               type="text"
@@ -196,8 +265,8 @@ const hideCountryList = () => {
           </div>
           <div class="flex justify-between items-center">
             <label class="text-[var(--primary-color)] font-semibold"
-              >Last Name:
-            </label>
+              >Last Name:</label
+            >
             <input
               class="outline-none w-80 p-2 rounded-lg border text-[var(--primary-color)] border-[var(--primary-color)]"
               type="text"
@@ -207,50 +276,83 @@ const hideCountryList = () => {
           </div>
           <div class="flex justify-between items-center">
             <label class="text-[var(--primary-color)] font-semibold"
-              >Email:
-            </label>
+              >Email:</label
+            >
             <input
               class="outline-none w-80 p-2 rounded-lg border text-[var(--primary-color)] border-[var(--primary-color)]"
               type="email"
               :value="email"
+              disabled
             />
           </div>
-          <div class="flex justify-between items-center">
+
+          <!-- Country and City Selection -->
+          <div class="flex items-center justify-between">
             <label class="text-[var(--primary-color)] font-semibold"
               >Country:</label
             >
-            <!-- Nationality filter with searchable dropdown -->
-            <div class="w-[320px]">
-              <div class="relative">
+            <div class="w-[320px] flex gap-4">
+              <!-- Country Input -->
+              <div
+                class="relative"
+                :class="selectedCountry ? 'w-[150px]' : 'w-[320px]'"
+              >
                 <input
                   v-model="country"
                   type="text"
-                  placeholder="Nationality"
+                  placeholder="Country"
                   @focus="showCountryList = true"
                   @blur="hideCountryList"
-                  class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
+                  :class="selectedCountry ? 'w-[9.5rem]' : 'w-[320px]'"
+                  class="outline-none p-2 rounded-lg border text-[var(--primary-color)] border-[var(--primary-color)]"
                 />
                 <ul
                   v-if="showCountryList && filteredCountries.length > 0"
                   class="absolute top-full left-0 w-full border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] mt-1 p-[0.3rem] bg-white z-10 max-h-40 overflow-y-auto"
                 >
                   <li
-                    v-for="c in filteredCountries"
-                    :key="c.cca2"
+                    v-for="(c, index) in filteredCountries"
+                    :key="index"
                     @mousedown="selectCountry(c)"
                     class="cursor-pointer p-[0.2rem] hover:bg-[var(--primary-color)] hover:text-white flex items-center"
                   >
-                    <span>{{ c.flag }} {{ c.name.common }}</span>
+                    <span>{{ c.country }}</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- City Input -->
+              <div v-if="selectedCountry" class="relative w-[150px]">
+                <input
+                  v-model="cityQuery"
+                  type="text"
+                  placeholder="City"
+                  @focus="showCityList = true"
+                  @blur="hideCityList"
+                  class="outline-none w-[9.5rem] p-2 rounded-lg border text-[var(--primary-color)] border-[var(--primary-color)]"
+                />
+                <ul
+                  v-if="showCityList && filteredCities.length > 0"
+                  class="absolute top-full left-0 w-full border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] mt-1 p-[0.3rem] bg-white z-10 max-h-40 overflow-y-auto"
+                >
+                  <li
+                    v-for="(city, index) in filteredCities"
+                    :key="index"
+                    @mousedown="selectCity(city)"
+                    class="cursor-pointer p-[0.2rem] hover:bg-[var(--primary-color)] hover:text-white flex items-center"
+                  >
+                    <span>{{ city }}</span>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
 
+          <!-- Gender Selection -->
           <div class="flex justify-between items-center">
             <label class="text-[var(--primary-color)] font-semibold"
-              >Gender:
-            </label>
+              >Gender:</label
+            >
             <select
               v-model="gender"
               class="outline-none w-80 p-2 rounded-lg border bg-white text-[var(--primary-color)] border-[var(--primary-color)]"
@@ -261,39 +363,73 @@ const hideCountryList = () => {
             </select>
           </div>
 
+          <!-- Date of Birth -->
           <div class="flex justify-between items-center">
             <label class="text-[var(--primary-color)] font-semibold"
-              >Date of Birth:
-            </label>
+              >Date of Birth:</label
+            >
             <input
               class="outline-none w-80 p-2 rounded-lg border text-[var(--primary-color)] border-[var(--primary-color)]"
               type="date"
               v-model="birthDate"
             />
           </div>
-          <div class="flex justify-between items-center">
+
+          <!-- Phone Number -->
+          <div class="relative flex items-center justify-between gap-4">
             <label class="text-[var(--primary-color)] font-semibold"
-              >Phone:
-            </label>
+              >Phone Number:</label
+            >
+            <!-- Phone Code Input -->
             <div class="flex gap-2">
-              <select
-                v-model="code"
-                class="outline-none p-2 rounded-lg border bg-gray-50 border-[var(--primary-color)]"
-              >
-                <option value="+251">🇪🇹</option>
-                <option value="+44">🇬🇧</option>
-              </select>
-              <input
-                class="outline-none w-56 p-2 rounded-lg border text-[var(--primary-color)] border-[var(--primary-color)]"
-                type="text"
-                v-model="number"
-                placeholder="912-34-5678"
-              />
+              <div class="relative">
+                <input
+                  class="outline-none w-16 p-2 rounded-lg border text-[var(--primary-color)] border-[var(--primary-color)]"
+                  type="text"
+                  v-model="code"
+                  placeholder="+251"
+                  @focus="showPhoneCodeList = true"
+                  @blur="hidePhoneCodeList"
+                />
+                <ul
+                  v-if="
+                    showPhoneCodeList &&
+                    filteredPhoneCodes &&
+                    filteredPhoneCodes.length > 0
+                  "
+                  class="absolute top-full left-0 w-[300px] border border-[var(--primary-color)] rounded outline-none text-[var(--primary-color)] mt-1 p-[0.3rem] bg-white z-10 max-h-24 overflow-x-hidden overflow-y-auto"
+                >
+                  <li
+                    v-for="(phoneCode, index) in filteredPhoneCodes"
+                    :key="index"
+                    @mousedown="handlePhoneCodeClick(phoneCode)"
+                    class="cursor-pointer p-[0.2rem] hover:bg-[var(--primary-color)] hover:text-white flex items-center"
+                  >
+                    <span>
+                      ({{ phoneCode.code }}) {{ phoneCode.flag }}
+                      {{ phoneCode.name }}</span
+                    >
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Phone Number Input -->
+              <div class="w-[248px]">
+                <input
+                  class="outline-none w-full p-2 rounded-lg border text-[var(--primary-color)] border-[var(--primary-color)]"
+                  type="text"
+                  v-model="phoneNumber"
+                  placeholder="912-34-5678"
+                />
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- Submit Button -->
         <button
-          class="mt-4 py-3 px-4 bg-[var(--primary-color)] text-white rounded-lg hover:bg-[var(--secondary-color)] transition-all"
+          type="submit"
+          class="w-full py-3 bg-[var(--primary-color)] text-white rounded-lg mt-4 hover:bg-opacity-80"
         >
           Create Profile
         </button>
