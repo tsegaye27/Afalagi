@@ -297,7 +297,7 @@ function timeAgo(date) {
                 />
                 <DetailsRow
                   label="Last Seen Location"
-                  :value="missingPerson.lastSeenLocation"
+                  :value="`${missingPerson.lastSeenLocationCity}, ${missingPerson.lastSeenLocationCountry}`"
                 />
                 <DetailsRow
                   label="Last Seen Date"
