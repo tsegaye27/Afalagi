@@ -108,9 +108,13 @@ const passwordConfirm = ref("");
 const email = ref("");
 const password = ref("");
 const toasts = ref([]);
+const showToaster = ref(false);
+const toasterMessage = ref("");
+const toasterType = ref("");
 
 onMounted(() => {
   store.setLoading(false);
+  if (!store.token) navigateTo("/auth/signup");
 });
 
 const submitForm = async () => {
@@ -127,7 +131,6 @@ const submitForm = async () => {
       email: email.value,
       password: password.value,
     });
-    console.log("Signup successful:", response.data);
     store.setEmail(email.value);
     store.setToken(response.data.access_token);
     store.setRefreshToken(response.data.refresh_token);
