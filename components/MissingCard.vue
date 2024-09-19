@@ -18,7 +18,11 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  lastSeenLocation: {
+  lastSeenLocationCountry: {
+    type: String,
+    required: true,
+  },
+  lastSeenLocationCity: {
     type: String,
     required: true,
   },
@@ -178,13 +182,15 @@ const setStatus = (status) => {
       </h1>
       <p
         class="text-[var(--primary-color)] pl-4 w-full"
-        :title="lastSeenLocation"
+        :title="`${lastSeenLocationCity}, ${lastSeenLocationCountry}`"
       >
         Last-Seen(Location):
+        {{ lastSeenLocationCity }},
         {{
-          lastSeenLocation.length > 10
-            ? lastSeenLocation.slice(0, 10) + "..."
-            : lastSeenLocation
+          lastSeenLocationCountry.length > 10
+            ? `${lastSeenLocationCountry}${lastSeenLocationCity}`.slice(0, 3) +
+              "..."
+            : `${lastSeenLocationCountry}`
         }}
       </p>
       <p class="text-[var(--primary-color)] pl-4 w-full">

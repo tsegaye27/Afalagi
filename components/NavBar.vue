@@ -266,7 +266,7 @@ function toggleMobileMenu() {
             <Icon name="heroicons-outline:moon" size="24px" />
           </span>
         </button>
-        <li v-if="!isLoggedIn" class="nav-menu">
+        <li v-if="!store.token" class="nav-menu">
           <NuxtLink
             to="/auth/login"
             class="flex items-center gap-1 hover:text-[var(--secondary-color)]"
