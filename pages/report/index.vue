@@ -157,10 +157,8 @@ const reportMissing = async () => {
   formData.append("languageSpoken", postData.value.languageSpoken);
   // formData.append("lastSeenWearing", lastSeenWearing.value);
   formData.append("lastSeenDate", postData.value.lastSeenDate);
-  formData.append(
-    "lastSeenLocation",
-    `${selectedLSLCity.value}, ${selectedLSLCountry.value.country}`
-  );
+  formData.append("lastSeenLocationCountry", selectedLSLCountry.value.country);
+  formData.append("lastSeenLocationCity", selectedLSLCity.value);
   formData.append("lastSeenWearing", lastSeenWearing.value);
 
   try {

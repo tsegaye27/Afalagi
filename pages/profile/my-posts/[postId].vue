@@ -61,7 +61,8 @@ const closeCase = async () => {
       foundCondition: foundCondition.value,
       foundThrough: foundThrough.value,
       foundDate: formatDateToInput(foundDate.value),
-      foundLocation: `${selectedLSLCity.value}, ${selectedLSLCountry.value.country}`,
+      foundCountry: selectedLSLCountry.value.country,
+      foundCity: selectedLSLCity.value,
       description: description.value,
     };
 
