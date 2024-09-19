@@ -37,13 +37,12 @@ const submitSuccessStory = async () => {
       },
     });
 
-    console.log("Story submitted successfully", response.data);
     title.value = "";
     content.value = "";
     // image.value = null;
     navigateTo("/success-story");
   } catch (error) {
-    console.log(error.response ? error.response.data : error.message);
+    console.error(error.response ? error.response.data : error.message);
   } finally {
     store.setLoading(false);
   }

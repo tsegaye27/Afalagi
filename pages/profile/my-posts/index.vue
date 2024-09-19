@@ -44,7 +44,7 @@ const fetchPosts = async () => {
     myPosts.value = res.data.data;
     totalPages.value = res.data.totalPages; // Assuming the backend returns the total number of pages
   } catch (err) {
-    console.log(
+    console.error(
       "❌❌Failed❌❌",
       err.response ? err.response.data : err.message
     );
