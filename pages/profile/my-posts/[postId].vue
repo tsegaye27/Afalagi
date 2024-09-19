@@ -73,11 +73,10 @@ const closeCase = async () => {
       },
     });
 
-    console.log("Case closed successfully", res.data);
     closeCaseId.value = res.data.data.id;
     showStoryPrompt.value = true; // Show the Yes/No prompt after form submission
   } catch (error) {
-    console.log(error.response ? error.response.data : error.message);
+    console.error(error.response ? error.response.data : error.message);
     closeCaseErrorMessage.value = error.response
       ? error.response.data.message
       : error.message;
@@ -133,7 +132,6 @@ const fetchLSLCountries = async () => {
 
     const data = await response.json();
     lSLCountries.value = data.data;
-    console.log(lSLCountries.value);
   } catch (error) {
     console.error("Error fetching countries:", error);
   }

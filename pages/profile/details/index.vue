@@ -84,7 +84,6 @@ const updateProfilePicture = async () => {
     });
 
     showToast("Profile picture updated successfully", "success");
-    console.log("Profile picture updated successfully", response);
     user.value.profilePicture = `http://localhost:3333/${response.data.imagePath}`;
     store.setProfileUpdated(true);
     store.setLoading(false);
@@ -136,11 +135,10 @@ const updateProfile = async () => {
       }
     );
     showToast(response.data.message, "success");
-    console.log("success", response);
     store.setProfileUpdated(true);
     store.setLoading(false);
   } catch (error) {
-    console.log(
+    console.error(
       store.token,
       error.response ? error.response.data : error.message
     );
