@@ -83,12 +83,11 @@ const logoutHandler = async () => {
         },
       }
     );
-    console.log("logging out...", res);
     store.setLoading(true);
     store.setToken();
     store.setRefreshToken();
   } catch (error) {
-    console.log(
+    console.error(
       error.response ? error.response.data.message : error.message,
       store.token
     );

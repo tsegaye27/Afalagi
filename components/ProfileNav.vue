@@ -52,7 +52,7 @@ onMounted(async () => {
     lastName.value = profileResponse.data.data.lastName;
     profilePicture.value = `http://localhost:3333/${picResponse.data.imagePath}`;
   } catch (error) {
-    console.log(
+    console.error(
       "❌❌Failed❌❌",
       error.response ? error.response.data : error.message
     );
