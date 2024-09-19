@@ -143,7 +143,7 @@ const submitForm = async () => {
     refreshTokenCookie.value = response.data.refresh_token;
     profileCookie.value = response.data.profile;
     verifiedCookie.value = response.data.verified;
-    // showToast("Signup successful", "success");
+    showToast("Signup successful", "success");
     navigateTo("/auth/verification");
   } catch (error) {
     showToast(
