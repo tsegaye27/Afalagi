@@ -17,8 +17,15 @@
     </h1>
     <hr />
 
+    <div v-if="successStories.length === 0">
+      <p class="text-[var(--primary-color)] text-center text-[24px] my-[2rem]">
+        No success stories yet. Check back later.
+      </p>
+    </div>
+
     <!-- Success Stories List -->
     <div
+      v-else
       v-for="story in successStories"
       :key="story.id"
       class="blog-post w-full bg-[var(--background-color)] flex flex-col items-center px-[4rem] py-[2rem] mb-[2rem] rounded-lg shadow-md"
@@ -60,6 +67,7 @@
         </div>
       </div>
     </div>
+    <hr />
 
     <!-- Statistics Section -->
     <div
