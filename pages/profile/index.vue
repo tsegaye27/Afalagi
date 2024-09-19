@@ -53,15 +53,15 @@ const handleFileChange = (event) => {
 
 const createProfile = async () => {
   const formData = new FormData();
-  const phoneNumber = `${code.value} ${number.value}`;
 
   formData.append("profilePicture", profilePictureB.value);
   formData.append("firstName", firstName.value);
   formData.append("middleName", middleName.value);
   formData.append("lastName", lastName.value);
   formData.append("country", country.value);
+  formData.append("city", cityQuery.value);
   formData.append("gender", gender.value);
-  formData.append("phoneNumber", phoneNumber);
+  formData.append("phoneNumber", `${code.value} ${number.value}`);
   formData.append("birthDate", birthDate.value);
 
   try {
@@ -418,7 +418,7 @@ const hidePhoneCodeList = () => {
                 <input
                   class="outline-none w-full p-2 rounded-lg border text-[var(--primary-color)] border-[var(--primary-color)]"
                   type="text"
-                  v-model="phoneNumber"
+                  v-model="number"
                   placeholder="912-34-5678"
                 />
               </div>
