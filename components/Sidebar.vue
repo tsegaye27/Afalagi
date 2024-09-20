@@ -158,19 +158,6 @@ const logoutHandler = async () => {
           Messages
         </nuxt-link>
       </div>
-      <div
-        class="text-white my-1 border border-white w-[60%] text-center rounded-md cursor-pointer hover:text-blue-500 hover:border-blue-500"
-      >
-        <nuxt-link
-          class="flex py-[0.3rem] justify-center gap-[0.2rem]"
-          to="/profile/settings"
-        >
-          <span class="flex justify-center items-baseline"
-            ><Icon name="humbleicons:cog" size="20px"
-          /></span>
-          Settings
-        </nuxt-link>
-      </div>
     </ul>
     <button
       @click="logoutHandler"
