@@ -37,24 +37,25 @@ const activeFaq = ref(null);
 
 const faqs = ref([
   {
-    question: "How can I reset my password?",
+    question:
+      "How does Afalagi help reconnect missing individuals with their families?",
     answer:
-      "To reset your password, go to the login page and click on 'Forgot Password'. Follow the instructions to receive a reset link.",
+      "Afalagi allows families to create detailed posts about their missing loved ones, including photos, descriptions, and last known locations. These posts are shared publicly, increasing the chances of someone recognizing and reporting a sighting. The platform also provides a way to track progress, share success stories, and connect with authorities or volunteers.",
   },
   {
-    question: "Where can I view my order history?",
+    question: "Is there a cost to use Afalagi's services?",
     answer:
-      "You can view your order history in your account dashboard under 'Order History'.",
+      "No, Afalagi is completely free to use. Our mission is to help families reunite with their missing loved ones without any financial barriers. The platform is supported through partnerships, donations, and volunteers who share our vision of bringing families back together.",
   },
   {
-    question: "How do I contact customer support?",
+    question: "What should I do if I find a missing person listed on Afalagi?",
     answer:
-      "Customer support can be reached via email or phone. Visit our Contact Us page for more details.",
+      "If you believe you've found someone listed as missing, you can contact the family directly through the platform or notify local authorities. Afalagi also provides a safe space for verified users to communicate and share important information discreetly.",
   },
   {
-    question: "What is your return policy?",
+    question: "How secure is the information I share on Afalagi?",
     answer:
-      "Our return policy allows returns within 30 days of purchase. Please visit our Returns page for more details.",
+      "Afalagi takes privacy and security seriously. User information and posts are protected with strict data security measures, and sensitive details like contact information are only shared with authorized individuals or authorities when necessary. We ensure that all data is handled responsibly to keep both families and the individuals they're searching for safe",
   },
 ]);
 

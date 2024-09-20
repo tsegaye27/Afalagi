@@ -4,17 +4,19 @@
       class="left flex flex-col justify-start mt-[3rem] gap-[20px] lg:mt-[6rem] lg:gap-[30px]"
     >
       <h2
-        class="text-[30px] lg:text-[55px] pl-[2rem] lg:pl-[6rem] lg:w-[700px] font-bold text-[var(--secondary-color)]"
+        class="text-[30px] lg:text-[50px] pl-[2rem] lg:pl-[6rem] lg:w-[700px] font-bold text-[var(--secondary-color)]"
       >
-        Bringing loved ones together
+        Reuniting Loved Ones, One Story at a Time
       </h2>
       <p
         class="text-[16px] lg:text-[20px] lg:w-[700px] pl-[2rem] lg:pl-[6rem] text-[var(--primary-color)]"
       >
-        At volutpat diam ut venenatis tellus in. Est ullamcorper eget nulla
-        facilisi etiam dignissim. Ut aliquam purus sit amet.At volutpat diam ut
-        venenatis tellus in. Est ullamcorper eget nulla facilisi etiam
-        dignissim. Ut aliquam purus sit amet.
+        Have you or someone you know been separated from a loved one? Don’t lose
+        hope. Our platform is here to help families reconnect with their missing
+        loved ones, bringing you one step closer to a reunion. With every post,
+        you have the chance to make a difference, turning heartbreak into hope.
+        Join the thousands who have found support, guidance, and the strength to
+        keep searching. Because every family deserves to be whole again.
       </p>
       <div class="flex justify-start pl-[2rem] lg:pl-[6rem]">
         <ReportBtn class="w-[50%] lg:w-[30%]" />
