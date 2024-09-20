@@ -219,6 +219,25 @@ function timeAgo(date) {
   }
   return `${Math.floor(seconds)} sec ago`;
 }
+
+// Function to check if the video URL is from YouTube
+const isYouTubeVideo = (url) => {
+  return url?.includes("youtube.com") || url?.includes("youtu.be");
+};
+
+// Function to get the embeddable YouTube URL
+const getYouTubeEmbedUrl = (url) => {
+  const videoId = extractYouTubeVideoId(url);
+  return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
+};
+
+// Function to extract the YouTube video ID
+const extractYouTubeVideoId = (url) => {
+  const regex =
+    /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+  const match = url.match(regex);
+  return match ? match[1] : null;
+};
 </script>
 
 <template>
@@ -332,6 +351,11 @@ function timeAgo(date) {
                   label="Medical Condition"
                   :value="formatArrayText(missingPerson.medicalIssues)"
                 />
+                <DetailsRow
+                  class="font-semibold"
+                  label="Poster Contact"
+                  :value="missingPerson.user?.Profile.phoneNumber"
+                />
               </ul>
             </div>
           </div>
@@ -347,7 +371,27 @@ function timeAgo(date) {
           <div
             class="video-section flex flex-col justify-start items-center w-2/3"
           >
-            <video class="w-full h-[550px] rounded-md" controls src=""></video>
+            <div
+              v-if="isYouTubeVideo(missingPerson.videoMessage)"
+              class="w-full"
+            >
+              <!-- Embed YouTube video -->
+              <iframe
+                class="w-full h-[550px]"
+                :src="getYouTubeEmbedUrl(missingPerson.videoMessage)"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <div v-else>
+              <!-- Handle other video URLs -->
+              <a :href="missingPerson.videoMessage" target="_blank"
+                >Click here to view the video</a
+              >
+            </div>
             <h1
               class="text-[24px] w-full text-left text-[var(--primary-color)] font-medium font-[sora] mt-[1rem]"
             >
