@@ -113,7 +113,7 @@ const logoutHandler = async () => {
       class="w-[200px] h-[200px] flex flex-col gap-[2rem] justify-center items-center"
     >
       <img
-        class="w-[80px] h-[80px] rounded-[2.5rem] border-2 border-[#f4f4f4]"
+        class="w-[80px] h-[80px] object-cover rounded-[2.5rem] border-2 border-[#f4f4f4]"
         :src="profilePicture"
         :alt="`${firstName} ${lastName}`"
       />

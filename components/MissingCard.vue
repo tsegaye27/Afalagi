@@ -62,18 +62,18 @@ const props = defineProps({
 });
 
 const sharePost = () => {
-  // if (navigator.share) {
-  //   navigator
-  //     .share({
-  //       title: `${props.firstName} ${props.middleName} ${props.lastName}`,
-  //       text: `Check out this missing person report: ${props.firstName} ${props.middleName} ${props.lastName}. Last seen at ${props.lastSeenLocation}.`,
-  //       url: window.location.href,
-  //     })
-  //     .then(() => console.log("Post shared successfully"))
-  //     .catch((error) => console.error("Error sharing post:", error));
-  // } else {
-  //   console.log("Share API not supported on this browser.");
-  // }
+  if (navigator.share) {
+    navigator
+      .share({
+        title: `${props.firstName} ${props.middleName} ${props.lastName}`,
+        text: `Check out this missing person report: ${props.firstName} ${props.middleName} ${props.lastName}. Last seen at ${props.lastSeenLocationCity}, ${props.lastSeenLocationCountry}.`,
+        url: window.location.href,
+      })
+      .then(() => console.log("Post shared successfully"))
+      .catch((error) => console.error("Error sharing post:", error));
+  } else {
+    console.log("Share API not supported on this browser.");
+  }
 };
 
 const viewDetails = () => {
