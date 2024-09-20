@@ -15,6 +15,25 @@ const closedCaseId = ref(route.params.closeCaseId); // Renamed to closedCaseId
 //   image.value = event.target.files[0];
 // };
 
+// toasters
+
+// State to control the toaster
+const toasterVisible = ref(false);
+const toasterMessage = ref("");
+const toasterType = ref("success"); // or 'error'
+const toasterDuration = ref(3000);
+
+function showToaster(message, type = "success", duration = 3000) {
+  toasterMessage.value = message;
+  toasterType.value = type;
+  toasterDuration.value = duration;
+  toasterVisible.value = true;
+
+  setTimeout(() => {
+    toasterVisible.value = false;
+  }, duration);
+}
+
 const submitSuccessStory = async () => {
   if (!validateSuccessStoryForm()) {
     return;
@@ -37,12 +56,14 @@ const submitSuccessStory = async () => {
       },
     });
 
+    showToaster("Story created successfully", "success");
+
     title.value = "";
     content.value = "";
     // image.value = null;
     navigateTo("/success-story");
   } catch (error) {
-    console.error(error.response ? error.response.data : error.message);
+    showToaster(error.response.data.message[0], "error");
   } finally {
     store.setLoading(false);
   }
@@ -63,11 +84,17 @@ const validateSuccessStoryForm = () => {
   <div
     class="bg-white p-8 ring ring-[var(--primary-color)] my-8 shadow-lg rounded-md max-w-lg mx-auto"
   >
+    <Toaster
+      v-if="toasterVisible"
+      :message="toasterMessage"
+      :type="toasterType"
+      :duration="toasterDuration"
+    />
     <button
       @click="handleBackFromForm"
-      class="bg-[var(--secondary-color)] text-white px-2 py-2 flex items-center rounded mb-6 hover:bg-[var(--secondary-color)] transition"
+      class="text-[var(--secondary-color)] px-2 py-2 flex items-center rounded mb-6 hover:bg-[var(--secondary-color)] transition"
     >
-      <Icon name="material-symbols:arrow-left-alt" size="24px" />
+      <Icon name="mdi:arrow-left" size="24px" />
       <span
         class="text-[var(--primary-color)] text-lg font-[poppins] ml-[0.5rem]"
         >Back</span
