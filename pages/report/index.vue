@@ -288,7 +288,6 @@ const fetchLSLCountries = async () => {
 
     const data = await response.json();
     lSLCountries.value = data.data;
-    console.error(lSLCountries.value);
   } catch (error) {
     console.error("Error fetching countries:", error);
   }

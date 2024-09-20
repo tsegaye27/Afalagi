@@ -3,7 +3,6 @@ import { useUserStore } from "#imports";
 definePageMeta({ layout: "profile" });
 
 const store = useUserStore();
-const email = store.email;
 const user = ref({
   firstName: "",
   middleName: "",
@@ -14,6 +13,7 @@ const user = ref({
   profilePicture: "",
   gender: "",
   birthDate: "",
+  phoneNumber: "",
 });
 
 const { $axios } = useNuxtApp();
@@ -33,6 +33,7 @@ onMounted(async () => {
       profileResponse.data.data.birthDate
     );
     user.value.profilePicture = `http://localhost:3333/${pictureResponse.data.imagePath}`;
+    console.log(user.value);
   } catch (error) {
     console.error(
       "failed❌",
@@ -138,10 +139,7 @@ const updateProfile = async () => {
     store.setProfileUpdated(true);
     store.setLoading(false);
   } catch (error) {
-    console.error(
-      store.token,
-      error.response ? error.response.data : error.message
-    );
+    console.error(error.response ? error.response.data : error.message);
     store.setLoading(false);
   }
 };
@@ -265,7 +263,19 @@ const updateProfile = async () => {
             />
           </div>
 
-          <div class="flex justify-start items-baseline gap-[4rem]">
+          <div class="flex justify-between items-baseline gap-[0.7rem]">
+            <label class="text-[var(--primary-color)] font-semibold"
+              >City:
+            </label>
+            <input
+              class="outline-none p-1 w-[300px] pl-2 rounded bg-[var(--background-color)] text-[var(--primary-color)] border border-[var(--primary-color)]"
+              type="text"
+              placeholder="Enter your city here"
+              v-model="user.city"
+            />
+          </div>
+
+          <div class="flex justify-start items-baseline gap-[5rem]">
             <label class="text-[var(--primary-color)] font-semibold"
               >Gender:</label
             >
@@ -278,14 +288,26 @@ const updateProfile = async () => {
               <option value="FEMALE">Female</option>
             </select>
           </div>
-          <div class="flex justify-start items-baseline gap-[1.3rem]">
+
+          <div class="flex justify-between items-baseline gap-[0.7rem]">
             <label class="text-[var(--primary-color)] font-semibold"
               >Date of Birth:
             </label>
             <input
-              class="outline-none bg-[var(--background-color)] w-[300px] p-1 pl-2 rounded text-[var(--primary-color)] border border-[var(--primary-color)]"
+              class="outline-none p-1 w-[300px] pl-2 rounded bg-[var(--background-color)] text-[var(--primary-color)] border border-[var(--primary-color)]"
               type="date"
+              placeholder="Enter your city here"
               v-model="user.birthDate"
+            />
+          </div>
+          <div class="flex justify-start items-baseline gap-[1.3rem]">
+            <label class="text-[var(--primary-color)] font-semibold"
+              >Phone Number:
+            </label>
+            <input
+              class="outline-none bg-[var(--background-color)] w-[300px] p-1 pl-2 rounded text-[var(--primary-color)] border border-[var(--primary-color)]"
+              type="text"
+              v-model="user.phoneNumber"
             />
           </div>
         </div>
