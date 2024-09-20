@@ -122,7 +122,7 @@ const reportMissing = async () => {
 
   formData.append("postImages", postData.value.images);
   formData.append("legalDocs", postData.value.legalDocs);
-  // formData.append("videoMessage", postData.value.videoMessage);
+  formData.append("videoMessage", postData.value.videoMessage);
   formData.append("dateOfBirth", postData.value.dateOfBirth);
   // formData.append("height", height.value * 1);
   formData.append("maritalStatus", postData.value.maritalStatus.toUpperCase());
@@ -758,10 +758,9 @@ function hideLSLCityList() {
             >Video Message:
           </label>
           <input
-            type="file"
+            type="url"
+            v-model="postData.videoMessage"
             class="border border-[var(--primary-color)] w-[320px] rounded outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
-            @change="handleVideoMessage"
-            accept="video/*"
           />
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
