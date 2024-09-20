@@ -14,6 +14,8 @@ const maritalStatusFilter = ref("");
 const hairColorFilter = ref("");
 const physicalDisabilityFilter = ref("");
 const mentalDisabilityFilter = ref("");
+const lastSeenLocationCountryFilter = ref("");
+const lastSeenLocationCityFilter = ref("");
 
 const showSidebar = ref(false);
 
@@ -36,7 +38,7 @@ const fetchPosts = async () => {
       params: {
         name: searchQuery.value,
         page: currentPage.value,
-        per_page: 8,
+        limit: 4,
       },
     });
 
@@ -98,6 +100,17 @@ const filteredMissingPersons = computed(() => {
         mentalDisabilityFilter.value.toLocaleUpperCase()
       );
 
+    const matchesLastSeenLocationCountry =
+      !lastSeenLocationCountryFilter.value ||
+      person.lastSeenLocationCountry
+        .toLowerCase()
+        .includes(lastSeenLocationCountryFilter.value.toLowerCase());
+    const matchesLastSeenLocationCity =
+      !lastSeenLocationCityFilter.value ||
+      person.lastSeenLocationCity
+        .toLowerCase()
+        .includes(lastSeenLocationCityFilter.value.toLowerCase());
+
     // If all filters are empty, show all posts
     return (
       matchesGender &&
@@ -106,7 +119,9 @@ const filteredMissingPersons = computed(() => {
       matchesMaritalStatus &&
       matchesHairColor &&
       matchesPhysicalDisability &&
-      matchesMentalDisability
+      matchesMentalDisability &&
+      matchesLastSeenLocationCountry &&
+      matchesLastSeenLocationCity
     );
   });
 });
@@ -320,6 +335,21 @@ const hideCountryList = () => {
               <option value="DEMENTIA">Dementia</option>
               <option value="OTHER">Other</option>
             </select>
+            <!-- Last Seen Location Country filter -->
+            <input
+              v-model="lastSeenLocationCountryFilter"
+              type="text"
+              placeholder="Country"
+              class="w-full p-[0.3rem] border border-[var(--primary-color)] bg-[var(--background-color)] text-[var(--text-color)] rounded outline-none"
+            />
+
+            <!-- Last Seen Location City filter -->
+            <input
+              v-model="lastSeenLocationCityFilter"
+              type="text"
+              placeholder="City"
+              class="w-full p-[0.3rem] border border-[var(--primary-color)] bg-[var(--background-color)] text-[var(--text-color)] rounded outline-none"
+            />
           </div>
         </div>
       </transition>
@@ -363,13 +393,17 @@ const hideCountryList = () => {
         :reporterEmail="person.user.email"
       />
     </div>
-    <button
-      v-if="hasMore && !isFetching"
-      @click="fetchPosts"
-      class="load-more-btn"
-    >
-      Load More
-    </button>
+    <div class="flex justify-center mt-4">
+      <button
+        v-if="hasMore"
+        @click="fetchPosts"
+        class="load-more-btn"
+        :disabled="isFetching"
+      >
+        <span v-if="isFetching">Loading...</span>
+        <span v-else>Load More</span>
+      </button>
+    </div>
   </div>
 </template>
 <style>

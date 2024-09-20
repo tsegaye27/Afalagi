@@ -6,13 +6,8 @@
       Testimonials
     </h1>
     <div class="flex justify-center items-center w-[100%]]">
-      <button
-        class="btn-round-white flex justify-center items-center mr-[3rem]"
-      >
-        <Icon
-          class="text-[var(--secondary-color)]"
-          name="material-symbols:arrow-left-alt"
-        />
+      <button class="btn-round flex justify-center items-center mr-[3rem]">
+        <Icon name="mdi:arrow-left" />
       </button>
       <div>
         <div
@@ -42,7 +37,7 @@
       </div>
       <button class="btn-round flex items-center justify-center ml-12">
         <span class="flex items-center"
-          ><Icon size="22px" name="material-symbols:arrow-right-alt"
+          ><Icon size="22px" name="mdi:arrow-right"
         /></span>
       </button>
     </div>
