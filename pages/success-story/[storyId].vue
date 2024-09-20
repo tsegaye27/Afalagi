@@ -1,29 +1,42 @@
 <template>
   <div class="blog-container">
-    <!-- Toaster -->
-    <div
-      v-if="showToaster"
-      :class="toasterType === 'success' ? 'bg-green-500' : 'bg-red-500'"
-      class="fixed top-5 right-5 p-4 rounded text-white shadow-lg z-50"
-    >
-      {{ toasterMessage }}
-    </div>
+    <Toaster
+      v-if="toasterVisible"
+      :message="toasterMessage"
+      :type="toasterType"
+      :duration="toasterDuration"
+    />
 
     <!-- Success Story Details -->
+    <div class="flex items-center m-8">
+      <button
+        @click="prevPage"
+        title="Go back"
+        class="flex text-[var(--primary-color)] justify-center items-center mr-[1rem]"
+      >
+        <Icon name="mdi:arrow-left" size="24px" />
+        <span
+          class="text-[var(--primary-color)] text-lg font-[poppins] ml-[0.5rem]"
+          >Back</span
+        >
+      </button>
+    </div>
     <div
       v-if="story"
       class="blog-post w-full bg-[var(--background-color)] flex flex-col items-center px-[4rem] py-[2rem] mb-[2rem] rounded-lg shadow-md"
     >
       <h2
-        class="text-[24px] font-[sora] text-left w-full max-w-[800px] text-[var(--secondary-color)] my-4"
+        class="text-[24px] font-[sora] text-left w-full max-w-[900px] text-[var(--secondary-color)] mt-4"
       >
         {{ story.title }}
       </h2>
-      <p class="text-[16px] text-[var(--primary-color)] mb-[1rem]">
-        Posted by: {{ story.posterName }}
+      <p
+        class="text-[16px] text-[var(--primary-color)] w-full max-w-[900px] mb-[1rem] text-left"
+      >
+        Posted by: {{ story.user?.Profile.firstName }}
       </p>
-      <div class="flex flex-col w-full max-w-[800px] text-left">
-        <p class="text-[16px] text-[var(--primary-color)] mb-[1rem]">
+      <div class="flex flex-col w-full max-w-[900px] text-left">
+        <p class="text-[16px] text-[var(--text-color)] mb-[1rem]">
           {{ story.content }}
         </p>
 
@@ -56,7 +69,7 @@
                 "
                 :class="isLiked(story.id) ? 'text-blue-500' : 'text-gray-500'"
               />
-              <span>{{ likes[story.id] || story.likes }}</span>
+              <span>{{ likes[story.id] || story.likes.length }}</span>
             </button>
           </div>
         </div>
@@ -66,14 +79,30 @@
 </template>
 
 <script setup>
+import { useUserStore } from "#imports";
+
 // State for story details
 const story = ref(null);
 const likes = ref({});
 const likedPosts = ref(new Set());
-const showToaster = ref(false);
+const store = useUserStore();
+
+// State to control the toaster
+const toasterVisible = ref(false);
 const toasterMessage = ref("");
-const toasterType = ref("");
-const authStore = useUserStore();
+const toasterType = ref("success"); // or 'error'
+const toasterDuration = ref(3000);
+
+function showToaster(message, type = "success", duration = 3000) {
+  toasterMessage.value = message;
+  toasterType.value = type;
+  toasterDuration.value = duration;
+  toasterVisible.value = true;
+
+  setTimeout(() => {
+    toasterVisible.value = false;
+  }, duration);
+}
 
 // Fetch the dynamic story based on storyId
 const route = useRoute();
@@ -84,14 +113,20 @@ const fetchStoryDetails = async () => {
       `/success-story/${route.params.storyId}`,
       {
         headers: {
-          Authorization: `Bearer ${authStore.token}`,
+          Authorization: `Bearer ${store.token}`,
         },
       }
     );
-    story.value = response.data;
+    story.value = response.data.data;
+    console.log(response.data);
   } catch (error) {
     console.error("Error fetching story details:", error.message);
   }
+};
+
+const prevPage = () => {
+  const router = useRouter();
+  router.back();
 };
 
 // Fetch story details on component mount
@@ -99,23 +134,27 @@ onMounted(fetchStoryDetails);
 
 // Toggle like state
 const toggleLike = async (postId) => {
-  if (!authStore.token) {
-    showToast("Please log in to react to posts.", "error");
-    return;
-  }
-
-  if (likedPosts.value.has(postId)) {
-    likes.value[postId]--;
-    likedPosts.value.delete(postId);
-  } else {
-    likes.value[postId] = (likes.value[postId] || 0) + 1;
-    likedPosts.value.add(postId);
+  if (!store.token) {
+    showToaster("Please log in to react to posts.", "error");
+    navigateTo("/auth/login");
   }
 
   try {
     const { $axios } = useNuxtApp();
-    await $axios.post(`/success-stories/${postId}/like`);
+    await $axios.post(`/like/${postId}`, {
+      headers: {
+        Authorization: `Bearer ${store.token}`,
+      },
+    });
+    if (likedPosts.value.has(postId)) {
+      likes.value[postId]--;
+      likedPosts.value.delete(postId);
+    } else {
+      likes.value[postId] = (likes.value[postId] || 0) + 1;
+      likedPosts.value.add(postId);
+    }
   } catch (error) {
+    showToaster(error.response.data.message, "error");
     console.error("Error liking post:", error.message);
   }
 };
@@ -127,7 +166,7 @@ const isLiked = (postId) => likedPosts.value.has(postId);
 <style scoped>
 .blog-container {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 16px auto;
 }
 .blog-post {
   border: 1px solid #e2e8f0;
