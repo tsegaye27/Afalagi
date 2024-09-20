@@ -11,9 +11,8 @@ const isLoading = ref(false);
 const { $axios } = useNuxtApp();
 const currentPage = ref(1);
 const totalPages = ref(0);
-const postsPerPage = 6; // Define how many posts you want per page
+const postsPerPage = 6; 
 
-// Computed properties to separate posts by status
 const underReviewAndOpenPosts = computed(() =>
   myPosts.value.filter((post) => post.status === "OPEN")
 );
@@ -27,7 +26,6 @@ const closedAndRejectedPosts = computed(() =>
   )
 );
 
-// Function to fetch posts with pagination
 const fetchPosts = async () => {
   isLoading.value = true;
   try {
@@ -42,6 +40,7 @@ const fetchPosts = async () => {
     });
 
     myPosts.value = res.data.data;
+    console.log(res.data.data);
     totalPages.value = res.data.totalPages; // Assuming the backend returns the total number of pages
   } catch (err) {
     console.error(
@@ -64,7 +63,7 @@ const nextPage = () => {
   }
 };
 
-// Function to go to the previous page
+
 const previousPage = () => {
   if (currentPage.value > 1) {
     currentPage.value--;
@@ -84,10 +83,15 @@ const previousPage = () => {
       </h1>
       <hr class="my-12 border-[var(--primary-color)]" />
 
-      <!-- Display posts with UNDER_REVIEW and OPEN status -->
-      <div class="flex flex-wrap justify-start gap-[3rem] mx-[2rem]">
+      <!-- Display posts with OPEN status -->
+      <div v-if="underReviewAndOpenPosts.length === 0">
+        <p class="text-[var(--primary-color)] font-medium text-center w-full">
+          Your approved posts will appear here
+        </p>
+      </div>
+      <div v-else class="flex flex-wrap justify-start gap-[3rem] mx-[2rem]">
         <MissingCard
-          v-for="(post, index) in underReviewAndOpenPosts"
+          v-for="post in underReviewAndOpenPosts"
           :key="post.id"
           :postId="post.id"
           :lastSeenWearing="post.lastSeenWearing"
