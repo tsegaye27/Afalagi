@@ -179,7 +179,7 @@ function hideLSLCityList() {
         title="Back"
         class="flex items-center text-[var(--primary-color)] px-4 py-2 mt-4 hover:underline"
       >
-        <Icon name="material-symbols:arrow-left-alt" size="24px" />
+        <Icon name="mdi:arrow-left" size="24px" />
         <span
           class="text-[var(--primary-color)] text-lg font-[poppins] ml-[0.5rem]"
           >Back</span
