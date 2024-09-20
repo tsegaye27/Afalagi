@@ -113,7 +113,7 @@ const logoutHandler = async () => {
       class="w-[200px] h-[200px] flex flex-col gap-[2rem] justify-center items-center"
     >
       <img
-        class="w-[80px] h-[80px] rounded-[2.5rem] border-2 border-[#f4f4f4]"
+        class="w-[80px] h-[80px] object-cover rounded-[2.5rem] border-2 border-[#f4f4f4]"
         :src="profilePicture"
         :alt="`${firstName} ${lastName}`"
       />
@@ -156,19 +156,6 @@ const logoutHandler = async () => {
             ><Icon name="humbleicons:chat" size="20px"
           /></span>
           Messages
-        </nuxt-link>
-      </div>
-      <div
-        class="text-white my-1 border border-white w-[60%] text-center rounded-md cursor-pointer hover:text-blue-500 hover:border-blue-500"
-      >
-        <nuxt-link
-          class="flex py-[0.3rem] justify-center gap-[0.2rem]"
-          to="/profile/settings"
-        >
-          <span class="flex justify-center items-baseline"
-            ><Icon name="humbleicons:cog" size="20px"
-          /></span>
-          Settings
         </nuxt-link>
       </div>
     </ul>

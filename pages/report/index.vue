@@ -288,7 +288,6 @@ const fetchLSLCountries = async () => {
 
     const data = await response.json();
     lSLCountries.value = data.data;
-    console.error(lSLCountries.value);
   } catch (error) {
     console.error("Error fetching countries:", error);
   }
@@ -361,7 +360,7 @@ function hideLSLCityList() {
             type="text"
             class="border border-[var(--primary-color)] rounded w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
             v-model="postData.firstName"
-            placeholder="Abraham"
+            placeholder="John"
           />
         </div>
         <div class="flex gap-2 justify-between px-[3rem] items-center">
@@ -372,7 +371,7 @@ function hideLSLCityList() {
             type="text"
             class="border border-[var(--primary-color)] rounded w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
             v-model="postData.middleName"
-            placeholder="Desalegn"
+            placeholder="Doe"
           />
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
@@ -383,7 +382,7 @@ function hideLSLCityList() {
             type="text"
             class="border border-[var(--primary-color)] rounded w-[320px] outline-none text-[var(--primary-color)] p-[0.1rem] pl-[0.5rem]"
             v-model="postData.lastName"
-            placeholder="Feleke"
+            placeholder="Doe"
           />
         </div>
         <div class="flex justify-between px-[3rem] items-center">
@@ -407,7 +406,7 @@ function hideLSLCityList() {
             <input
               v-model="nationalityQuery"
               type="text"
-              placeholder="Search nationality"
+              placeholder="Nationality"
               @focus="showCountryList = true"
               @blur="hideCountryList"
               class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
@@ -460,7 +459,7 @@ function hideLSLCityList() {
             <input
               v-model="lSLCountryQuery"
               type="text"
-              placeholder="Search Country"
+              placeholder="Country"
               @focus="showLSLCountryList = true"
               @blur="hideLSLCountryList"
               class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
@@ -485,7 +484,7 @@ function hideLSLCityList() {
             <input
               v-model="lSLCityQuery"
               type="text"
-              placeholder="Search City"
+              placeholder="City"
               @focus="showLSLCityList = true"
               @blur="hideLSLCityList"
               class="w-full p-[0.3rem] border border-[var(--primary-color)] text-[var(--primary-color)] rounded outline-none"
@@ -568,7 +567,6 @@ function hideLSLCityList() {
             <option value="brown">Brown</option>
             <option value="white">White</option>
             <option value="lightskin">light-skin</option>
-            <option value="other">Other</option>
           </select>
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
@@ -586,7 +584,6 @@ function hideLSLCityList() {
             <option value="blonde">Blonde</option>
             <option value="grey">Grey</option>
             <option value="orange">Orange</option>
-            <option value="other">Other</option>
           </select>
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
@@ -703,7 +700,6 @@ function hideLSLCityList() {
             <option value="bachelor">Bachelor</option>
             <option value="master">Master</option>
             <option value="doctorate">Doctorate</option>
-            <option value="other">Other</option>
           </select>
         </div>
         <div class="flex gap-[1.8rem] justify-between px-[3rem] items-center">
@@ -714,9 +710,7 @@ function hideLSLCityList() {
             v-model="postData.maritalStatus"
             class="border border-[var(--primary-color)] rounded outline-none h-[30px] text-[var(--primary-color)] p-[0.1rem] w-[320px]"
           >
-            <option value="" disabled selected>
-              Select your Marital Status
-            </option>
+            <option value="" disabled selected>Select Marital Status</option>
             <option value="single">Single</option>
             <option value="married">Married</option>
             <option value="divorced">Divorced</option>

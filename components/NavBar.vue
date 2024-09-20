@@ -285,7 +285,7 @@ function toggleMobileMenu() {
             to="/profile/details"
           >
             <img
-              class="w-[55px] h-[55px] rounded-full border-1 border-[#f4f4f4]"
+              class="w-[55px] h-[55px] object-cover rounded-full border-1 border-[#f4f4f4]"
               :src="profilePicture"
               alt="profile-picture"
             />

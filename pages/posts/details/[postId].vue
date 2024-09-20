@@ -29,6 +29,7 @@ onMounted(async () => {
         Authorization: `Bearer ${store.token}`,
       },
     });
+    console.log(response.data.data);
     missingPerson.value = response.data.data;
     comments.value = response.data.data.comments;
     replies.value = comments.value.map((comment) =>
@@ -93,7 +94,7 @@ const submitComment = async () => {
       {
         postId,
         commentText: newComment.value,
-        parentId: parentId.value, // Handle parentId for replies
+        parentId: parentId.value,
       },
       {
         headers: {
@@ -103,8 +104,8 @@ const submitComment = async () => {
     );
 
     comments.value.push(response.data.data);
-    newComment.value = ""; // Clear input after submission
-    parentId.value = null; // Reset parentId after reply submission
+    newComment.value = "";
+    parentId.value = null;
     fetchComments();
   } catch (error) {
     console.error(error.response ? error.response.data : error.message);
@@ -124,15 +125,15 @@ const submitReply = async (parentId) => {
     return;
   }
 
-  if (!replyText.value.trim()) return; // Access replyText.value since it's a ref
+  if (!replyText.value.trim()) return;
 
   try {
     const response = await $axios.post(
       `/comment/post`,
       {
-        postId, // Ensure postId is passed correctly
-        commentText: replyText.value, // Use replyText.value
-        parentId, // Send parentId to link the reply with the comment
+        postId,
+        commentText: replyText.value,
+        parentId,
       },
       {
         headers: {
@@ -141,37 +142,30 @@ const submitReply = async (parentId) => {
       }
     );
 
-    // Use the response directly (no need for response.json())
     newReply.value = response.data.data;
 
-    // Push the new reply to the comments array
     comments.value.push(newReply.value);
 
-    replyText.value = ""; // Clear the reply input after submission
-    replyVisible.value = null; // Hide the reply textarea
-    newReply.value = {}; // Reset the newReply object
+    replyText.value = "";
+    replyVisible.value = null;
+    newReply.value = {};
 
-    fetchComments(); // Optionally refetch comments after reply submission
+    fetchComments();
   } catch (error) {
     console.error(error.response ? error.response.data : error.message);
   }
 };
 
 const getReplies = (parentId) => {
-  // Add new reply to the comments array (or send to backend)
-
   return comments.value.filter((comment) => comment.parentId === parentId);
 };
 
-// Reactive state for managing visibility of replies
 const replyVisibility = ref({});
 
-// Toggle reply visibility for a specific comment
 const toggleReplies = (commentId) => {
   replyVisibility.value[commentId] = !replyVisibility.value[commentId];
 };
 
-// Get top-level comments only
 const topLevelComments = computed(() => {
   return comments.value.filter((comment) => comment.parentId === null);
 });
@@ -187,14 +181,11 @@ const visibleComments = computed(() => {
 });
 
 function formatArrayText(arr) {
-  // Access the first element of the array
   if (!arr) return;
   const text = arr[0];
 
-  // Replace underscores with spaces
   const replacedText = text.replace(/_/g, " ");
 
-  // Capitalize each word
   const formattedText = replacedText
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
