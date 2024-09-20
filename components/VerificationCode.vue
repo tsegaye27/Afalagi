@@ -67,7 +67,6 @@ const verify = async () => {
       }
     );
     showToast("Verification successful", "success");
-    console.log("verification success", response.data);
 
     navigateTo("/profile");
     store.setLoading(false);
