@@ -42,35 +42,20 @@
             `${story.user.Profile?.firstName} ${story.user.Profile?.lastName}`
           }}
         </p>
-
-        <!-- Like and View Details Section -->
-        <div class="flex justify-between items-center">
-          <div class="flex items-center gap-[1rem]">
-            <button
-              class="like-button flex items-center gap-[0.5rem]"
-              @click="toggleLike(story.id)"
-            >
-              <Icon
-                :name="
-                  isLiked(story.id)
-                    ? 'heroicons-solid:thumb-up'
-                    : 'heroicons-outline:thumb-up'
-                "
-                :class="isLiked(story.id) ? 'text-blue-500' : 'text-gray-500'"
-              />
-              <span>{{ likes[story.id] || story.likes }}</span>
-            </button>
-            <button @click="viewDetails(story.id)" class="text-blue-500">
-              View Details
-            </button>
-          </div>
+        <div>
+          <button
+            class="text-[var(--secondary-color)]"
+            @click="viewDetails(story.id)"
+          >
+            View Details
+          </button>
         </div>
       </div>
     </div>
     <hr />
 
     <!-- Statistics Section -->
-    <div
+    <!-- <div
       class="stats-section w-full h-[300px] flex justify-evenly my-[2rem] items-center"
     >
       <div class="flex flex-col items-start">
@@ -85,7 +70,7 @@
         <h1 class="text-[var(--primary-color)] text-[70px]">50+</h1>
         <p class="text-[var(--primary-color)] text-[35px]">Unions</p>
       </div>
-    </div>
+    </div> -->
     <hr />
 
     <!-- Contact Section -->
@@ -98,9 +83,6 @@
 import { ref, onMounted } from "vue";
 import { useUserStore } from "#imports"; // Assuming you're using Pinia for authentication
 
-// State for likes and success stories
-const likes = ref({});
-const likedPosts = ref(new Set());
 const successStories = ref([]);
 const showToaster = ref(false);
 const toasterMessage = ref("");
@@ -131,36 +113,10 @@ const showToast = (message, type) => {
 // Fetch stories on component mount
 onMounted(fetchSuccessStories);
 
-// Toggle like state
-const toggleLike = async (postId) => {
-  if (!authStore.token) {
-    showToast("Please log in to react to posts.", "error");
-    return;
-  }
-
-  if (likedPosts.value.has(postId)) {
-    likes.value[postId]--;
-    likedPosts.value.delete(postId);
-  } else {
-    likes.value[postId] = (likes.value[postId] || 0) + 1;
-    likedPosts.value.add(postId);
-  }
-
-  try {
-    const { $axios } = useNuxtApp();
-    await $axios.post(`/success-stories/${postId}/like`);
-  } catch (error) {
-    console.error("Error liking post:", error.message);
-  }
-};
-
 const viewDetails = (storyId) => {
   // Redirect to the story details page
   navigateTo(`/success-story/${storyId}`);
 };
-
-// Check if a post is liked
-const isLiked = (postId) => likedPosts.value.has(postId);
 </script>
 
 <style scoped>
@@ -170,8 +126,5 @@ const isLiked = (postId) => likedPosts.value.has(postId);
 }
 .blog-post {
   border: 1px solid #e2e8f0;
-}
-.like-button {
-  cursor: pointer;
 }
 </style>
