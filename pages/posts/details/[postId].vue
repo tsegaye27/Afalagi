@@ -369,6 +369,7 @@ const extractYouTubeVideoId = (url) => {
         <div class="flex gap-8">
           <!-- Video Section -->
           <div
+            v-if="missingPerson.videoMessage"
             class="video-section flex flex-col justify-start items-center w-2/3"
           >
             <div
@@ -392,6 +393,17 @@ const extractYouTubeVideoId = (url) => {
                 >Click here to view the video</a
               >
             </div>
+            <h1
+              class="text-[24px] w-full text-left text-[var(--primary-color)] font-medium font-[sora] mt-[1rem]"
+            >
+              Message from his {{ missingPerson.posterRelation?.toLowerCase() }}
+            </h1>
+          </div>
+          <div
+            v-else
+            class="video-section flex flex-col justify-start items-center w-2/3"
+          >
+            <video class="w-full h-[550px]" src="" controls></video>
             <h1
               class="text-[24px] w-full text-left text-[var(--primary-color)] font-medium font-[sora] mt-[1rem]"
             >

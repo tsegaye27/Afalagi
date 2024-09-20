@@ -105,6 +105,7 @@ const progressWidth = computed(() => {
 });
 
 const reportMissing = async () => {
+  if (!store.token) navigateTo("/auth/login");
   store.setLoading(true);
   const formData = new FormData();
 
