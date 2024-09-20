@@ -184,7 +184,7 @@ const setStatus = (status) => {
         class="text-[var(--primary-color)] pl-4 w-full"
         :title="`${lastSeenLocationCity}, ${lastSeenLocationCountry}`"
       >
-        Last-Seen(Location):
+        Last-Seen:
         {{ lastSeenLocationCity }},
         {{
           lastSeenLocationCountry.length > 10
@@ -194,7 +194,7 @@ const setStatus = (status) => {
         }}
       </p>
       <p class="text-[var(--primary-color)] pl-4 w-full">
-        Last-Seen(Date): {{ formatDate(lastSeenDate) }}
+        Date: {{ formatDate(lastSeenDate) }}
       </p>
 
       <button
