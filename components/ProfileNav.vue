@@ -63,35 +63,6 @@ onMounted(async () => {
 
 const isLoggedIn = computed(() => !!store.token); // Reactive check
 const language = ref("English");
-
-const isDarkMode = ref(false);
-
-onMounted(() => {
-  if (typeof window !== "undefined") {
-    // Check local storage for the dark mode preference
-    isDarkMode.value = localStorage.getItem("dark-mode") === true;
-  }
-});
-
-// Toggle Dark Mode function
-const toggleDarkMode = () => {
-  if (typeof window !== "undefined") {
-    isDarkMode.value = !isDarkMode.value;
-    localStorage.setItem("dark-mode", isDarkMode.value);
-    document.documentElement.classList.toggle("dark", isDarkMode.value);
-  }
-};
-
-watchEffect(() => {
-  if (typeof window !== "undefined") {
-    document.documentElement.classList.toggle("dark", isDarkMode.value);
-  }
-});
-
-// Function to toggle mobile menu
-function toggleMobileMenu() {
-  isMobileMenuOpen.value = !isMobileMenuOpen.value;
-}
 </script>
 
 <template>
@@ -200,16 +171,6 @@ function toggleMobileMenu() {
           >
         </li>
         <ReportBtn />
-
-        <!-- Dark Mode Toggle -->
-        <button @click="toggleDarkMode">
-          <span class="flex items-center" v-if="isDarkMode">
-            <Icon name="heroicons-outline:sun" size="24px" />
-          </span>
-          <span class="flex items-center" v-else>
-            <Icon name="heroicons-outline:moon" size="24px" />
-          </span>
-        </button>
       </ul>
     </div>
   </nav>

@@ -35,22 +35,16 @@ onMounted(async () => {
   }
 
   try {
-    const [profileResponse, picResponse] = await Promise.all([
-      $axios.get("/user/profile/me", {
-        headers: {
-          Authorization: `Bearer ${store.token}`,
-        },
-      }),
-      $axios.get("/user/profile/pic", {
-        headers: {
-          Authorization: `Bearer ${store.token}`,
-        },
-      }),
-    ]);
+    const profileResponse = await $axios.get("/user/profile/me", {
+      headers: {
+        Authorization: `Bearer ${store.token}`,
+      },
+    });
 
     firstName.value = profileResponse.data.data.firstName;
     lastName.value = profileResponse.data.data.lastName;
-    profilePicture.value = `http://localhost:3333/${picResponse.data.imagePath}`;
+    console.log(profileResponse.data.data);
+    profilePicture.value = `http://localhost:3333/uploads/profile/${profileResponse.data.data.profilePicture}`;
   } catch (error) {
     console.error(
       "❌❌Failed❌❌",
@@ -64,28 +58,33 @@ onMounted(async () => {
 const isLoggedIn = computed(() => !!store.token); // Reactive check
 const language = ref("English");
 
-const isDarkMode = ref(false);
+const isDarkMode = ref(localStorage.getItem("dark-mode"));
 
-onMounted(() => {
-  if (typeof window !== "undefined") {
-    // Check local storage for the dark mode preference
-    isDarkMode.value = localStorage.getItem("dark-mode") === true;
-  }
-});
-
-// Toggle Dark Mode function
-const toggleDarkMode = () => {
-  if (typeof window !== "undefined") {
-    isDarkMode.value = !isDarkMode.value;
-    localStorage.setItem("dark-mode", isDarkMode.value);
-    document.documentElement.classList.toggle("dark", isDarkMode.value);
+// Function to handle storage changes
+const handleStorageChange = (event) => {
+  if (event.key === "dark-mode") {
+    isDarkMode.value = event.newValue === "true";
   }
 };
 
-watchEffect(() => {
-  if (typeof window !== "undefined") {
-    document.documentElement.classList.toggle("dark", isDarkMode.value);
+// toggle dark-mode
+const toggleDarkMode = () => {
+  isDarkMode.value = !isDarkMode.value;
+  localStorage.setItem("dark-mode", isDarkMode.value);
+  document.documentElement.classList.toggle("dark-mode");
+};
+
+// Set up event listener on mounted
+onMounted(() => {
+  if (localStorage.getItem("dark-mode") === null) {
+    localStorage.setItem("dark-mode", false);
   }
+  window.addEventListener("storage", handleStorageChange);
+});
+
+// Clean up event listener before unmount
+onBeforeUnmount(() => {
+  window.removeEventListener("storage", handleStorageChange);
 });
 
 // Function to toggle mobile menu
@@ -258,7 +257,7 @@ function toggleMobileMenu() {
         </select>
         <!-- Dark Mode Toggle -->
         <button @click="toggleDarkMode">
-          <span class="flex items-center" v-if="isDarkMode">
+          <span class="flex items-center" v-if="isDarkMode === false">
             <Icon name="heroicons-outline:sun" size="24px" />
           </span>
           <span class="flex items-center" v-else>

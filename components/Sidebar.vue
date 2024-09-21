@@ -34,21 +34,15 @@ const fetchProfileData = async () => {
 
   store.setLoading(true);
   try {
-    const [profileResponse, pictureResponse] = await Promise.all([
-      $axios.get("/user/profile/me", {
-        headers: { Authorization: `Bearer ${store.token}` },
-      }),
-      $axios.get("/user/profile/pic", {
-        headers: { Authorization: `Bearer ${store.token}` },
-      }),
-    ]);
+    const profileResponse = await $axios.get("/user/profile/me", {
+      headers: { Authorization: `Bearer ${store.token}` },
+    });
 
     const profileData = profileResponse.data.data;
-    const pictureData = pictureResponse.data.imagePath;
 
     firstName.value = profileData.firstName;
     lastName.value = profileData.lastName;
-    profilePicture.value = `http://localhost:3333/${pictureData}`;
+    profilePicture.value = `http://localhost:3333/uploads/profile/${profileData.profilePicture}`;
   } catch (error) {
     console.error(
       "❌ Error fetching profile data:",

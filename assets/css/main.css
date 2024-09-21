@@ -16,7 +16,7 @@
   --text-color: #343a40; /* Dark gray for better readability */
 }
 
-.dark {
+.dark-mode {
   --primary-color: #90cdf4; /* Soft light blue */
   --secondary-color: #1d4ed8; /* Richer, deeper blue */
   --background-color: #2d3748; /* Darker background for contrast */
