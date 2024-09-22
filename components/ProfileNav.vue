@@ -10,9 +10,6 @@ const { $axios } = useNuxtApp();
 const accessTokenCookie = useCookie("access_token");
 const refreshTokenCookie = useCookie("refresh_token");
 
-// Define the reactive property for mobile menu state
-const isMobileMenuOpen = ref(false);
-
 const setCookiesToStore = () => {
   if (accessTokenCookie.value && refreshTokenCookie.value) {
     store.setToken(accessTokenCookie.value);
@@ -35,18 +32,11 @@ onMounted(async () => {
   }
 
   try {
-    const [profileResponse, picResponse] = await Promise.all([
-      $axios.get("user/profile/me", {
-        headers: {
-          Authorization: `Bearer ${store.token}`,
-        },
-      }),
-      $axios.get("user/profile/pic", {
-        headers: {
-          Authorization: `Bearer ${store.token}`,
-        },
-      }),
-    ]);
+    const profileResponse = await $axios.get("user/profile/me", {
+      headers: {
+        Authorization: `Bearer ${store.token}`,
+      },
+    });
 
     firstName.value = profileResponse.data.data.firstName;
     lastName.value = profileResponse.data.data.lastName;
@@ -60,9 +50,6 @@ onMounted(async () => {
     store.setLoading(false);
   }
 });
-
-const isLoggedIn = computed(() => !!store.token); // Reactive check
-const language = ref("English");
 </script>
 
 <template>
