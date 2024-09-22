@@ -1,6 +1,6 @@
 <script setup>
 import { useUserStore } from "#imports";
-import { ref, onMounted, computed, watchEffect } from "vue"; // Import necessary functions
+import { ref, onMounted, computed, watchEffect } from "vue";
 
 const store = useUserStore();
 const firstName = ref("");
