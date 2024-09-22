@@ -249,7 +249,7 @@ const extractYouTubeVideoId = (url) => {
         title="Go back"
         class="flex text-[var(--primary-color)] justify-center items-center mr-[1rem]"
       >
-        <Icon name="material-symbols:arrow-left-alt" size="24px" />
+        <Icon name="mdi:arrow-left" size="24px" />
         <span
           class="text-[var(--primary-color)] text-lg font-[poppins] ml-[0.5rem]"
           >Back</span
