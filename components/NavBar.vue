@@ -1,6 +1,6 @@
 <script setup>
 import { useUserStore } from "#imports";
-import { ref, onMounted, computed, watchEffect } from "vue"; // Import necessary functions
+import { ref, onMounted, computed, watchEffect } from "vue";
 
 const store = useUserStore();
 const firstName = ref("");
@@ -10,7 +10,6 @@ const { $axios } = useNuxtApp();
 const accessTokenCookie = useCookie("access_token");
 const refreshTokenCookie = useCookie("refresh_token");
 
-// Define the reactive property for mobile menu state
 const isMobileMenuOpen = ref(false);
 
 const setCookiesToStore = () => {
@@ -43,7 +42,6 @@ onMounted(async () => {
 
     firstName.value = profileResponse.data.data.firstName;
     lastName.value = profileResponse.data.data.lastName;
-    console.log(profileResponse.data.data);
     profilePicture.value = `http://localhost:3333/uploads/profile/${profileResponse.data.data.profilePicture}`;
   } catch (error) {
     console.error(
@@ -55,42 +53,50 @@ onMounted(async () => {
   }
 });
 
-const isLoggedIn = computed(() => !!store.token); // Reactive check
+const isLoggedIn = computed(() => !!store.token);
 const language = ref("English");
 
-const isDarkMode = ref(localStorage.getItem("dark-mode"));
+const isDarkMode = ref(false); // Default to false
 
-// Function to handle storage changes
+onMounted(() => {
+  if (process.client) {
+    isDarkMode.value = localStorage.getItem("dark-mode") === "true";
+
+    // Set up event listener for localStorage changes
+    window.addEventListener("storage", handleStorageChange);
+
+    // Set dark-mode value in localStorage if it doesn't exist
+    if (localStorage.getItem("dark-mode") === null) {
+      localStorage.setItem("dark-mode", "false");
+    }
+  }
+});
+
+// Function to handle localStorage changes
 const handleStorageChange = (event) => {
   if (event.key === "dark-mode") {
     isDarkMode.value = event.newValue === "true";
   }
 };
 
-// toggle dark-mode
+// Function to toggle dark mode
 const toggleDarkMode = () => {
   isDarkMode.value = !isDarkMode.value;
-  localStorage.setItem("dark-mode", isDarkMode.value);
+  localStorage.setItem("dark-mode", isDarkMode.value.toString());
   document.documentElement.classList.toggle("dark-mode");
 };
-
-// Set up event listener on mounted
-onMounted(() => {
-  if (localStorage.getItem("dark-mode") === null) {
-    localStorage.setItem("dark-mode", false);
-  }
-  window.addEventListener("storage", handleStorageChange);
-});
-
-// Clean up event listener before unmount
-onBeforeUnmount(() => {
-  window.removeEventListener("storage", handleStorageChange);
-});
 
 // Function to toggle mobile menu
 function toggleMobileMenu() {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
 }
+
+// Clean up event listener before unmount
+onBeforeUnmount(() => {
+  if (process.client) {
+    window.removeEventListener("storage", handleStorageChange);
+  }
+});
 </script>
 
 <template>
