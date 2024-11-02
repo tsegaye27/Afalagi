@@ -3,8 +3,10 @@ definePageMeta({
   layout: "",
 });
 
+const accessTokenCookie = useCookie("access_token");
 onMounted(() => {
   store.setLoading(true);
+  store.setToken(accessTokenCookie.value);
   if (!store.token) navigateTo("/auth/signup");
 });
 
@@ -63,6 +65,11 @@ const createProfile = async () => {
   formData.append("gender", gender.value);
   formData.append("phoneNumber", `${code.value} ${number.value}`);
   formData.append("birthDate", birthDate.value);
+
+  if (!store.token) {
+    showToast("Unauthorized", "error");
+    return;
+  }
 
   try {
     const response = await $axios.post("/user/profile", formData, {
@@ -139,7 +146,6 @@ const hideCityList = () => {
   }, 100);
 };
 
-const phoneNumber = ref("");
 const showPhoneCodeList = ref(false);
 const selectedPhoneCode = ref(null);
 const countriesPhone = ref([]);
