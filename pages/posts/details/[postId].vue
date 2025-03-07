@@ -220,18 +220,15 @@ function timeAgo(date) {
   return `${Math.floor(seconds)} sec ago`;
 }
 
-// Function to check if the video URL is from YouTube
 const isYouTubeVideo = (url) => {
   return url?.includes("youtube.com") || url?.includes("youtu.be");
 };
 
-// Function to get the embeddable YouTube URL
 const getYouTubeEmbedUrl = (url) => {
   const videoId = extractYouTubeVideoId(url);
   return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
 };
 
-// Function to extract the YouTube video ID
 const extractYouTubeVideoId = (url) => {
   const regex =
     /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
@@ -571,6 +568,7 @@ const extractYouTubeVideoId = (url) => {
               ></textarea>
               <button
                 @click="submitComment"
+                :disabled="missingPerson.status === 'CLOSED' || missingPerson.status === 'REJECTED' || missingPerson.status === 'UNDER_REVIEW'"
                 class="px-4 py-2 w-[8rem] bg-[var(--secondary-color)] text-white rounded mt-[0.5rem]"
               >
                 Submit

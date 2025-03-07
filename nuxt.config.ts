@@ -11,17 +11,14 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: [
-    // "nuxt-swiper",
-    // '@primevue/nuxt-module',
-    [
-      "@pinia/nuxt",
-      {
-        autoImports: ["defineStore", "acceptHMRUpdate"],
-      },
-    ],
-    "@nuxt/icon",
-  ],
+  modules: [// "nuxt-swiper",
+  // '@primevue/nuxt-module',
+  [
+    "@pinia/nuxt",
+    {
+      autoImports: ["defineStore", "acceptHMRUpdate"],
+    },
+  ], "nuxt-icons", "@nuxt/icon"],
 
   plugins: ["~/plugins/axios.ts"],
 
